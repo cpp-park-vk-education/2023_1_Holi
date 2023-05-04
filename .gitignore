@@ -1,16 +1,15 @@
-# CMake build directory
 build/
 
-# CMake generated files
 CMakeCache.txt
 CMakeFiles/
 cmake_install.cmake
 Makefile
 
-# Compiled object files and libraries
 *.o
 *.a
 *.so
 
-# Executables
 *.exe
+*.idea*
+*.DS_Store*
+*cmake-build-debug
