@@ -1,8 +1,7 @@
 #pragma once
 
-#include <json/json.h>
-#include <json/value.h>
 #include <vector>
+#include <string>
 
 //todo: string поменять на Json::value
 class Response{
