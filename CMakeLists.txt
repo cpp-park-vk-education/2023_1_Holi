@@ -31,12 +31,22 @@ include_directories(${Boost_INCLUDE_DIRS})
 
 option(BUILD_FOR_TEST "build for test" ON)
 
-if (BUILD_FOR_TEST)
-    enable_testing()
-    find_package(GTest REQUIRED)
-    include(GoogleTest)
-endif ()
+#if (BUILD_FOR_TEST)
+#    enable_testing()
+#    find_package(GTest REQUIRED)
+#    include(GoogleTest)
+#endif ()
 
+if (BUILD_FOR_TEST)
+include(FetchContent)
+    FetchContent_Declare(
+      googletest
+      URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+    )
+
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    FetchContent_MakeAvailable(googletest)
+endif ()
 find_package(Threads REQUIRED)
 
 add_subdirectory(server)
