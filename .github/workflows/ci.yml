@@ -11,9 +11,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install dependencies
+      - name: Install qt
+        run: sudo apt install qt6-base-dev
+
+      - name: Install GoogleTest
         run: |
-          sudo apt install qt6-base-dev
           cd ~
           git clone https://github.com/google/googletest.git
           cd googletest
@@ -22,6 +24,16 @@ jobs:
           make -j8
           sudo make install
           sudo ldconfig
+
+      - name: Install Boost
+        run: |
+          sudo apt update && sudo apt upgrade
+          sudo apt-get install build-essential g++ python3-dev autotools-dev libicu-dev libbz2-dev libboost-all-dev
+          wget https://boostorg.jfrog.io/artifactory/main/release/1.81.0/source/boost_1_81_0.tar.gz
+          tar xvf boost_1_81_0.tar.gz
+          cd boost_1_81_0
+          ./bootstrap.sh --prefix=/usr/
+          sudo ./b2 install
           
 
       - name: Configure CMake
