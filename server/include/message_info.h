@@ -7,6 +7,7 @@
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/json.hpp>
 #include <iostream>
+#include <stack>
 
 #include "namespaces.h"
 
