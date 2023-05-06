@@ -13,10 +13,11 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 file(GLOB PROJECT_SOURCES
+        src/*/*.cpp
         src/*.cpp
-        include/*.h
-        include/*.hpp
-        include/*.ui
+        include/*/*.h
+        include/*/*.hpp
+        include/*/*.ui
         )
 
 if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -37,7 +38,7 @@ else ()
         #    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
     else ()
         add_executable(client
-                ${PROJECT_SOURCES})
+                ${PROJECT_SOURCES} include/request_maker.h)
     endif ()
 endif ()
 

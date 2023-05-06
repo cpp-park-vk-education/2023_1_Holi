@@ -13,10 +13,11 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 file(GLOB PROJECT_SOURCES
+        src/*/*.cpp
         src/*.cpp
-        include/*.h
-        include/*.hpp
-        include/*.ui
+        include/*/*.h
+        include/*/*.hpp
+        include/*/*.ui
         )
 
 if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
