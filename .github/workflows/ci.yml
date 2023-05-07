@@ -36,8 +36,8 @@ jobs:
 
       - name: Configure CMake
         run: |
+          sudo /sbin/ldconfig -v
           export Boost_ROOT=/home/runner/work/2023_1_Holi/2023_1_Holi/boost
-          export Qt6_ROOT=/usr/include/
           cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DBUILD_FOR_TEST=1
 
       - name: Build
