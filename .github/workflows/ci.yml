@@ -33,12 +33,10 @@ jobs:
           platform_version: 22.04
           toolset: gcc
           arch: x86
-          boost_install_dir: /home/runner/2023_1_Holi
+          boost_install_dir: ~
 
       - name: Configure CMake
         run: |
-          ls -la
-          ls -la ..
           cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DBUILD_FOR_TEST=1
 
       - name: Build
