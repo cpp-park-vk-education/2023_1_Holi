@@ -33,6 +33,7 @@ jobs:
           platform_version: 22.04
           toolset: gcc
           arch: x86
+          boost_install_dir: /home/runner/2023_1_Holi
 
       - name: Configure CMake
         run: |
