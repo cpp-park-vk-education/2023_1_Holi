@@ -37,7 +37,7 @@ jobs:
       - name: Configure CMake
         run: |
           ls -la
-          ls -la cd ..
+          ls -la ..
           cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DBUILD_FOR_TEST=1
 
       - name: Build
