@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>952</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(167, 62, 231, 255), stop:1 rgba(0, 235, 255, 255));
+</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="Line" name="line">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>-20</y>
+      <width>20</width>
+      <height>601</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:1 rgba(0, 0, 0, 0));</string>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+   </widget>
+   <widget class="QStackedWidget" name="stackedWidget">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>20</y>
+      <width>731</width>
+      <height>491</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:1 rgba(0, 0, 0, 0));</string>
+    </property>
+    <property name="currentIndex">
+     <number>-1</number>
+    </property>
+   </widget>
+   <widget class="QWidget" name="verticalWidget_2" native="true">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>80</y>
+      <width>160</width>
+      <height>451</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:1 rgba(0, 0, 0, 0));</string>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item alignment="Qt::AlignLeft">
+      <widget class="QPushButton" name="main_button">
+       <property name="minimumSize">
+        <size>
+         <width>62</width>
+         <height>19</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Play</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	border: none;
+	color: rgb(255, 255, 255);
+
+}
+
+QPushButton:hover {
+	background-color: rgba(102, 64, 191, 169);
+	border-radius: 5px;
+	color: rgb(255, 255, 255);
+	
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Главная</string>
+       </property>
+      </widget>
+     </item>
+     <item alignment="Qt::AlignLeft">
+      <widget class="QPushButton" name="chat_Button">
+       <property name="font">
+        <font>
+         <family>Play</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	border: none;
+	color: rgb(255, 255, 255);
+
+}
+
+QPushButton:hover {
+	background-color: rgba(102, 64, 191, 169);
+	border-radius: 5px;
+	color: rgb(255, 255, 255);
+	
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Мессенджер</string>
+       </property>
+      </widget>
+     </item>
+     <item alignment="Qt::AlignLeft">
+      <widget class="QPushButton" name="AlbomsButton">
+       <property name="font">
+        <font>
+         <family>Play</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	border: none;
+	color: rgb(255, 255, 255);
+
+}
+
+QPushButton:hover {
+	background-color: rgba(102, 64, 191, 169);
+	border-radius: 5px;
+	color: rgb(255, 255, 255);
+	
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Мои альбомы</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>155</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_4">
+       <property name="font">
+        <font>
+         <family>Play</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:1 rgba(0, 0, 0, 0));
+color: rgb(232, 231, 255);
+</string>
+       </property>
+       <property name="text">
+        <string>Сообщество</string>
+       </property>
+      </widget>
+     </item>
+     <item alignment="Qt::AlignLeft">
+      <widget class="QPushButton" name="Friends_bar">
+       <property name="font">
+        <font>
+         <family>Play</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	border: none;
+	color: rgb(255, 255, 255);
+
+}
+
+QPushButton:hover {
+	background-color: rgba(102, 64, 191, 169);
+	border-radius: 5px;
+	color: rgb(255, 255, 255);
+	
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Друзья</string>
+       </property>
+      </widget>
+     </item>
+     <item alignment="Qt::AlignLeft">
+      <widget class="QPushButton" name="input_friends">
+       <property name="font">
+        <font>
+         <family>Play</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	border: none;
+	color: rgb(255, 255, 255);
+
+}
+
+QPushButton:hover {
+	background-color: rgba(102, 64, 191, 169);
+	border-radius: 5px;
+	color: rgb(255, 255, 255);
+	
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Входящие заявки</string>
+       </property>
+      </widget>
+     </item>
+     <item alignment="Qt::AlignLeft">
+      <widget class="QPushButton" name="output_friends">
+       <property name="font">
+        <font>
+         <family>Play</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	border: none;
+	color: rgb(255, 255, 255);
+
+}
+
+QPushButton:hover {
+	background-color: rgba(102, 64, 191, 169);
+	border-radius: 5px;
+	color: rgb(255, 255, 255);
+	
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Исходящие заявки</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>155</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_3">
+       <property name="font">
+        <font>
+         <family>Play</family>
+         <pointsize>12</pointsize>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:1 rgba(0, 0, 0, 0));
+color: rgb(232, 231, 255);
+</string>
+       </property>
+       <property name="text">
+        <string>Сервисы</string>
+       </property>
+      </widget>
+     </item>
+     <item alignment="Qt::AlignLeft">
+      <widget class="QPushButton" name="VK_button">
+       <property name="font">
+        <font>
+         <family>Play</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	border: none;
+	color: rgb(255, 255, 255);
+
+}
+
+QPushButton:hover {
+	background-color: rgba(102, 64, 191, 169);
+	border-radius: 5px;
+	color: rgb(255, 255, 255);
+	
+}
+</string>
+       </property>
+       <property name="text">
+        <string>VK</string>
+       </property>
+      </widget>
+     </item>
+     <item alignment="Qt::AlignLeft">
+      <widget class="QPushButton" name="YT_Button">
+       <property name="font">
+        <font>
+         <family>Play</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	border: none;
+	color: rgb(255, 255, 255);
+
+}
+
+QPushButton:hover {
+	background-color: rgba(102, 64, 191, 169);
+	border-radius: 5px;
+	color: rgb(255, 255, 255);
+	
+}
+</string>
+       </property>
+       <property name="text">
+        <string>YouTube</string>
+       </property>
+      </widget>
+     </item>
+     <item alignment="Qt::AlignLeft">
+      <widget class="QPushButton" name="Config_button">
+       <property name="font">
+        <font>
+         <family>Play</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	border: none;
+	color: rgb(255, 255, 255);
+
+}
+
+QPushButton:hover {
+	background-color: rgba(102, 64, 191, 169);
+	border-radius: 5px;
+	color: rgb(255, 255, 255);
+	
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Настройки</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="verticalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="button_login">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Play</family>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	background-color: rgb(72, 49, 157);
+	border-radius: 5px;
+	color: rgb(255, 255, 255);
+
+}
+
+QPushButton:hover {
+	background-color: rgba(102, 64, 191, 169);
+	border-radius: 5px;
+	color: rgb(255, 255, 255);
+	
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Войти</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="signUp_button">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Play</family>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	background-color: rgb(72, 49, 157);
+	border-radius: 5px;
+	color: rgb(255, 255, 255);
+
+}
+
+QPushButton:hover {
+	background-color: rgba(102, 64, 191, 169);
+	border-radius: 5px;
+	color: rgb(255, 255, 255);
+	
+}
+
+</string>
+       </property>
+       <property name="text">
+        <string>Регистрация</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>0</y>
+      <width>161</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Play</family>
+      <pointsize>44</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:1 rgba(0, 0, 0, 0));
+color: rgb(232, 231, 255);
+</string>
+    </property>
+    <property name="text">
+     <string>HOLI</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>952</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
