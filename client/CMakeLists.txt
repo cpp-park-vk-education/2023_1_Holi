@@ -1,6 +1,8 @@
+cmake_minimum_required(VERSION 3.5)
+
 project(client VERSION 0.1 LANGUAGES CXX)
 
-#set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
@@ -65,7 +67,6 @@ include_directories(client PUBLIC include/api_client/VK)
 include_directories(client PUBLIC include/api_client/YT)
 include_directories(client PUBLIC include/api_client/Base)
 include_directories(client PUBLIC include/request_maker)
-include_directories(client PUBLIC include/gui)
 
 if (BUILD_FOR_TEST)
     add_library(client_lib ${PROJECT_SOURCES})
