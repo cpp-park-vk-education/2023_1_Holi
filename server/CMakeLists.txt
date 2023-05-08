@@ -36,8 +36,7 @@ else ()
         #    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
     else ()
         add_executable(server
-                ${PROJECT_SOURCES}
-                include/i_db_connector.h src/db_connector.cpp include/db_connector.h include/errors.h)
+                ${PROJECT_SOURCES})
     endif ()
 endif ()
 
