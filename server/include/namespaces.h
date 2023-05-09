@@ -6,6 +6,7 @@
 
 #include <boost/asio.hpp>
 #include <boost/beast.hpp>
+#include <boost/beast/http.hpp>
 #include <boost/json.hpp>
 #include <boost/url.hpp>
 
