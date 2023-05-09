@@ -9,10 +9,6 @@
 
 
 class Server : public std::enable_shared_from_this<Server> {
-private:
-    net::io_context &ioc_;
-    tcp::acceptor acceptor_;
-
 public:
     Server(
             net::io_context &ioc,
@@ -28,4 +24,9 @@ private:
     void DoAccept();
 
     void OnAccept(beast::error_code ec, tcp::socket socket);
+
+private:
+    net::io_context &ioc_;
+    tcp::acceptor acceptor_;
+
 };
