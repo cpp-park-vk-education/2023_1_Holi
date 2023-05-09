@@ -2,6 +2,7 @@
 // Created by Алексей on 01.05.2023.
 //
 
+#include <boost/asio/signal_set.hpp>
 #include <iostream>
 
 #include "server/server.h"
@@ -25,6 +26,12 @@ int main(int argc, char *argv[]) {
             ioc,
             tcp::endpoint{address, port})->Run();
 
+    net::signal_set _signals(ioc, SIGINT, SIGTERM);
+    _signals.async_wait(
+            [&](beast::error_code const &, int) {
+                ioc.stop();
+            });
+
     std::vector<std::thread> v;
     v.reserve(threads - 1);
     for (auto i = threads - 1; i > 0; --i)
@@ -33,6 +40,9 @@ int main(int argc, char *argv[]) {
                     ioc.run();
                 });
     ioc.run();
+
+    for (auto &t: v)
+        t.join();
 
     return EXIT_SUCCESS;
 }
