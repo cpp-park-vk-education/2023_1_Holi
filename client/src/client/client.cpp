@@ -28,9 +28,13 @@ void Client::Run(
 }
 
 void Client::Write() {
+    std::cout << "\t--- write: start " << std::endl;
+
     stream_.expires_after(std::chrono::seconds(30));
 
     http::write(stream_, request_);
+
+    std::cout << "\t--- write: end " << std::endl;
 
     GetResponse();
 }
@@ -38,7 +42,11 @@ void Client::Write() {
 MessageInfo Client::GetResponse() {
     buffer_.clear();
 
+    std::cout << "\t--- read: start " << std::endl;
+
     http::read(stream_, buffer_, response_);
+
+    std::cout << "\t--- read: end " << std::endl;
 
     std::cout << response_ << std::endl;
 

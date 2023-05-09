@@ -46,6 +46,7 @@ void Session::DoRead() {
     request_ = {};
 
     stream_.expires_after(std::chrono::seconds(30));
+    std::cout << "\t--- read: start " << std::this_thread::get_id() << std::endl;
 
     http::async_read(stream_, buffer_, request_,
                      beast::bind_front_handler(
@@ -54,6 +55,7 @@ void Session::DoRead() {
 }
 
 void Session::OnRead(beast::error_code ec, std::size_t bytes_transferred) {
+
     boost::ignore_unused(bytes_transferred);
 
     if (ec == http::error::end_of_stream)
@@ -61,6 +63,7 @@ void Session::OnRead(beast::error_code ec, std::size_t bytes_transferred) {
 
     if (ec)
         return fail(ec, "read");
+    std::cout << "\t--- read: done " << std::this_thread::get_id() << std::endl;
 
     SendResponse(
             HandleRequest(std::move(request_)));
@@ -68,6 +71,8 @@ void Session::OnRead(beast::error_code ec, std::size_t bytes_transferred) {
 
 void Session::SendResponse(http::message_generator &&message) {
     bool keep_alive = message.keep_alive();
+
+    std::cout << "\t--- write: start " << std::this_thread::get_id() << std::endl;
 
     beast::async_write(
             stream_,
@@ -87,8 +92,11 @@ void Session::OnWrite(
         return fail(ec, "write");
 
     if (!keep_alive) {
+        std::cout << "CLOSE" << std::endl;
         return DoClose();
     }
+
+    std::cout << "\t--- write: done " << std::this_thread::get_id() << std::endl << std::endl;
 
     DoRead();
 }
