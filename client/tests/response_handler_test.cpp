@@ -4,8 +4,8 @@
 
 #include <gtest/gtest.h>
 
-#include "request_maker/errors.h"
-#include "request_maker/response_handler.h"
+#include "client/errors.h"
+#include "client/response_handler.h"
 
 
 http::response<http::string_body>
