@@ -8,7 +8,7 @@
 #include "session.h"
 
 
-class Server : std::enable_shared_from_this<Server> {
+class Server : public std::enable_shared_from_this<Server> {
 private:
     net::io_context &ioc_;
     tcp::acceptor acceptor_;

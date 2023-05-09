@@ -5,6 +5,36 @@
 #include "server/session.h"
 
 
+void fail(beast::error_code ec, char const *what) {
+    std::cerr << what << ": " << ec.message() << "\n";
+}
+
+
+http::response<http::string_body> HandleRequest(http::request<http::string_body> &&request) {
+    http::response<http::string_body> response{http::status::ok, request.version()};
+
+    response.set(http::field::host, "localhost");
+    response.set(http::field::server, BOOST_BEAST_VERSION_STRING);
+    response.keep_alive(request.keep_alive());
+
+    std::string body = R"(
+        {
+            "name": "name",
+            "image": "image",
+            "exported_from": "exported_from",
+            "user": "6",
+            "playlists": ["12", "2", "43"]
+        }
+    )";
+
+    response.set(http::field::content_type, "application/json");
+    response.set(http::field::content_length, std::to_string(body.length()));
+    response.body() = body;
+    response.prepare_payload();
+
+    return response;
+}
+
 void Session::Start() {
     net::dispatch(stream_.get_executor(),
                   beast::bind_front_handler(
@@ -32,8 +62,8 @@ void Session::OnRead(beast::error_code ec, std::size_t bytes_transferred) {
     if (ec)
         return fail(ec, "read");
 
-    send_response(
-            handle_request(*doc_root_, std::move(req_)));
+    SendResponse(
+            HandleRequest(std::move(request_)));
 }
 
 void Session::SendResponse(http::message_generator &&message) {

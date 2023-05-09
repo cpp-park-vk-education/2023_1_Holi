@@ -23,14 +23,11 @@
 
 #include "namespaces.h"
 #include "orm/room.h"
+#include "request_handling/request_handler.h"
 
+void fail(beast::error_code ec, char const *what);
 
-void fail(beast::error_code ec, char const *what) {
-    std::cerr << what << ": " << ec.message() << "\n";
-}
-
-
-class Session : public std::enable_shared_from_this<Session> {
+    class Session : public std::enable_shared_from_this<Session> {
 private:
     std::vector<std::shared_ptr<Room>> rooms_;
     std::queue<http::request<http::string_body>> write_messages_;
