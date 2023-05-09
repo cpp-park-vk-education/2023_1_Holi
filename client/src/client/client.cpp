@@ -31,6 +31,8 @@ void Client::Write() {
     stream_.expires_after(std::chrono::seconds(30));
 
     http::write(stream_, request_);
+
+    GetResponse();
 }
 
 MessageInfo Client::GetResponse() {

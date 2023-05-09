@@ -8,6 +8,7 @@
 #include <boost/beast/http.hpp>
 #include <boost/beast/version.hpp>
 #include <boost/asio/strand.hpp>
+#include <chrono>
 #include <cstdlib>
 #include <functional>
 #include <iostream>
