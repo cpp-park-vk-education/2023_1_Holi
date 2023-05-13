@@ -18,8 +18,6 @@ public:
 
     void Run();
 
-    void Stop();
-
 private:
     void DoAccept();
 

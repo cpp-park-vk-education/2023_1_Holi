@@ -6,6 +6,14 @@
 
 
 MessageInfo Router::Route(const ParsedRequest &request) {
-    return {};
+    return {json::parse(R"(
+                {
+                    "name": "name",
+                    "image": "image",
+                    "exported_from": "exported_from",
+                    "user": "6",
+                    "playlists": ["12", "2", "43"]
+                }
+            )"), http::status::ok};
 }
 

@@ -25,11 +25,14 @@
 #include "orm/room.h"
 #include "request_handling/request_handler.h"
 
+
 void fail(beast::error_code ec, char const *what);
 
 class Session : public std::enable_shared_from_this<Session> {
 public:
-    Session(tcp::socket &&socket) : stream_(std::move(socket)) {}
+    Session(tcp::socket &&socket) :
+            stream_(std::move(socket)),
+            request_handler_(std::make_unique<RequestHandler>()) {}
 
     void Start();
 
@@ -48,10 +51,10 @@ public:
     void DoClose();
 
 private:
-    std::vector<std::shared_ptr<Room>> rooms_;
-    std::queue<http::request<http::string_body>> write_messages_;
+//    std::vector<std::shared_ptr<Room>> rooms_;
+//    std::queue<http::request<http::string_body>> write_messages_;
     beast::flat_buffer buffer_;
     beast::tcp_stream stream_;
     http::request<http::string_body> request_;
-
+    std::unique_ptr<IRequestHandler> request_handler_;
 };

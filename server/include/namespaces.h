@@ -14,7 +14,7 @@
 namespace net = boost::asio;
 namespace beast = boost::beast;
 namespace json = boost::json;
-namespace urls = boost::urls;
+namespace url = boost::urls;
 
 namespace http = beast::http;
 namespace websocket = beast::websocket;

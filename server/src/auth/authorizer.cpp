@@ -5,7 +5,7 @@
 #include "auth/authorizer.h"
 
 
-json::value Authorizer::Authorise() {
+json::value Authorizer::Authorize() {
     return {};
 }
 
@@ -13,6 +13,6 @@ json::value Authorizer::Register() {
     return {};
 }
 
-bool Authorizer::IsAuthorised() {
+bool Authorizer::IsAuthorized() {
     return {};
 }
