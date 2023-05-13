@@ -17,13 +17,15 @@
 
 #include "message_info.h"
 #include "namespaces.h"
+#include "response_handler.h"
 
 
 class Client {
 public:
     explicit Client(net::io_context &ioc) :
             resolver_(net::make_strand(ioc)),
-            stream_(net::make_strand(ioc)) {}
+            stream_(net::make_strand(ioc)),
+            response_handler(std::make_unique<ResponseHandler>()) {}
 
     void Close();
 
@@ -43,5 +45,6 @@ private:
     http::response<http::string_body> response_;
     http::request<http::string_body> request_;
     beast::flat_buffer buffer_;
+    std::unique_ptr<IResponseHandler> response_handler;
 };
 
