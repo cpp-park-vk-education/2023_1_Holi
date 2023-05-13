@@ -22,15 +22,17 @@ MessageInfo ResponseHandler::Handle(http::response<http::string_body> &&response
     MessageInfo message_info;
 
     message_info.status_ = response_.result();
-//    parsed_request.body_ = request_.body().empty() ? json::parse("{}", ec) : json::parse(request_.body(), ec);
-//    if (ec) {
-//        std::cerr << ec.message() << std::endl;
-//        return CreateResponse(http::status::bad_request);
-//    }
+
+    boost::system::error_code ec;
+    message_info.body_ = response_.body().empty() ? json::parse("{}", ec) : json::parse(response_.body(), ec);
+    if (ec) {
+        std::cerr << ec.message() << std::endl;
+        message_info.body_ = json::parse("{}");
+    }
 //    if (parsed_request.method_ == http::verb::post && parsed_request.body_ == json::parse("{}")) {
 //        return CreateResponse(http::status::bad_request);
 //    }
-    return {};
+    return message_info;
 }
 
 void ResponseHandler::ParseBody() {

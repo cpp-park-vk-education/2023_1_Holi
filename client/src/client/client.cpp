@@ -48,8 +48,9 @@ MessageInfo Client::GetResponse() {
 
     std::cout << "\t--- read: end " << std::endl;
 
-    auto f = response_handler->Handle(std::move(response_));
-//    std::cout << response_ << std::endl;
+    auto message_info = response_handler->Handle(std::move(response_));
+    std::cout << message_info.status_ << std::endl;
+    std::cout << message_info.body_ << std::endl;
 
     beast::error_code ec;
     stream_.socket().shutdown(tcp::socket::shutdown_both, ec);
