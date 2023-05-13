@@ -63,6 +63,8 @@ if (QT_VERSION_MAJOR EQUAL 6)
 endif ()
 
 include_directories(client PUBLIC include)
+include_directories(client PUBLIC include/gui)
+include_directories(client PUBLIC include/user)
 include_directories(client PUBLIC include/api_client/VK)
 include_directories(client PUBLIC include/api_client/YT)
 include_directories(client PUBLIC include/api_client/Base)
