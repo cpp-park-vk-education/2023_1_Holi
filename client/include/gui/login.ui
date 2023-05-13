@@ -17,36 +17,6 @@
    <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(167, 62, 231, 255), stop:1 rgba(0, 235, 255, 255));
 </string>
   </property>
-  <widget class="QPushButton" name="foggot_password">
-   <property name="geometry">
-    <rect>
-     <x>149</x>
-     <y>665</y>
-     <width>121</width>
-     <height>15</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Play</family>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QPushButton{
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:1 rgba(0, 0, 0, 0));
-border: none;
-color: rgb(29, 35, 77);
-}
-
-QPushButton:hover{
-border-bottom: 1px solid rgb(29, 35, 77);
-}
-</string>
-   </property>
-   <property name="text">
-    <string>Забыли пароль?</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="signin_button">
    <property name="geometry">
     <rect>

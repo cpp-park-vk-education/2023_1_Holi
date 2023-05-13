@@ -1,49 +1,63 @@
-
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "login.h"
+
+#include "oauthprovider.h"
+
+#include "signup.h"
 #include <QMainWindow>
 
+#include <QApplication>
+#include <QDesktopServices>
+#include <QFile>
+#include <QJsonArray>
+#include <QJsonDocument>
 
+#include <QtNetwork/QNetworkReply>
+#include <QtNetworkAuth/QAbstractOAuthReplyHandler>
+#include <QtNetworkAuth/QOAuth2AuthorizationCodeFlow>
+
+#include <QUrl>
+#include <QWidget>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
+namespace Ui {
+class MainWindow;
+}
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
 
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+  MainWindow(QWidget *parent = nullptr);
+  ~MainWindow();
+
+  void
+  OAuthVK(const std::function<void(QOAuth2AuthorizationCodeFlow *)> &onSuccess);
 
 private slots:
-    void on_main_button_clicked();
+  void on_main_button_clicked();
 
-    void on_chat_Button_clicked();
+  void on_AlbomsButton_clicked();
 
-    void on_AlbomsButton_clicked();
+  void on_VK_button_clicked();
 
-    void on_Friends_bar_clicked();
+  void on_YT_Button_clicked();
 
-    void on_input_friends_clicked();
+  void on_Config_button_clicked();
 
-    void on_output_friends_clicked();
+  void on_button_login_clicked();
 
-    void on_VK_button_clicked();
+  void on_signUp_button_clicked();
 
-    void on_YT_Button_clicked();
-
-    void on_Config_button_clicked();
-
-    void on_button_login_clicked();
-
-    void on_signUp_button_clicked();
+  void on_VK_getAllAlboms_clicked();
 
 private:
-    Ui::MainWindow *ui;
+  Ui::MainWindow *ui;
 };
 
 #endif // MAINWINDOW_H

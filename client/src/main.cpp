@@ -1,15 +1,15 @@
 //
 // Created by Алексей on 01.05.2023.
 //
-//#include "crypto.h"
 #include "mainwindow.h"
 #include "registrationmanager.h"
 #include <QApplication>
-#include <QDebug>
-#include <iostream>
+
 int main(int argc, char *argv[]) {
   QApplication a(argc, argv);
+
   MainWindow w;
+
   RegistrationManager r;
   QString email = "user@user.com";
   if (r.isEmailValid(email)) {
