@@ -4,6 +4,32 @@
 
 #include "request_handling/router.h"
 
+//
+//ResultCode Router::GetParameter(std::string key, int &value) {
+//    auto parameter = request_.parameters_.find(key);
+//    if (parameter == request_.parameters_.end()) {
+//        std::cerr << "Error: improper url parameters" << std::endl;
+//        return bad_request;
+//    }
+//
+//    try {
+//        value = std::stoi((*parameter).value);
+//    } catch (std::invalid_argument const &ex) {
+//        std::cerr << "Error: invalid url parameters" << std::endl;
+//        return bad_request;
+//    } catch (...) {
+//        std::cerr << "Unexpected error with parameters" << std::endl;
+//        return bad_request;
+//    }
+//
+//    if (value <= 0) {
+//        std::cerr << "Error: Negative user id" << std::endl;
+//        return not_found;
+//    }
+//
+//    return success;
+//}
+
 
 MessageInfo Router::Route(const ParsedRequest &request) {
 //    return {json::parse(R"(
@@ -16,12 +42,13 @@ MessageInfo Router::Route(const ParsedRequest &request) {
 //                }
 //            )"), http::status::ok};
 
-    if (request.path_.empty()) {
+    request_ = request;
+
+    if (request_.path_.empty()) {
         std::cerr << "Error: empty path" << std::endl;
         return {{}, http::status::bad_request};
     }
-
-    if (request.parameters_.empty()) {
+    if (request_.parameters_.empty()) {
         std::cerr << "Error: empty url parameters" << std::endl;
         return {{}, http::status::bad_request};
     }
@@ -31,10 +58,9 @@ MessageInfo Router::Route(const ParsedRequest &request) {
         std::cerr << "Error: improper url parameters" << std::endl;
         return {{}, http::status::bad_request};
     }
-
     int user_id = 0;
     try {
-        user_id = std::stol((*parameter).value);
+        user_id = std::stoi((*parameter).value);
     } catch (std::invalid_argument const &ex) {
         std::cerr << "Error: invalid url parameters" << std::endl;
         return {{}, http::status::bad_request};
@@ -42,15 +68,45 @@ MessageInfo Router::Route(const ParsedRequest &request) {
         std::cerr << "Unexpected error with parameters" << std::endl;
         return {{}, http::status::bad_request};
     }
-
     if (user_id <= 0) {
         std::cerr << "Error: Negative user id" << std::endl;
         return {{}, http::status::not_found};
     }
 
+
     std::unique_ptr<IRoute> route;
-    if (request.path_ == "/user") {
+    if (request_.path_ == "/user") {
         route = std::make_unique<UserRoute>(user_id);
+    }
+
+
+    parameter = request.parameters_.find("resource_id");
+    if (parameter == request.parameters_.end() && !route) {
+        std::cerr << "Error: improper url parameters" << std::endl;
+        return {{}, http::status::bad_request};
+    }
+    int resource_id = 0;
+    if (route) {
+        resource_id = user_id;
+    } else {
+        try {
+            user_id = std::stoi((*parameter).value);
+        } catch (std::invalid_argument const &ex) {
+            std::cerr << "Error: invalid url parameters" << std::endl;
+            return {{}, http::status::bad_request};
+        } catch (...) {
+            std::cerr << "Unexpected error with parameters" << std::endl;
+            return {{}, http::status::bad_request};
+        }
+        if (user_id <= 0) {
+            std::cerr << "Error: Negative user id" << std::endl;
+            return {{}, http::status::not_found};
+        }
+    }
+
+
+    if (request_.path_ == "/video") {
+        route = std::make_unique<VideoListRoute>(user_id);
     }
 
     if (!route) {
@@ -58,9 +114,10 @@ MessageInfo Router::Route(const ParsedRequest &request) {
         return {{}, http::status::not_found};
     }
 
-    switch (request.method_) {
+
+    switch (request_.method_) {
         case (http::verb::get): {
-            route->Get();
+            route->Get(resource_id);
             break;
         }
         case (http::verb::post): {
@@ -75,6 +132,7 @@ MessageInfo Router::Route(const ParsedRequest &request) {
 
         }
     }
+
     return {{}, http::status::not_found};
 }
 
