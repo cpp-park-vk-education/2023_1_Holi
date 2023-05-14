@@ -15,10 +15,14 @@ void Client::Run(
         const std::string &target
 ) {
     request_.version(11);
-    request_.method(http::verb::get);
+    request_.method(http::verb::post);
     request_.target(target);
     request_.set(http::field::host, host);
     request_.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
+
+    std::string s = "";
+    request_.body() = s;
+    request_.content_length(s.length());
 
     stream_.expires_after(std::chrono::seconds(30));
 
@@ -48,9 +52,10 @@ MessageInfo Client::GetResponse() {
 
     std::cout << "\t--- read: end " << std::endl;
 
-    auto message_info = response_handler->Handle(std::move(response_));
-    std::cout << message_info.status_ << std::endl;
-    std::cout << message_info.body_ << std::endl;
+    std::cout << response_ << std::endl;
+//    auto message_info = response_handler->Handle(std::move(response_));
+//    std::cout << message_info.status_ << std::endl;
+//    std::cout << message_info.body_ << std::endl;
 
     beast::error_code ec;
     stream_.socket().shutdown(tcp::socket::shutdown_both, ec);
