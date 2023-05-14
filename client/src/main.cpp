@@ -7,6 +7,7 @@
 #include <iostream>
 
 #include "client/request_maker_tmp.h"
+#include "client/https_request_maker_tmp.h"
 
 
 int main(int argc, char *argv[]) {
@@ -17,5 +18,5 @@ int main(int argc, char *argv[]) {
 //  return a.exec();
 
 
-    MakeRequest();
+    MakeHttpsRequest();
 }

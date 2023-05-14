@@ -2,27 +2,23 @@
 // Created by Алексей on 09.05.2023.
 //
 
-#include "client/client.h"
+#include "client/client_http.h"
 
 
-void Client::Close() {
-
-}
-
-void Client::Run(
+void ClientHttp::Run(
         const std::string &host,
         const std::string &port,
         const std::string &target
 ) {
     request_.version(11);
-    request_.method(http::verb::post);
+    request_.method(http::verb::get);
     request_.target(target);
     request_.set(http::field::host, host);
     request_.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
 
-    std::string s = "";
-    request_.body() = s;
-    request_.content_length(s.length());
+//    std::string s = "{}";
+//    request_.body() = s;
+//    request_.content_length(s.length());
 
     stream_.expires_after(std::chrono::seconds(30));
 
@@ -31,7 +27,7 @@ void Client::Run(
     Write();
 }
 
-void Client::Write() {
+void ClientHttp::Write() {
     std::cout << "\t--- write: start " << std::endl;
 
     stream_.expires_after(std::chrono::seconds(30));
@@ -43,7 +39,7 @@ void Client::Write() {
     GetResponse();
 }
 
-MessageInfo Client::GetResponse() {
+MessageInfo ClientHttp::GetResponse() {
     buffer_.clear();
 
     std::cout << "\t--- read: start " << std::endl;

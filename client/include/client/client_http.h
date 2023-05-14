@@ -4,40 +4,30 @@
 
 #pragma once
 
-#include <boost/beast/core.hpp>
-#include <boost/beast/http.hpp>
-#include <boost/beast/version.hpp>
 #include <boost/asio/strand.hpp>
 #include <chrono>
-#include <cstdlib>
 #include <functional>
-#include <iostream>
 #include <memory>
-#include <string>
 
+#include "i_client.h"
 #include "message_info.h"
-#include "namespaces.h"
 #include "response_handler.h"
 
 
-class Client {
+class ClientHttp : public IClient {
 public:
-    explicit Client(net::io_context &ioc) :
+    explicit ClientHttp(net::io_context &ioc) :
             resolver_(net::make_strand(ioc)),
             stream_(net::make_strand(ioc)),
             response_handler(std::make_unique<ResponseHandler>()) {}
-
-    void Close();
 
     void Run(
             const std::string &host,
             const std::string &port,
             const std::string &target
-    );
+    ) override;
 
-    void Write();
-
-    MessageInfo GetResponse();
+    MessageInfo GetResponse() override;
 
 private:
     beast::tcp_stream stream_;
@@ -46,5 +36,9 @@ private:
     http::request<http::string_body> request_;
     beast::flat_buffer buffer_;
     std::unique_ptr<IResponseHandler> response_handler;
+
+private:
+    void Write();
+
 };
 
