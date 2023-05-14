@@ -24,5 +24,4 @@ public:
     MessageInfo Post(json::value body) override;
 
     MessageInfo Delete(int id) override;
-
 };

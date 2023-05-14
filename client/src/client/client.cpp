@@ -55,7 +55,7 @@ MessageInfo Client::GetResponse() {
     beast::error_code ec;
     stream_.socket().shutdown(tcp::socket::shutdown_both, ec);
 
-    if(ec && ec != beast::errc::not_connected)
+    if (ec && ec != beast::errc::not_connected)
         throw beast::system_error{ec};
 
     return {};
