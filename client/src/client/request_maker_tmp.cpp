@@ -9,7 +9,7 @@ int MakeRequest() {
     try {
         auto const host = "localhost";
         auto const port = "8080";
-        auto const target = "/";
+        auto const target = "/user?user_id=3";
 
         net::io_context ioc;
 

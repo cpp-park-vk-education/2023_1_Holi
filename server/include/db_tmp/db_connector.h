@@ -13,20 +13,20 @@
 #include "orm/errors.h"
 
 
-enum ConnectReturnCode {
-    success,
-    already_connected,
-    error
-};
+//enum ConnectReturnCode {
+//    success,
+//    already_connected,
+//    error
+//};
 
 
-class DbConnector : public IDbConnector {
+class DbConnectorTmp : public IDbConnectorTmp {
 public:
-    explicit DbConnector(QString db_name = "hooli_share") : db_name_(std::move(db_name)) {}
+    explicit DbConnectorTmp(QString db_name = "hooli_share") : db_name_(std::move(db_name)) {}
 
     QSqlQuery MakeQuery(QString query_string) override;
 
-    ~DbConnector();
+    ~DbConnectorTmp();
 
 private:
     QSqlDatabase connection_;

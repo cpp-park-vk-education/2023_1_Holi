@@ -5,7 +5,7 @@
 #include "db_tmp/db_connector.h"
 
 
-QSqlQuery DbConnector::MakeQuery(QString query_string) {
+QSqlQuery DbConnectorTmp::MakeQuery(QString query_string) {
     Connect();
 
     QSqlQuery query(connection_);
@@ -40,14 +40,13 @@ QSqlQuery DbConnector::MakeQuery(QString query_string) {
 //        i++;
 //    }
 
-    Disconnect();
+//    Disconnect();
 
     return query;
 }
 
-void DbConnector::Connect() {
+void DbConnectorTmp::Connect() {
     if (connection_.isOpen()) {
-//        return already_connected;
         return;
     }
 
@@ -57,15 +56,19 @@ void DbConnector::Connect() {
     connection_.setUserName("aleksej");
     connection_.setPassword("postgres");
 
-//    return (connection_.open() ? success : error);
+    bool is_open = connection_.open();
+
+    if (!is_open) {
+        throw DbConnectError("Cant connect to db");
+    }
 }
 
 
-DbConnector::~DbConnector() {
+DbConnectorTmp::~DbConnectorTmp() {
     Disconnect();
 }
 
-void DbConnector::Disconnect() {
+void DbConnectorTmp::Disconnect() {
     if (connection_.isOpen()) {
         connection_.close();
     }

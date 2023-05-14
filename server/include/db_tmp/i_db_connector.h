@@ -7,9 +7,9 @@
 #include <QString>
 
 
-class IDbConnector {
+class IDbConnectorTmp {
 public:
     virtual QSqlQuery MakeQuery(QString query_string) = 0;
 
-    virtual ~IDbConnector() = default;
+    virtual ~IDbConnectorTmp() = default;
 };
