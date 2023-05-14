@@ -117,8 +117,7 @@ MessageInfo Router::Route(const ParsedRequest &request) {
 
     switch (request_.method_) {
         case (http::verb::get): {
-            route->Get(resource_id);
-            break;
+            return route->Get(resource_id);
         }
         case (http::verb::post): {
 
