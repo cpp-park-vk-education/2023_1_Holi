@@ -21,27 +21,6 @@ QSqlQuery DbConnectorTmp::MakeQuery(QString query_string) {
     std::cout << "Query executed successfully" << std::endl;
     std::cout << "Amount of rows read: " << query.size() << std::endl;
 
-//    int i = 0;
-//    while (query.next()) {
-//        ui->twOrg->setItem(i, 0, new
-//                QTableWidgetItem(query.value("customer_id").toString()));
-//        ui->twOrg->setItem(i, 1, new
-//                QTableWidgetItem(query.value("company_name").toString()));
-//        ui->twOrg->setItem(i, 2, new
-//                QTableWidgetItem(query.value("last_name").toString()));
-//        ui->twOrg->setItem(i, 3, new
-//                QTableWidgetItem(query.value("first_name").toString()));
-//        ui->twOrg->setItem(i, 4, new
-//                QTableWidgetItem(query.value("address").toString()));
-//        ui->twOrg->setItem(i, 5, new
-//                QTableWidgetItem(query.value("index").toString()));
-//        ui->twOrg->setItem(i, 6, new
-//                QTableWidgetItem(query.value("phone").toString()));
-//        i++;
-//    }
-
-//    Disconnect();
-
     return query;
 }
 

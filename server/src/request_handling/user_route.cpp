@@ -6,8 +6,21 @@
 
 
 MessageInfo UserRoute::Get(int id) {
+    if (id <= 0) {
+        return {{}, http::status::not_found};
+    }
     std::string sql = R"(select * from "User" where id = )" + std::to_string(id);
-    auto query = db_connector_->MakeQuery(sql.c_str());
+
+    QSqlQuery query;
+    try {
+        query = db_connector_->MakeQuery(sql.c_str());
+    } catch (ConditionError &e) {
+        std::cerr << e.what() << std::endl;
+        return {{}, http::status::internal_server_error};
+    } catch (...) {
+        std::cerr << "Unexpected error with DB" << std::endl;
+        return {{}, http::status::internal_server_error};
+    }
 
     std::vector<std::string> keys{"id", "name", "surname", "email", "avatar", "login", "password"};
     json::object init;
