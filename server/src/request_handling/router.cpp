@@ -104,8 +104,11 @@ MessageInfo Router::Route(const ParsedRequest &request) {
         }
     }
 
-
     if (request_.path_ == "/video") {
+        route = std::make_unique<VideoRoute>(user_id);
+    }
+
+    if (request_.path_ == "/video/list") {
         route = std::make_unique<VideoListRoute>(user_id);
     }
 
