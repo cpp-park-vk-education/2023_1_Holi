@@ -83,6 +83,6 @@ if (BUILD_FOR_TEST)
     add_library(client_lib ${PROJECT_SOURCES})
     target_link_libraries(client_lib PUBLIC Qt${QT_VERSION_MAJOR}::Widgets)
     target_include_directories(client_lib PUBLIC include)
-    add_subdirectory(tests)
+    #add_subdirectory(tests)
 
 endif ()

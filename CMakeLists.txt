@@ -10,9 +10,9 @@ include_directories(${Boost_INCLUDE_DIRS})
 option(BUILD_FOR_TEST "build for test" ON)
 
 if (BUILD_FOR_TEST)
-enable_testing()
-find_package(GTest REQUIRED)
-include(GoogleTest)
+    enable_testing()
+    find_package(GTest REQUIRED)
+    include(GoogleTest)
 endif ()
 
 find_package(Threads REQUIRED)

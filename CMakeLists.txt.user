@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 6.0.2, 2023-05-15T21:50:33. -->
+<!-- Written by QtCreator 6.0.2, 2023-05-15T23:44:59. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -67,7 +67,155 @@
     <value type="bool" key="AutoTest.Framework.QtQuickTest">true</value>
     <value type="bool" key="AutoTest.Framework.QtTest">true</value>
    </valuemap>
-   <valuemap type="QVariantMap" key="AutoTest.CheckStates"/>
+   <valuemap type="QVariantMap" key="AutoTest.CheckStates">
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/chat_model_test.cpp:AlterCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/chat_model_test.cpp:AlterNegativeId">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/chat_model_test.cpp:ChatModelTest">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/chat_model_test.cpp:DeleteCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/chat_model_test.cpp:DeleteNegativeId">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/chat_model_test.cpp:DeleteWithCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/chat_model_test.cpp:DeleteWithEmptyCondition">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/chat_model_test.cpp:DeleteWithIncorrectCondition">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/chat_model_test.cpp:GetCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/chat_model_test.cpp:GetNegativeId">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/chat_model_test.cpp:SaveCommonParams">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/chat_model_test.cpp:SaveEmptyParams">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/chat_model_test.cpp:SelectWithCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/chat_model_test.cpp:SelectWithEmptyCondition">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/chat_model_test.cpp:SelectWithIncorrectCondition">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/follow_model_test.cpp:AlterCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/follow_model_test.cpp:AlterNegativeId">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/follow_model_test.cpp:DeleteCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/follow_model_test.cpp:DeleteNegativeId">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/follow_model_test.cpp:DeleteWithCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/follow_model_test.cpp:DeleteWithEmptyCondition">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/follow_model_test.cpp:DeleteWithIncorrectCondition">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/follow_model_test.cpp:FollowModelTest">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/follow_model_test.cpp:GetCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/follow_model_test.cpp:GetNegativeId">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/follow_model_test.cpp:SaveCommonParams">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/follow_model_test.cpp:SaveEmptyParams">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/follow_model_test.cpp:SelectWithCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/follow_model_test.cpp:SelectWithEmptyCondition">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/follow_model_test.cpp:SelectWithIncorrectCondition">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/message_model_test.cpp:AlterCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/message_model_test.cpp:AlterNegativeId">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/message_model_test.cpp:DeleteCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/message_model_test.cpp:DeleteNegativeId">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/message_model_test.cpp:DeleteWithCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/message_model_test.cpp:DeleteWithEmptyCondition">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/message_model_test.cpp:DeleteWithIncorrectCondition">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/message_model_test.cpp:GetCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/message_model_test.cpp:GetNegativeId">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/message_model_test.cpp:MessageModelTest">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/message_model_test.cpp:SaveCommonParams">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/message_model_test.cpp:SaveEmptyParams">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/message_model_test.cpp:SelectWithCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/message_model_test.cpp:SelectWithEmptyCondition">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/message_model_test.cpp:SelectWithIncorrectCondition">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/playlist_model_test.cpp:AlterCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/playlist_model_test.cpp:AlterNegativeId">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/playlist_model_test.cpp:DeleteCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/playlist_model_test.cpp:DeleteNegativeId">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/playlist_model_test.cpp:DeleteWithCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/playlist_model_test.cpp:DeleteWithEmptyCondition">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/playlist_model_test.cpp:DeleteWithIncorrectCondition">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/playlist_model_test.cpp:GetCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/playlist_model_test.cpp:GetNegativeId">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/playlist_model_test.cpp:PlaylistModelTest">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/playlist_model_test.cpp:SaveCommonParams">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/playlist_model_test.cpp:SaveEmptyParams">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/playlist_model_test.cpp:SelectWithCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/playlist_model_test.cpp:SelectWithEmptyCondition">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/playlist_model_test.cpp:SelectWithIncorrectCondition">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/profile_reference_model_test.cpp:AlterCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/profile_reference_model_test.cpp:AlterNegativeId">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/profile_reference_model_test.cpp:DeleteCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/profile_reference_model_test.cpp:DeleteNegativeId">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/profile_reference_model_test.cpp:DeleteWithCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/profile_reference_model_test.cpp:DeleteWithEmptyCondition">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/profile_reference_model_test.cpp:DeleteWithIncorrectCondition">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/profile_reference_model_test.cpp:GetCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/profile_reference_model_test.cpp:GetNegativeId">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/profile_reference_model_test.cpp:ProfileReferenceModelTest">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/profile_reference_model_test.cpp:SaveCommonParams">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/profile_reference_model_test.cpp:SaveEmptyParams">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/profile_reference_model_test.cpp:SelectWithCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/profile_reference_model_test.cpp:SelectWithEmptyCondition">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/profile_reference_model_test.cpp:SelectWithIncorrectCondition">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/user_model_test.cpp:AlterCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/user_model_test.cpp:AlterNegativeId">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/user_model_test.cpp:DeleteCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/user_model_test.cpp:DeleteNegativeId">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/user_model_test.cpp:DeleteWithCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/user_model_test.cpp:DeleteWithEmptyCondition">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/user_model_test.cpp:DeleteWithIncorrectCondition">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/user_model_test.cpp:GetCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/user_model_test.cpp:GetNegativeId">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/user_model_test.cpp:SaveCommonParams">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/user_model_test.cpp:SaveEmptyParams">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/user_model_test.cpp:SelectWithCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/user_model_test.cpp:SelectWithEmptyCondition">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/user_model_test.cpp:SelectWithIncorrectCondition">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/user_model_test.cpp:UserModelTest">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/video_model_test.cpp:AlterCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/video_model_test.cpp:AlterNegativeId">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/video_model_test.cpp:DeleteCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/video_model_test.cpp:DeleteNegativeId">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/video_model_test.cpp:DeleteWithCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/video_model_test.cpp:DeleteWithEmptyCondition">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/video_model_test.cpp:DeleteWithIncorrectCondition">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/video_model_test.cpp:GetCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/video_model_test.cpp:GetNegativeId">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/video_model_test.cpp:SaveCommonParams">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/video_model_test.cpp:SaveEmptyParams">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/video_model_test.cpp:SelectWithCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/video_model_test.cpp:SelectWithEmptyCondition">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/video_model_test.cpp:SelectWithIncorrectCondition">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/orm/video_model_test.cpp:VideoModelTest">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/request_handler_test.cpp:CommonRequest">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/request_handler_test.cpp:InvalidJsonBody">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/request_handler_test.cpp:PostEmptyBody">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/request_handler_test.cpp:RequestHandlerTest">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/router_test.cpp:RouteWithCommonParams">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/router_test.cpp:RouteWithImproperPath">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/router_test.cpp:RouteWithInvalidParams">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/router_test.cpp:RouteWithNoParams">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/router_test.cpp:RouteWithNoPath">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/router_test.cpp:RouterTest">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/user_friend_route_test.cpp:DeleteCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/user_friend_route_test.cpp:DeleteNegativeId">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/user_friend_route_test.cpp:GetCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/user_friend_route_test.cpp:GetNegativeId">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/user_friend_route_test.cpp:PostCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/user_friend_route_test.cpp:PostEmptyJson">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/user_friend_route_test.cpp:PostIncorrectValueType">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/user_friend_route_test.cpp:UserFriendRouteTest">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/user_route_test.cpp:DeleteCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/user_route_test.cpp:DeleteNegativeId">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/user_route_test.cpp:GetCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/user_route_test.cpp:GetNegativeId">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/user_route_test.cpp:PostCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/user_route_test.cpp:PostEmptyJson">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/user_route_test.cpp:PostIncorrectValueType">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/user_route_test.cpp:UserRouteTest">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/video_list_route.cpp:DeleteCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/video_list_route.cpp:DeleteNegativeId">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/video_list_route.cpp:GetCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/video_list_route.cpp:GetNegativeId">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/video_list_route.cpp:PostCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/video_list_route.cpp:PostEmptyJson">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/video_list_route.cpp:PostIncorrectValueType">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/video_list_route.cpp:VideoListRouteTest">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/video_route_test.cpp:DeleteCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/video_route_test.cpp:DeleteNegativeId">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/video_route_test.cpp:GetCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/video_route_test.cpp:GetNegativeId">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/video_route_test.cpp:PostCommon">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/video_route_test.cpp:PostEmptyJson">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/video_route_test.cpp:PostIncorrectValueType">Checked</value>
+    <value type="Qt::CheckState" key="1@/home/nik/pr/2023_1_Holi/server/tests/request_handling/video_route_test.cpp:VideoRouteTest">Checked</value>
+   </valuemap>
    <value type="int" key="AutoTest.RunAfterBuild">0</value>
    <value type="bool" key="AutoTest.UseGlobal">true</value>
    <valuelist type="QVariantList" key="ClangCodeModel.CustomCommandLineKey"/>
@@ -163,12 +311,15 @@
     <valuelist type="QVariantList" key="CustomOutputParsers"/>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">ProjectExplorer.CustomExecutableRunConfiguration</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey"></value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">client</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.CMakeRunConfiguration.client</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">client</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
+    <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">/home/nik/pr/build-2023_1_Holi-Desktop-Debug/client</value>
    </valuemap>
    <value type="int" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
   </valuemap>
