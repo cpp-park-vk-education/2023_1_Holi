@@ -20,7 +20,7 @@ int MakeHttpsRequest() {
 
         tcp::resolver resolver(ioc);
         beast::ssl_stream<beast::tcp_stream> stream(ioc, ctx);
-        std::make_shared<ClientHttps>(ioc, ctx)->Run(host, port, target);
+        //std::make_shared<ClientHttps>(ioc, ctx)->Run(host, port, target);
     }
     catch (std::exception const &e) {
         std::cerr << "Error: " << e.what() << std::endl;

@@ -14,6 +14,9 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 
+#include "api_client/Base/client.hpp"
+#include <memory>
+
 #include <QtNetwork/QNetworkReply>
 #include <QtNetworkAuth/QAbstractOAuthReplyHandler>
 #include <QtNetworkAuth/QOAuth2AuthorizationCodeFlow>
@@ -71,6 +74,7 @@ private slots:
 
 private:
   Ui::MainWindow *ui;
+  std::unique_ptr<APIClient> api_client;
 };
 
 #endif // MAINWINDOW_H

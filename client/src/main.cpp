@@ -9,8 +9,8 @@
 #include "registrationmanager.h"
 #include <QApplication>
 
-#include "client/request_maker_tmp.h"
-#include "client/https_request_maker_tmp.h"
+//#include "client/request_maker_tmp.h"
+//#include "client/https_request_maker_tmp.h"
 
 
 int main(int argc, char *argv[]) {

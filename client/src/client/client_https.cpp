@@ -9,18 +9,28 @@ void ClientHttps::Run(
         const std::string &port,
         const std::string &target
 ) {
+    std::cout << host << " " << port << " " << target << std::endl;
+
     if (!SSL_set_tlsext_host_name(stream_.native_handle(), host.c_str())) {
         beast::error_code ec{static_cast<int>(::ERR_get_error()), net::error::get_ssl_category()};
         throw beast::system_error{ec};
-    }
+    }   
+
+    std::cout << "1" << std::endl;
 
     auto const results = resolver_.resolve(host, port);
 
+    std::cout << "2" << std::endl;
+
     beast::get_lowest_layer(stream_).expires_after(std::chrono::seconds(30));
 
-    beast::get_lowest_layer(stream_).connect(results);
-    stream_.handshake(ssl::stream_base::client);
+    std::cout << "3" << std::endl;
 
+    beast::get_lowest_layer(stream_).connect(results);
+    std::cout << "4" << std::endl;
+    stream_.handshake(ssl::stream_base::client);
+    std::cout << "5" << std::endl;
+    
     Write();
 }
 

@@ -11,7 +11,7 @@ int MakeRequest() {
         auto const port = "8080";
         auto const target = "/user?user_id=3";
         net::io_context ioc;
-        std::make_shared<ClientHttp>(ioc)->Run(host, port, target);
+        //std::make_unique<ClientHttp>(ioc)->Run(host, port, target);
     }
     catch (std::exception const &e) {
         std::cerr << "Error: " << e.what() << std::endl;

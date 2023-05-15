@@ -13,12 +13,12 @@ void RequestMaker::Get()
     tcp::resolver resolver(ioc);
     beast::ssl_stream<beast::tcp_stream> stream(ioc, ctx);
 
-    client_ = std::make_unique<ClientHttps>(ioc, ctx);
-
-    http::request<http::string_body> request{http::verb::get, path, 11};
+    http::request<http::string_body> request{http::verb::get, target_, 11};
     request.set(http::field::host, host_);
     request.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
-    std::thread thr(&RequestMaker::CallBack, this, request);
+
+    client_ = std::make_unique<ClientHttps>(ioc, ctx, request);
+    std::thread thr(&RequestMaker::CallBack, this);
 }
 
 
@@ -31,14 +31,15 @@ void RequestMaker::Post(json::value body)
     ctx.set_verify_mode(ssl::verify_peer);
     tcp::resolver resolver(ioc);
     beast::ssl_stream<beast::tcp_stream> stream(ioc, ctx);
-    client_ = std::make_unique<ClientHttps>(ioc, ctx);
     http::request<http::string_body> request{http::verb::post, path, 11};
     request.set(http::field::host, host_);
     request.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
     request.set(http::field::content_type, "application/json");
     request.body() = json::serialize(body);
     request.prepare_payload();
-    std::thread thr(&RequestMaker::CallBack, this, request);
+
+    client_ = std::make_unique<ClientHttps>(ioc, ctx, request);
+    std::thread thr(&RequestMaker::CallBack, this);
 }
 
 void RequestMaker::Delete()
@@ -50,16 +51,20 @@ void RequestMaker::Delete()
     ctx.set_verify_mode(ssl::verify_peer);
     tcp::resolver resolver(ioc);
     beast::ssl_stream<beast::tcp_stream> stream(ioc, ctx);
-    client_ = std::make_unique<ClientHttps>(ioc, ctx);
     http::request<http::string_body> request{http::verb::delete_, path, 11};
     request.set(http::field::host, host_);
     request.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
-    std::thread thr(&RequestMaker::CallBack, this, request);
+
+    client_ = std::make_unique<ClientHttps>(ioc, ctx, request);
+    std::thread thr(&RequestMaker::CallBack, this);
 }
 
-void RequestMaker::CallBack(http::request<http::string_body> request)
+void RequestMaker::CallBack()
 {
+    std::cout << "TEST THREAD" << std::endl;
     client_->Run(host_, port_, target_);
+    std::cout << "TEST RUN" << std::endl;
     auto message = client_->GetResponse();
+    std::cout << message << std::endl;
     response_->get_response(message);
 }

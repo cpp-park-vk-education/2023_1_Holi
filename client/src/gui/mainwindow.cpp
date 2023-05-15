@@ -119,8 +119,8 @@ void MainWindow::on_AlbomsButton_clicked() {
 
 void MainWindow::on_VK_getAllAlboms_clicked() {
     std::string token = accessTokenVK.toStdString();
-    VKClient vk(token, 478111331);
-    vk.GetPlaylists();
+    api_client = std::make_unique<VKClient>(token, 478111331);
+    api_client->GetPlaylists();
 }
 
 
