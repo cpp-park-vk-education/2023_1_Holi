@@ -119,7 +119,7 @@ void MainWindow::on_AlbomsButton_clicked() {
 
 void MainWindow::on_VK_getAllAlboms_clicked() {
     std::string token = accessTokenVK.toStdString();
-    VKClient(token, 478111331);
+    VKClient vk(token, 478111331);
 }
 
 
