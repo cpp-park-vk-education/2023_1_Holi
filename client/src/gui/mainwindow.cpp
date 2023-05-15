@@ -1,7 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "oauthprovider.h"
-#include "message_info.h"
+#include "client/message_info.h"
+
 //#include <boost/json/src.hpp>
 /*VK Settings Auth*/
 const QUrl authUrlVK{"https://oauth.vk.com/authorize"};
@@ -53,33 +54,7 @@ void MainWindow::OAuthVK(
 void MainWindow::OAuthYT(
     const std::function<void(QOAuth2AuthorizationCodeFlow *)> &onSuccess) {
 
-   /* auto google = new QOAuth2AuthorizationCodeFlow(this);
-    google = new QOAuth2AuthorizationCodeFlow(this);
-           google->setScope("email");
 
-            connect(google, &QOAuth2AuthorizationCodeFlow::authorizeWithBrowser, &QDesktopServices::openUrl);
-
-            google->setAuthorizationUrl(QUrl("https://accounts.google.com/o/oauth2/auth"));
-            google->setClientIdentifier(clientIdYT);
-            google->setAccessTokenUrl(QUrl("https://oauth2.googleapis.com/token"));
-            google->setClientIdentifierSharedKey(clientSecretYT);
-
-    // In my case, I have hardcoded 8080 to test
-            auto replyHandler = new QOAuthHttpServerReplyHandler(8080, this);
-            google->setReplyHandler(replyHandler);
-            google->grant();
-
-            qDebug() << "Access";
-
-            connect(google, &QOAuth2AuthorizationCodeFlow::granted, [=](){
-                qDebug() << __FUNCTION__ << __LINE__ << "Access Granted!";
-
-                auto reply = google->get(QUrl("https://www.googleapis.com/plus/v1/people/me"));
-                connect(reply, &QNetworkReply::finished, [reply](){
-                    qDebug() << "REQUEST FINISHED. Error? " << (reply->error() != QNetworkReply::NoError);
-                    qDebug() << reply->readAll();
-                });
-            });*/
 
     GoogleAuth googleAuth;
 
@@ -147,18 +122,20 @@ void MainWindow::on_VK_getAllAlboms_clicked() {
 }
 
 
-///*колбэки для вк*/
-//void MP_VK_getAlbums(MessageInfo* info){
+//*колбэки для вк*//
+void MP_VK_getAlbums(MessageInfo* info){
+    //info содержит статус и json
 
-//}
-//void MP_VK_getVideo(MessageInfo* info){
+}
+void MP_VK_getVideo(MessageInfo* info){
 
-//}
+}
 
-///*Колбеки для ютуба*/
-//void MP_YT_getAlbums(MessageInfo* info){
+//*Колбеки для ютуба*//
+void MP_YT_getAlbums(MessageInfo* info){
 
-//}
-//void MP_YT_getVideo(MessageInfo* info){
+}
 
-//}
+void MP_YT_getVideo(MessageInfo* info){
+
+}

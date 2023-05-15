@@ -7,7 +7,7 @@
 
 
 
-json::value Authorizer::Authorise() {
+json::value Authorizer::Authorize() {
 
     //Нужно получить запрос с клиента с логином и паролем
     //Не важно в каком они виде, хэш или нет

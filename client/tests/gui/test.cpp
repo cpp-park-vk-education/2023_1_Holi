@@ -230,7 +230,7 @@ TEST(RegistrationManager, saveUserToDatabase) {
   stubRegistrationManager sRG;
   EXPECT_EQ(sRG.saveUserToDatabase(user), true);
 }
-/*int main(int argc, char **argv) {
+int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }*/
