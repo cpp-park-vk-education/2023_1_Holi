@@ -12,10 +12,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
-<<<<<<< HEAD
-=======
-
->>>>>>> ce181516b800dd0c9ceb198968948dba5033a715
 find_package(OpenSSL REQUIRED)
 find_package(Qt6 COMPONENTS Network REQUIRED)
 find_package(Qt6 COMPONENTS NetworkAuth REQUIRED)
@@ -52,10 +48,7 @@ ${PROJECT_SOURCES})
 endif ()
 endif ()
 
-<<<<<<< HEAD
-=======
 
->>>>>>> ce181516b800dd0c9ceb198968948dba5033a715
 target_link_libraries(client PRIVATE Qt${QT_VERSION_MAJOR}::Widgets OpenSSL::SSL)
 target_link_libraries(client PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(client PRIVATE Qt6::Network)
