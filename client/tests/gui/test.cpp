@@ -13,7 +13,7 @@
 #include "registrationmanager.h"
 #include "user.h"
 
-// OAuthProvider
+/*// OAuthProvider
 class MockOAuthProvider : public OAuthProvider {
 public:
   QString getAccessToken() { return "token"; }

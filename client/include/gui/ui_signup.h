@@ -145,6 +145,7 @@ public:
         password_input->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:1 rgba(0, 0, 0, 0));\n"
 "border: 0.5px solid #000000;\n"
 "border-radius: 10px;"));
+        password_input->setEchoMode(QLineEdit::Password);
         label_create = new QLabel(SignUp);
         label_create->setObjectName(QString::fromUtf8("label_create"));
         label_create->setGeometry(QRect(30, 108, 354, 51));

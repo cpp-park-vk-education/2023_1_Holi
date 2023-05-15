@@ -1,7 +1,7 @@
 
 #ifndef AUTHENTICATIONMANAGER_H
 #define AUTHENTICATIONMANAGER_H
-
+#include <QCryptographicHash>
 #include <QString>
 
 
