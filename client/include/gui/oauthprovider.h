@@ -7,23 +7,27 @@
 #include <QJsonDocument>
 #include <QtNetworkAuth/QOAuth2AuthorizationCodeFlow>
 #include <QtNetworkAuth/QOAuthHttpServerReplyHandler>
-//#include <QOAuth2AuthorizationCodeFlow>
-//#include <QOAuthHttpServerReplyHandler>
-
 #include <QObject>
-#include <QUrl>
 
-class OAuthProvider : public QObject {
+#include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QNetworkReply>
+#include <QtNetwork/QNetworkReply>
+#include <QUrl>
+#include <QUrlQuery>
+
+#include <QDesktopServices>
+
+
+class GoogleAuth : public QObject {
   Q_OBJECT
 public:
-  explicit OAuthProvider(QObject *parent = nullptr);
-  QString getAccessToken(const QString &); //получить токен доступа
-  QVector<QString> getUserProfile(int id, const QString &); //получить данные
-  QString getAuthorizationUrl(const QString &);
+  explicit GoogleAuth(QObject *parent = nullptr);
+  Q_INVOKABLE void click();
+
 
 private:
-  QString oAuthVK_getToken();
-  QString token_;
+  QOAuth2AuthorizationCodeFlow * google;
+
 };
 
 #endif // OAUTHPROVIDER_H

@@ -1,15 +1,22 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QJsonObject>
-#include <QString>
-#include <QUrlQuery>
+#include "oauthprovider.h"
+#include "message_info.h"
+//#include <boost/json/src.hpp>
 /*VK Settings Auth*/
-const QUrl authUrl{"https://oauth.vk.com/authorize"};
-const QUrl tokenUrl{"https://oauth.vk.com/access_token"};
-const QString clientSecret{"d4rZuR8zHiYHgntXC1kp"};
-const QString clientId{"51400815"};
-const QString scopeMask = "video"; // https://dev.vk.com/reference/access-rights
+const QUrl authUrlVK{"https://oauth.vk.com/authorize"};
+const QUrl tokenUrlVK{"https://oauth.vk.com/access_token"};
+const QString clientSecretVK{"d4rZuR8zHiYHgntXC1kp"};
+const QString clientIdVK{"51400815"};
+const QString scopeMaskVK = "video"; // https://dev.vk.com/reference/access-rights
 
+
+/*YT Settings Auth*/
+const QUrl authUrlYT{"https://accounts.google.com/o/oauth2/auth"};
+const QUrl tokenUrlYT{"https://oauth2.googleapis.com/token"};
+const QString clientSecretYT{"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"};
+const QString clientIdYT{"869025620327-u6eu9r31nr3p7qdaiqvkgd9g53vtah6q.apps.googleusercontent.com"};
+const QString scopeMaskYT = "video"; // https://dev.vk.com/reference/access-rights
 /* VK API Settings*/
 
 QUrl albumsUrl("https://api.vk.com/method/video.getAlbums");
@@ -28,40 +35,60 @@ void MainWindow::OAuthVK(
   auto replyHandler = new QOAuthHttpServerReplyHandler(6543, this);
 
   oauth->setReplyHandler(replyHandler);
-  oauth->setAccessTokenUrl(tokenUrl);
-  oauth->setAuthorizationUrl(authUrl);
-  oauth->setClientIdentifier(clientId);
-  oauth->setClientIdentifierSharedKey(clientSecret);
-  oauth->setScope((scopeMask));
+  oauth->setAccessTokenUrl(tokenUrlVK);
+  oauth->setAuthorizationUrl(authUrlVK);
+  oauth->setClientIdentifier(clientIdVK);
+  oauth->setClientIdentifierSharedKey(clientSecretVK);
+  oauth->setScope((scopeMaskVK));
   QObject::connect(oauth, &QOAuth2AuthorizationCodeFlow::authorizeWithBrowser,
                    &QDesktopServices::openUrl);
 
   QObject::connect(oauth, &QOAuth2AuthorizationCodeFlow::granted,
                    [oauth, onSuccess, this]() { onSuccess(oauth); });
-
-  QObject::connect(oauth, &QOAuth2AuthorizationCodeFlow::granted, [oauth]() {
-    const QUrl getFriends{"https://api.vk.com/method/friends.get"};
-
-    // Vk требует указывать версию API в параметрах запроса. Укажем 5.131
-    auto network_reply = oauth->post(getFriends, {{"v", 5.131}});
-    QObject::connect(network_reply, &QNetworkReply::finished, [network_reply] {
-      //Ответ будет удалён позже, когда отработают все связанные
-      //с ним сигнально-слотовые соединения,
-      //поэтому такое удаление безопасно
-      network_reply->deleteLater();
-
-      QJsonDocument response =
-          QJsonDocument::fromJson(network_reply->readAll());
-      qDebug() << "All friends ids:";
-      for (const auto &user_id : response["response"]["items"].toArray())
-        qDebug() << '\t' << user_id.toInteger();
-    });
-  });
   oauth->grant();
 }
 
+
+//Метод авторизации в YT
+void MainWindow::OAuthYT(
+    const std::function<void(QOAuth2AuthorizationCodeFlow *)> &onSuccess) {
+
+   /* auto google = new QOAuth2AuthorizationCodeFlow(this);
+    google = new QOAuth2AuthorizationCodeFlow(this);
+           google->setScope("email");
+
+            connect(google, &QOAuth2AuthorizationCodeFlow::authorizeWithBrowser, &QDesktopServices::openUrl);
+
+            google->setAuthorizationUrl(QUrl("https://accounts.google.com/o/oauth2/auth"));
+            google->setClientIdentifier(clientIdYT);
+            google->setAccessTokenUrl(QUrl("https://oauth2.googleapis.com/token"));
+            google->setClientIdentifierSharedKey(clientSecretYT);
+
+    // In my case, I have hardcoded 8080 to test
+            auto replyHandler = new QOAuthHttpServerReplyHandler(8080, this);
+            google->setReplyHandler(replyHandler);
+            google->grant();
+
+            qDebug() << "Access";
+
+            connect(google, &QOAuth2AuthorizationCodeFlow::granted, [=](){
+                qDebug() << __FUNCTION__ << __LINE__ << "Access Granted!";
+
+                auto reply = google->get(QUrl("https://www.googleapis.com/plus/v1/people/me"));
+                connect(reply, &QNetworkReply::finished, [reply](){
+                    qDebug() << "REQUEST FINISHED. Error? " << (reply->error() != QNetworkReply::NoError);
+                    qDebug() << reply->readAll();
+                });
+            });*/
+
+    GoogleAuth googleAuth;
+
+}
+
 QString accessTokenVK;
+QString accessTokenYT;
 QOAuth2AuthorizationCodeFlow *oauthVK;
+
 MainWindow::~MainWindow() { delete ui; }
 
 /*БОКОВОЕ МЕНЮ*/
@@ -72,6 +99,7 @@ void MainWindow::on_main_button_clicked() {
 void MainWindow::on_VK_button_clicked() {
   OAuthVK([this](QOAuth2AuthorizationCodeFlow *oauth) {
     qDebug() << oauth->token();
+
     oauthVK = oauth;
     accessTokenVK = oauth->token();
     ui->VK_button->setEnabled(false);
@@ -79,7 +107,20 @@ void MainWindow::on_VK_button_clicked() {
   });
 }
 
-void MainWindow::on_YT_Button_clicked() {}
+void MainWindow::on_YT_Button_clicked() {
+    boost::json::value j = boost::json::parse(R"(
+    {
+        "name": "Name",
+        "image": "image"
+    }
+    )");
+
+    boost::json::object obj = j.as_object();
+
+    qDebug() << obj["name"].as_string().c_str();
+
+    ui->VK_main_list_item->addItem(obj["name"].as_string().c_str());
+}
 
 void MainWindow::on_Config_button_clicked() {
   ui->stackedWidget->setCurrentIndex(1);
@@ -102,43 +143,22 @@ void MainWindow::on_AlbomsButton_clicked() {
 }
 
 void MainWindow::on_VK_getAllAlboms_clicked() {
-  // создаем QNetworkAccessManager
-  QNetworkAccessManager manager;
 
-  // создаем объект запроса
-  QNetworkRequest request;
-  request.setUrl(
-      QUrl("https://api.vk.com/method/video.getAlbums")); // замените на
-                                                          // соответствующий
-                                                          // URL-адрес
-  request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-
-  // создаем JSON-объект с данными для запроса
-  QJsonObject json;
-  json.insert("access_token", accessTokenVK);
-
-  QJsonDocument jsonDoc(json);
-  QByteArray jsonData = jsonDoc.toJson();
-
-  // отправляем POST-запрос
-  QNetworkReply *reply = manager.post(request, jsonData);
-
-  // ждем ответа от сервера
-  while (!reply->isFinished()) {
-    qDebug() << 1;
-    QCoreApplication::processEvents();
-  }
-
-  // получаем ответ
-  QByteArray response = reply->readAll();
-
-  // обрабатываем ответ (в данном случае это JSON-объект)
-  QJsonDocument responseDoc = QJsonDocument::fromJson(response);
-  QJsonObject responseObject = responseDoc.object();
-
-  // выводим данные на консоль
-  qDebug() << responseObject["resronse"].toString();
-
-  // очищаем память
-  reply->deleteLater();
 }
+
+
+///*колбэки для вк*/
+//void MP_VK_getAlbums(MessageInfo* info){
+
+//}
+//void MP_VK_getVideo(MessageInfo* info){
+
+//}
+
+///*Колбеки для ютуба*/
+//void MP_YT_getAlbums(MessageInfo* info){
+
+//}
+//void MP_YT_getVideo(MessageInfo* info){
+
+//}

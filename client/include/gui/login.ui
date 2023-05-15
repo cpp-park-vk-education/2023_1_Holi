@@ -92,6 +92,9 @@ color: rgb(29, 35, 77);</string>
 border: 0.5px solid #000000;
 border-radius: 10px;</string>
    </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
+   </property>
   </widget>
   <widget class="QLabel" name="login_label">
    <property name="geometry">
@@ -174,6 +177,7 @@ QPushButton:hover {
     <font>
      <family>Play</family>
      <pointsize>90</pointsize>
+     <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>

@@ -21,6 +21,8 @@
 #include <QUrl>
 #include <QWidget>
 
+
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -36,8 +38,19 @@ public:
   MainWindow(QWidget *parent = nullptr);
   ~MainWindow();
 
-  void
-  OAuthVK(const std::function<void(QOAuth2AuthorizationCodeFlow *)> &onSuccess);
+  void OAuthVK(const std::function<void(QOAuth2AuthorizationCodeFlow *)> &onSuccess);
+
+  void OAuthYT(const std::function<void(QOAuth2AuthorizationCodeFlow *)> &onSuccess);
+    /*Callback Methods*/
+
+  /*mainpage*/
+  /*колбэки для вк*/
+  //void MP_VK_getAlbums(MessageInfo* info);
+  //void MP_VK_getVideo(MessageInfo* info);
+
+  /*Колбеки для ютуба*/
+  //void MP_YT_getAlbums(MessageInfo* info);
+  //void MP_YT_getVideo(MessageInfo* info);
 
 private slots:
   void on_main_button_clicked();

@@ -78,6 +78,7 @@ public:
         password_input->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:1 rgba(0, 0, 0, 0));\n"
 "border: 0.5px solid #000000;\n"
 "border-radius: 10px;"));
+        password_input->setEchoMode(QLineEdit::Password);
         login_label = new QLabel(Login);
         login_label->setObjectName(QString::fromUtf8("login_label"));
         login_label->setGeometry(QRect(30, 390, 47, 17));
@@ -113,6 +114,7 @@ public:
         font2.setFamily(QString::fromUtf8("Play"));
         font2.setPointSize(90);
         font2.setBold(true);
+        //font2.setWeight(75);
         label->setFont(font2);
         label->setStyleSheet(QString::fromUtf8("color: rgb(72, 49, 157);\n"
 "background-color: qlineargradient(0);"));

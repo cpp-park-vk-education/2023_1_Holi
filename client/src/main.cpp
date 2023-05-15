@@ -1,6 +1,10 @@
 //
 // Created by Алексей on 01.05.2023.
 //
+
+
+
+
 #include "mainwindow.h"
 #include "registrationmanager.h"
 #include <QApplication>
@@ -19,6 +23,8 @@ int main(int argc, char *argv[]) {
     qDebug() << "NO"
              << "\n";
   }
+
+
 
   QString pas1 = "et45hjdtj@$grsgFFF!";
   QString pas2 = "1234";
@@ -53,3 +59,6 @@ int main(int argc, char *argv[]) {
   w.show();
   return a.exec();
 }
+
+
+
