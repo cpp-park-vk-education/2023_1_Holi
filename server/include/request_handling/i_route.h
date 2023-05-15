@@ -5,6 +5,7 @@
 #pragma once
 
 #include <memory>
+#include <exception>
 
 #include "db_tmp/db_connector.h"
 #include "orm/i_db_model.h"
