@@ -81,7 +81,7 @@ MessageInfo Router::Route(const ParsedRequest &request) {
 
 
     parameter = request.parameters_.find("resource_id");
-    if (parameter == request.parameters_.end() && !route) {
+    if (parameter == request.parameters_.end() && !route && request.method_ != http::verb::post) {
         std::cerr << "Error: improper url parameters" << std::endl;
         return {{}, http::status::bad_request};
     }
@@ -114,14 +114,14 @@ MessageInfo Router::Route(const ParsedRequest &request) {
         return {{}, http::status::not_found};
     }
 
+    // todo json check
 
     switch (request_.method_) {
         case (http::verb::get): {
             return route->Get(resource_id);
         }
         case (http::verb::post): {
-
-            break;
+            return route->Post(request.body_);
         }
         case (http::verb::delete_): {
 
