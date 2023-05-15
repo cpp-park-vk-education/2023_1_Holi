@@ -4,7 +4,7 @@
 #include <string>
 #include <map>
 
-#include "message_info.h"
+#include "client/message_info.h"
 
 class Response{
 protected:
