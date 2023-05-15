@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <algorithm>
+
 #include "request_handling/i_route.h"
 
 

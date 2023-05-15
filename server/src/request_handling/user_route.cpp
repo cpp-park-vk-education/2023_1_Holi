@@ -7,6 +7,7 @@
 
 MessageInfo UserRoute::Get(int id) {
     if (id <= 0) {
+        std::cerr << "Negative id" << std::endl;
         return {{}, http::status::not_found};
     }
 
