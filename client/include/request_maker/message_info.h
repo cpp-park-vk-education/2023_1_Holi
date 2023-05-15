@@ -13,7 +13,7 @@
 
 namespace json = boost::json;
 namespace pt = boost::property_tree;
-
+namespace http = boost::beast::http;
 
 struct MessageInfo {
     json::value body_;

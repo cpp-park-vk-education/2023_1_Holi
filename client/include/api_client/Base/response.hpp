@@ -3,28 +3,17 @@
 #include <vector>
 #include <string>
 
+#include "message_info.h"
+
 //todo: string поменять на Json::value
 class Response{
 private:
-    bool success_;
-    int error_code_;
-    std::string result_;
+    MessageInfo result_;
 public:
     Response(){}
-
-    Response(bool success, int error_code):
-        success_(success), error_code_(error_code) {}
-
     virtual ~Response(){}
 
-    bool isSuccess() { return success_; }
-    int getErrorCode() { return error_code_; }
-
-    void get_response(int error_code, std::string result){
-        error_code_ = error_code;
-        result_ = result;
-        parse_result();
-    }
-
+    void get_response(MessageInfo result){ result_ = result; }  //Этот метод вызывается от RequestMaker'a
+    
     virtual void parse_result() = 0;
 };

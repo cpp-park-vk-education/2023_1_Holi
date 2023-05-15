@@ -2,9 +2,29 @@
 #include "vk_request.hpp"
 
 void VKClient::GetPlaylists(){
-    std::string method = "method";
-    std::map<std::string, std::string> params = {};
+    std::string method = "video.getAlbums";
+    std::map<std::string, std::string> params = 
+    {
+        {"owner_id", std::to_string(user_id_)},
+        {"extended", std::to_string(1)}
+    };
 
+    request_ptr_->setAccessToken(access_token_);
+    request_ptr_->setMethod(method);
+    request_ptr_->setParams(params);
+
+    request_ptr_->execute();
+}
+
+
+void VKClient::GetVideos(){
+    std::string method = "video.get";
+    std::map<std::string, std::string> params = 
+    {
+        {"owner_id", std::to_string(user_id_)},
+        {"extended", std::to_string(1)}
+    };
+    
     request_ptr_->setAccessToken(access_token_);
     request_ptr_->setMethod(method);
     request_ptr_->setParams(params);

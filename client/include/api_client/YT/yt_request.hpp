@@ -4,8 +4,7 @@
 
 class YTRequest: public Request{
 public:
-    YTRequest(std::unique_ptr<Response> response_ptr):
-        Request(std::move(response_ptr)) {}
+    YTRequest(){}
 
     void execute() override;
 };

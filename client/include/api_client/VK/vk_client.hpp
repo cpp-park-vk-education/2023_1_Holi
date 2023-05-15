@@ -4,8 +4,9 @@
 
 class VKClient: public APIClient{
 public:
-    VKClient(std::string& access_token, int user_id, std::unique_ptr<Request> request_ptr): 
-        APIClient(access_token, user_id, std::move(request_ptr)) {}
+    VKClient(std::string& access_token, int user_id): 
+        APIClient(access_token, user_id) {}
 
     void GetPlaylists() override;
+    void GetVideos() override;
 };

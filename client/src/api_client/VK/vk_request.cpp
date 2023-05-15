@@ -3,19 +3,13 @@
 
 void VKRequest::execute(){
 
-    std::string url = "https://api.vk.com/method/" + method_ + "?access_token=" + access_token_;
+    std::string url = "https://api.vk.com/method" + method_ + "?";
+    std::string params;
 
     for (auto& param : params_) {
-        url += "&" + param.first + "=" + param.second;
+        params += param.first + "=" + param.second + "&";
     }
+    params += "access_token=" + access_token_ + "&v=5.131";
 
-    //Создаем путой объект ответа
-    //auto vk_resp = std::make_shared<VKResponse>(true, 0); //Заглушка
-
-    //Запрос к IRequestMaker
-    //RequestMaker request(vk_resp) // в конструкторе передаем shared_ptr 
-    //на response, метод которого он будет вызывать, чтобы вернуть ответ
-
-    //RequestMAker::get(url);  вызывает метод RequestMaker'a
-    //передаем ему готовую ссылку, по которой он будет делать запрос к АПИ
+    request_maker_ptr.GET(response_ptr_, url, params);
 }

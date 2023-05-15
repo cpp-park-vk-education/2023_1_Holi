@@ -11,3 +11,8 @@ void YTClient::GetPlaylists(){
 
     request_ptr_->execute();
 }
+
+
+void YTClient::GetVideos(){
+    
+}
