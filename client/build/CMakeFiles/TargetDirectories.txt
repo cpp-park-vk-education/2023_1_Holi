@@ -1,8 +1,0 @@
-/Users/shelby/Documents/VK/C++/project/2023_1_Holi/client/build/CMakeFiles/client.dir
-/Users/shelby/Documents/VK/C++/project/2023_1_Holi/client/build/CMakeFiles/edit_cache.dir
-/Users/shelby/Documents/VK/C++/project/2023_1_Holi/client/build/CMakeFiles/rebuild_cache.dir
-/Users/shelby/Documents/VK/C++/project/2023_1_Holi/client/build/CMakeFiles/list_install_components.dir
-/Users/shelby/Documents/VK/C++/project/2023_1_Holi/client/build/CMakeFiles/install.dir
-/Users/shelby/Documents/VK/C++/project/2023_1_Holi/client/build/CMakeFiles/install/local.dir
-/Users/shelby/Documents/VK/C++/project/2023_1_Holi/client/build/CMakeFiles/install/strip.dir
-/Users/shelby/Documents/VK/C++/project/2023_1_Holi/client/build/CMakeFiles/client_autogen.dir
