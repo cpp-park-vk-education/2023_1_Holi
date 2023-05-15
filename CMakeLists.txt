@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 20)
 find_package(Boost 1.81.0 COMPONENTS system filesystem url REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
 
-option(BUILD_FOR_TEST "build for test" ON)
+option(BUILD_FOR_TEST "build for test" OFF)
 
 if (BUILD_FOR_TEST)
 enable_testing()
