@@ -7,16 +7,20 @@ namespace Ui {
 class Login;
 }
 
-class Login : public QDialog
-{
-    Q_OBJECT
+class Login : public QDialog {
+  Q_OBJECT
 
 public:
-    explicit Login(QWidget *parent = nullptr);
-    ~Login();
+  explicit Login(QWidget *parent = nullptr);
+  ~Login();
+
+private slots:
+  void on_signin_button_clicked();
+
+  void on_login_button_clicked();
 
 private:
-    Ui::Login *ui;
+  Ui::Login *ui;
 };
 
 #endif // LOGIN_H
