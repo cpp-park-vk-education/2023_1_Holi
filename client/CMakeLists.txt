@@ -48,10 +48,6 @@ ${PROJECT_SOURCES})
 endif ()
 endif ()
 
-<<<<<<< HEAD
-=======
-
->>>>>>> ce181516b800dd0c9ceb198968948dba5033a715
 target_link_libraries(client PRIVATE Qt${QT_VERSION_MAJOR}::Widgets OpenSSL::SSL)
 target_link_libraries(client PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(client PRIVATE Qt6::Network)
