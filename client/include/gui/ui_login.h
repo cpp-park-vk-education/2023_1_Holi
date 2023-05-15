@@ -23,7 +23,6 @@ QT_BEGIN_NAMESPACE
 class Ui_Login
 {
 public:
-    QPushButton *foggot_password;
     QPushButton *signin_button;
     QLabel *password_label;
     QLineEdit *password_input;
@@ -42,29 +41,13 @@ public:
         Login->resize(414, 736);
         Login->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(167, 62, 231, 255), stop:1 rgba(0, 235, 255, 255));\n"
 ""));
-        foggot_password = new QPushButton(Login);
-        foggot_password->setObjectName(QString::fromUtf8("foggot_password"));
-        foggot_password->setGeometry(QRect(149, 665, 121, 15));
-        QFont font;
-        font.setFamily(QString::fromUtf8("Play"));
-        foggot_password->setFont(font);
-        foggot_password->setStyleSheet(QString::fromUtf8("QPushButton{\n"
-"background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:1 rgba(0, 0, 0, 0));\n"
-"border: none;\n"
-"color: rgb(29, 35, 77);\n"
-"}\n"
-"\n"
-"QPushButton:hover{\n"
-"border-bottom: 1px solid rgb(29, 35, 77);\n"
-"}\n"
-""));
         signin_button = new QPushButton(Login);
         signin_button->setObjectName(QString::fromUtf8("signin_button"));
         signin_button->setGeometry(QRect(30, 603, 348, 41));
-        QFont font1;
-        font1.setFamily(QString::fromUtf8("Play"));
-        font1.setPointSize(14);
-        signin_button->setFont(font1);
+        QFont font;
+        font.setFamily(QString::fromUtf8("Play"));
+        font.setPointSize(14);
+        signin_button->setFont(font);
         signin_button->setStyleSheet(QString::fromUtf8("QPushButton{\n"
 "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:1 rgba(0, 0, 0, 0));\n"
 "border: 1px solid #454B79;\n"
@@ -82,10 +65,10 @@ public:
         password_label = new QLabel(Login);
         password_label->setObjectName(QString::fromUtf8("password_label"));
         password_label->setGeometry(QRect(30, 456, 61, 17));
-        QFont font2;
-        font2.setFamily(QString::fromUtf8("Play"));
-        font2.setPointSize(12);
-        password_label->setFont(font2);
+        QFont font1;
+        font1.setFamily(QString::fromUtf8("Play"));
+        font1.setPointSize(12);
+        password_label->setFont(font1);
         password_label->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:1 rgba(0, 0, 0, 0));\n"
 "color: rgb(29, 35, 77);"));
         password_input = new QLineEdit(Login);
@@ -95,16 +78,17 @@ public:
         password_input->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:1 rgba(0, 0, 0, 0));\n"
 "border: 0.5px solid #000000;\n"
 "border-radius: 10px;"));
+        password_input->setEchoMode(QLineEdit::Password);
         login_label = new QLabel(Login);
         login_label->setObjectName(QString::fromUtf8("login_label"));
         login_label->setGeometry(QRect(30, 390, 47, 17));
-        login_label->setFont(font2);
+        login_label->setFont(font1);
         login_label->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:1 rgba(0, 0, 0, 0));\n"
 "color: rgb(29, 35, 77);"));
         login_button = new QPushButton(Login);
         login_button->setObjectName(QString::fromUtf8("login_button"));
         login_button->setGeometry(QRect(30, 542, 348, 41));
-        login_button->setFont(font1);
+        login_button->setFont(font);
         login_button->setCursor(QCursor(Qt::ArrowCursor));
         login_button->setTabletTracking(false);
         login_button->setFocusPolicy(Qt::StrongFocus);
@@ -126,11 +110,12 @@ public:
         label = new QLabel(Login);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(67, 70, 276, 97));
-        QFont font3;
-        font3.setFamily(QString::fromUtf8("Play"));
-        font3.setPointSize(90);
-        font3.setBold(true);
-        label->setFont(font3);
+        QFont font2;
+        font2.setFamily(QString::fromUtf8("Play"));
+        font2.setPointSize(90);
+        font2.setBold(true);
+        //font2.setWeight(75);
+        label->setFont(font2);
         label->setStyleSheet(QString::fromUtf8("color: rgb(72, 49, 157);\n"
 "background-color: qlineargradient(0);"));
         password_mask_button = new QPushButton(Login);
@@ -152,10 +137,10 @@ public:
         log_in_label_main = new QLabel(Login);
         log_in_label_main->setObjectName(QString::fromUtf8("log_in_label_main"));
         log_in_label_main->setGeometry(QRect(29, 338, 80, 32));
-        QFont font4;
-        font4.setFamily(QString::fromUtf8("Play"));
-        font4.setPointSize(21);
-        log_in_label_main->setFont(font4);
+        QFont font3;
+        font3.setFamily(QString::fromUtf8("Play"));
+        font3.setPointSize(21);
+        log_in_label_main->setFont(font3);
         log_in_label_main->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(0);\n"
 "color: rgb(29, 35, 77);"));
         line = new QFrame(Login);
@@ -182,7 +167,6 @@ public:
     void retranslateUi(QDialog *Login)
     {
         Login->setWindowTitle(QCoreApplication::translate("Login", "Dialog", nullptr));
-        foggot_password->setText(QCoreApplication::translate("Login", "\320\227\320\260\320\261\321\213\320\273\320\270 \320\277\320\260\321\200\320\276\320\273\321\214?", nullptr));
         signin_button->setText(QCoreApplication::translate("Login", "\320\241\320\276\320\267\320\264\320\260\321\202\321\214 \320\260\320\272\320\272\320\260\321\203\320\275\321\202", nullptr));
         password_label->setText(QCoreApplication::translate("Login", "\320\237\320\260\321\200\320\276\320\273\321\214", nullptr));
         login_label->setText(QCoreApplication::translate("Login", "\320\233\320\276\320\263\320\270\320\275", nullptr));

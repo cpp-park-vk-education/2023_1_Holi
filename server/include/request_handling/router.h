@@ -15,9 +15,16 @@
 #include "video_route.h"
 
 
+//enum ResultCode {
+//    bad_request,
+//    not_found,
+//    success
+//};
+
 class Router : public IRouter {
 private:
     std::unique_ptr<IRoute> route_;
+    ParsedRequest request_;
 
 public:
     Router() = default;
@@ -25,4 +32,7 @@ public:
     explicit Router(std::unique_ptr<IRoute> route) : route_(route.release()) {}
 
     MessageInfo Route(const ParsedRequest &request);
+
+//private:
+//    ResultCode GetParameter(std::string key, int &value);
 };

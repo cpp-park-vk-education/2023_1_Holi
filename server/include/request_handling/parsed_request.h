@@ -9,13 +9,15 @@
 #include "namespaces.h"
 
 struct ParsedRequest {
-    urls::params_encoded_view parameters_;
+    url::params_view parameters_;
     std::string path_;
     http::verb method_;
     json::value body_;
 
+    ParsedRequest() = default;
+
     ParsedRequest(
-            const boost::urls::params_encoded_view &parameters,
+            const url::params_view &parameters,
             std::string path,
             http::verb method,
             json::value body = {}

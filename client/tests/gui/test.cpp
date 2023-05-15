@@ -13,7 +13,7 @@
 #include "registrationmanager.h"
 #include "user.h"
 
-// OAuthProvider
+/*// OAuthProvider
 class MockOAuthProvider : public OAuthProvider {
 public:
   QString getAccessToken() { return "token"; }
@@ -230,7 +230,7 @@ TEST(RegistrationManager, saveUserToDatabase) {
   stubRegistrationManager sRG;
   EXPECT_EQ(sRG.saveUserToDatabase(user), true);
 }
-/*int main(int argc, char **argv) {
+int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }*/

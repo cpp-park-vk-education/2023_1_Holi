@@ -8,12 +8,13 @@
 #include <boost/beast.hpp>
 #include <boost/json.hpp>
 #include <boost/url.hpp>
-
+#include <boost/asio/ssl.hpp>
 
 namespace net = boost::asio;
 namespace beast = boost::beast;
 namespace json = boost::json;
 namespace urls = boost::urls;
+namespace ssl = net::ssl;
 
 namespace http = beast::http;
 namespace websocket = beast::websocket;

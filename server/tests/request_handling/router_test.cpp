@@ -54,7 +54,7 @@ TEST(RouterTest, RouteWithInvalidParams) {
     Router router(std::make_unique<StabVideoRoute>());
 
     ParsedRequest request(
-            urls::params_encoded_view("user_id=Artemij&resource_id=23"),
+            url::params_encoded_view("user_id=Artemij&resource_id=23"),
             "/video",
             http::verb::get
     );
@@ -66,7 +66,7 @@ TEST(RouterTest, RouteWithCommonParams) {
     Router router(std::make_unique<StabVideoListRoute>());
 
     ParsedRequest request(
-            urls::params_encoded_view("user_id=43&resource_id=23"),
+            url::params_encoded_view("user_id=43&resource_id=23"),
             "/video/list",
             http::verb::get
     );
@@ -90,7 +90,7 @@ TEST(RouterTest, RouteWithNoPath) {
     Router router(std::make_unique<StabVideoListRoute>());
 
     ParsedRequest request(
-            urls::params_encoded_view("user_id=63&resource_id=23"),
+            url::params_encoded_view("user_id=63&resource_id=23"),
             "",
             http::verb::post,
             json::parse(R"(
@@ -111,7 +111,7 @@ TEST(RouterTest, RouteWithImproperPath) {
     Router router(std::make_unique<StabVideoRoute>());
 
     ParsedRequest request(
-            urls::params_encoded_view("user_id=63&resource_id=23"),
+            url::params_encoded_view("user_id=63&resource_id=23"),
             "/video/supervideolist",
             http::verb::post,
             json::parse(R"(

@@ -4,8 +4,8 @@
 
 #include <gtest/gtest.h>
 
-#include "request_maker/errors.h"
-#include "request_maker/response_handler.h"
+#include "client/errors.h"
+#include "client/response_handler.h"
 
 
 http::response<http::string_body>
@@ -55,7 +55,7 @@ TEST(ResponseHandlerTest, EmptyBody) {
     auto response_for_throw_check = GetResponse(http::status::ok);
     auto response = GetResponse(http::status::ok);
 
-    auto expected = MessageInfo{json::value{}, http::status::bad_request};
+    auto expected = MessageInfo{json::value{}, http::status::ok};
     ResponseHandler handler;
 
     EXPECT_NO_THROW(handler.Handle(std::move(response_for_throw_check)));

@@ -8,7 +8,7 @@
 
 
 ParsedRequest::ParsedRequest(
-        const urls::params_encoded_view &parameters,
+        const url::params_view &parameters,
         std::string path,
         http::verb method,
         json::value body

@@ -4,20 +4,27 @@
 
 #pragma once
 
-#include <boost/beast/core.hpp>
-#include <boost/beast/http.hpp>
-#include <boost/beast/version.hpp>
-
-
 #include "namespaces.h"
+#include "session.h"
 
 
-class Server {
+class Server : public std::enable_shared_from_this<Server> {
+public:
+    Server(
+            net::io_context &ioc,
+            tcp::endpoint endpoint
+    );
+
+
+    void Run();
+
 private:
-//    net::io_context& ioc_;
+    void DoAccept();
+
+    void OnAccept(beast::error_code ec, tcp::socket socket);
+
+private:
+    net::io_context &ioc_;
     tcp::acceptor acceptor_;
 
-public:
-    void Run();
-    void Stop();
 };
