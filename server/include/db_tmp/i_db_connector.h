@@ -9,7 +9,11 @@
 
 class IDbConnectorTmp {
 public:
-    virtual QSqlQuery MakeQuery(QString query_string) = 0;
+    virtual QSqlQuery MakeQuery(QSqlQuery &&query) = 0;
+
+    virtual QSqlDatabase Connect() = 0;
+
+    virtual void Disconnect() = 0;
 
     virtual ~IDbConnectorTmp() = default;
 };

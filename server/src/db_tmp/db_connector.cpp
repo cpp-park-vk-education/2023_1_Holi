@@ -5,12 +5,8 @@
 #include "db_tmp/db_connector.h"
 
 
-QSqlQuery DbConnectorTmp::MakeQuery(QString query_string) {
-    Connect();
-
-    QSqlQuery query(connection_);
-
-    if (!query.exec(query_string)) {
+QSqlQuery DbConnectorTmp::MakeQuery(QSqlQuery &&query) {
+    if (!query.exec()) {
         throw ConditionError(query.lastError().text().toStdString());
     }
 
@@ -18,15 +14,16 @@ QSqlQuery DbConnectorTmp::MakeQuery(QString query_string) {
         throw ConditionError("Cant make request");
     }
 
-    std::cout << "Query executed successfully" << std::endl;
-    std::cout << "Amount of rows read: " << query.size() << std::endl;
+    std::cout << "\t\t--- Query executed successfully" << std::endl;
+    std::cout << "\t\t--- Amount of rows read: " << query.size() << std::endl;
 
     return query;
 }
 
-void DbConnectorTmp::Connect() {
+QSqlDatabase DbConnectorTmp::Connect() {
     if (connection_.isOpen()) {
-        return;
+        std::cout << "\t\t--- Connect to db" << std::endl;
+        return connection_;
     }
 
     connection_ = QSqlDatabase::addDatabase("QPSQL");
@@ -40,15 +37,19 @@ void DbConnectorTmp::Connect() {
     if (!is_open) {
         throw DbConnectError("Cant connect to db");
     }
+
+    std::cout << "\t\t--- Connect to db" << std::endl;
+    return connection_;
 }
 
 
 DbConnectorTmp::~DbConnectorTmp() {
-    Disconnect();
+    DbConnectorTmp::Disconnect();
 }
 
 void DbConnectorTmp::Disconnect() {
     if (connection_.isOpen()) {
         connection_.close();
+        std::cout << "\t\t--- Disconnect from db" << std::endl;
     }
 }

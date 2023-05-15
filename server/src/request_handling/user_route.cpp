@@ -9,11 +9,14 @@ MessageInfo UserRoute::Get(int id) {
     if (id <= 0) {
         return {{}, http::status::not_found};
     }
+
     std::string sql = R"(select * from "User" where id = )" + std::to_string(id);
 
     QSqlQuery query;
     try {
-        query = db_connector_->MakeQuery(sql.c_str());
+        query = QSqlQuery(db_connector_->Connect());
+        query.prepare(sql.c_str());
+        query = db_connector_->MakeQuery(std::move(query));
     } catch (ConditionError &e) {
         std::cerr << e.what() << std::endl;
         return {{}, http::status::internal_server_error};
@@ -31,7 +34,7 @@ MessageInfo UserRoute::Get(int id) {
     }
 
     json::value body(init);
-    std::cout << "Create json value" << std::endl;
+    std::cout << "\t\t--- Create json value" << std::endl;
 
     return {body, http::status::ok};
 }
