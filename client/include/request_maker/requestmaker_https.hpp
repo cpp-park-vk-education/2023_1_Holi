@@ -27,4 +27,5 @@ public:
     std::string host_;
     std::string port_;
     std::string target_;
-}
+};
+

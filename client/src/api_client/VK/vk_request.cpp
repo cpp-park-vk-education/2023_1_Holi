@@ -14,5 +14,7 @@ void VKRequest::execute(){
     auto response_ptr_ = std::make_unique<VKResponse>();
 
     auto request_maker_ptr_ = std::make_unique<RequestMaker>(url, params, std::move(response_ptr_));
-    request_maker_ptr_->GET();
+    request_maker_ptr_->Get();
+
 }
+
