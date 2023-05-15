@@ -9,9 +9,9 @@
 
 class Authorizer : public IAuthorizer {
 public:
-    json::value Authorise() override;
+    json::value Authorize() override;
 
     json::value Register() override;
 
-    bool IsAuthorised() override;
+    bool IsAuthorized() override;
 };

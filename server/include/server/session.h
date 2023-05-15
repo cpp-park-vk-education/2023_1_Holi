@@ -4,26 +4,36 @@
 
 #pragma once
 
-#include <boost/asio/dispatch.hpp>
-#include <boost/asio/strand.hpp>
 #include <boost/beast/core.hpp>
 #include <boost/beast/http.hpp>
 #include <boost/beast/http/message.hpp>
 #include <boost/beast/version.hpp>
+#include <boost/asio/dispatch.hpp>
+#include <boost/asio/strand.hpp>
+#include <boost/config.hpp>
+#include <algorithm>
+#include <cstdlib>
+#include <functional>
+#include <iostream>
+#include <memory>
+#include <string>
+#include <thread>
 #include <queue>
+#include <vector>
 
 #include "namespaces.h"
 #include "orm/room.h"
+#include "request_handling/request_handler.h"
 
+
+void fail(beast::error_code ec, char const *what);
 
 class Session : public std::enable_shared_from_this<Session> {
-private:
-    std::vector<std::shared_ptr<Room>> rooms_;
-    std::queue<http::request<http::string_body>> write_messages_;
-    beast::tcp_stream stream_;
-    http::request<http::string_body> request_;
-
 public:
+    Session(tcp::socket &&socket) :
+            stream_(std::move(socket)),
+            request_handler_(std::make_unique<RequestHandler>()) {}
+
     void Start();
 
     void DoRead();
@@ -40,4 +50,11 @@ public:
 
     void DoClose();
 
+private:
+//    std::vector<std::shared_ptr<Room>> rooms_;
+//    std::queue<http::request<http::string_body>> write_messages_;
+    beast::flat_buffer buffer_;
+    beast::tcp_stream stream_;
+    http::request<http::string_body> request_;
+    std::unique_ptr<IRequestHandler> request_handler_;
 };

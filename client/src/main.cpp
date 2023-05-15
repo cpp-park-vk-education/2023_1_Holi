@@ -4,8 +4,18 @@
 
 #include <iostream>
 
+#include "mainwindow.h"
+#include <QApplication>
+#include <iostream>
 
-int main() {
-    std::cout << "5\n";
-    return 0;
+#include "client/request_maker_tmp.h"
+#include "client/https_request_maker_tmp.h"
+
+
+int main(int argc, char *argv[]) {
+  QApplication a(argc, argv);
+  MainWindow w;
+
+  w.show();
+  return 0;
 }

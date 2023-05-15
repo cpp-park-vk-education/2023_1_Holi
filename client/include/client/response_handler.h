@@ -14,5 +14,8 @@ public:
     MessageInfo Handle(http::response<http::string_body> &&response) override;
 
 private:
+    http::response<http::string_body> response_;
+
+private:
     void ParseBody();
 };

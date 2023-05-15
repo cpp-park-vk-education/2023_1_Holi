@@ -4,7 +4,7 @@
 
 #include <boost/json/src.hpp>
 
-#include "request_maker/message_info.h"
+#include "client/message_info.h"
 
 
 bool operator==(const MessageInfo &l, const MessageInfo &r) {
