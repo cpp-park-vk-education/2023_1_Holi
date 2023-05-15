@@ -5,15 +5,17 @@
 
 #include "message_info.h"
 
-//todo: string поменять на Json::value
 class Response{
-private:
+protected:
     MessageInfo result_;
 public:
     Response(){}
-    virtual ~Response(){}
+    virtual ~Response(){}   
 
-    void get_response(MessageInfo result){ result_ = result; }  //Этот метод вызывается от RequestMaker'a
+    void get_response(MessageInfo result){ 
+        result_ = result; 
+        parse_result();
+    }  //Этот метод вызывается от RequestMaker'a
     
     virtual void parse_result() = 0;
 };

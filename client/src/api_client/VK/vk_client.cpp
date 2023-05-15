@@ -8,6 +8,7 @@ void VKClient::GetPlaylists(){
         {"owner_id", std::to_string(user_id_)},
         {"extended", std::to_string(1)}
     };
+    auto request_ptr_ = std::make_unique<VKRequest>();
 
     request_ptr_->setAccessToken(access_token_);
     request_ptr_->setMethod(method);
@@ -24,6 +25,7 @@ void VKClient::GetVideos(){
         {"owner_id", std::to_string(user_id_)},
         {"extended", std::to_string(1)}
     };
+    auto request_ptr_ = std::make_unique<VKRequest>();
     
     request_ptr_->setAccessToken(access_token_);
     request_ptr_->setMethod(method);
