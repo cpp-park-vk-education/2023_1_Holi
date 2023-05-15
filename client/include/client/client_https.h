@@ -18,10 +18,11 @@
 
 class ClientHttps : public IClient {
 public:
-    explicit ClientHttps(net::io_context &ioc, ssl::context& ctx) :
+    ClientHttps(net::io_context &ioc, ssl::context& ctx, http::request<http::string_body> request) :
             resolver_(net::make_strand(ioc)),
             stream_(net::make_strand(ioc), ctx),
-            response_handler(std::make_unique<ResponseHandler>()) {}
+            response_handler(std::make_unique<ResponseHandler>()),
+            request_(std::move(request)) {}
 
     void Run(
             const std::string &host,

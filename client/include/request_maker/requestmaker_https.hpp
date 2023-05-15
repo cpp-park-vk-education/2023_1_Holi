@@ -20,10 +20,10 @@ public:
     void Post(json::value body);
     void Delete();
     private:
-    void CallBack(http::request<http::string_body> request);
+    void CallBack();
 
     std::unique_ptr<Response> response_;
-    std::unique_ptr<IClient> client_;
+    std::unique_ptr<ClientHttps> client_;
     std::string host_;
     std::string port_;
     std::string target_;
