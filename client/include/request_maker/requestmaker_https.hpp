@@ -16,6 +16,9 @@ public:
     {
         port_ = "443";
     }
+    ~RequestMaker() {
+        std::cerr << "RequestMaker destruct" << std::endl;
+    }
     void Get();
     void Post(json::value body);
     void Delete();

@@ -5,6 +5,7 @@
 #include "api_client/VK/vk_client.hpp"
 
 #include <chrono>
+#include <memory>
 //#include <boost/json/src.hpp>
 /*VK Settings Auth*/
 const QUrl authUrlVK{"https://oauth.vk.com/authorize"};
@@ -66,7 +67,9 @@ QString accessTokenVK;
 QString accessTokenYT;
 QOAuth2AuthorizationCodeFlow *oauthVK;
 
-MainWindow::~MainWindow() { delete ui; }
+MainWindow::~MainWindow() {
+    std::cerr << "mwindow destruct" << std::endl;
+    delete ui; }
 
 /*БОКОВОЕ МЕНЮ*/
 void MainWindow::on_main_button_clicked() {
