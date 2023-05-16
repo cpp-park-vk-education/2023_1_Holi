@@ -8,7 +8,6 @@
 #include "mainwindow.h"
 #include "registrationmanager.h"
 #include <QApplication>
-
 //#include "client/request_maker_tmp.h"
 //#include "client/https_request_maker_tmp.h"
 
