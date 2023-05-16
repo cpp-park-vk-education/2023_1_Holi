@@ -18,7 +18,10 @@ void RequestMaker::Get()
     request.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
 
     client_ = std::make_unique<ClientHttps>(ioc, ctx, request);
+    std::cout << "thread start" << std::endl;
     std::thread thr(&RequestMaker::CallBack, this);
+    thr.detach();
+//    CallBack();
 }
 
 
@@ -39,6 +42,7 @@ void RequestMaker::Post(json::value body)
     request.prepare_payload();
 
     client_ = std::make_unique<ClientHttps>(ioc, ctx, request);
+    std::cout << "1" << std::endl;
     std::thread thr(&RequestMaker::CallBack, this);
 }
 
@@ -61,10 +65,11 @@ void RequestMaker::Delete()
 
 void RequestMaker::CallBack()
 {
-    std::cout << "TEST THREAD" << std::endl;
+    std::cout << "call back start" << std::endl;
     client_->Run(host_, port_, target_);
-    std::cout << "TEST RUN" << std::endl;
     auto message = client_->GetResponse();
     std::cout << message << std::endl;
     response_->get_response(message);
+    std::cout << "call back end" << std::endl;
+
 }

@@ -17,7 +17,7 @@ void VKRequest::execute(){
 
     auto request_maker_ptr_ = std::make_unique<RequestMaker>(url, params, std::move(response_ptr_));
     request_maker_ptr_->Get();
-    std::cout << "TEST" << std::endl;
-    qDebug() << "TEST";
+//    std::cout << "TEST" << std::endl;
+//    qDebug() << "TEST";
 }
 

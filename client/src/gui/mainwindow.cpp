@@ -3,6 +3,8 @@
 #include "oauthprovider.h"
 #include "client/message_info.h"
 #include "api_client/VK/vk_client.hpp"
+
+#include <chrono>
 //#include <boost/json/src.hpp>
 /*VK Settings Auth*/
 const QUrl authUrlVK{"https://oauth.vk.com/authorize"};
@@ -119,8 +121,10 @@ void MainWindow::on_AlbomsButton_clicked() {
 
 void MainWindow::on_VK_getAllAlboms_clicked() {
     std::string token = accessTokenVK.toStdString();
+    std::cout << "99" << std::endl;
     api_client = std::make_unique<VKClient>(token, 478111331);
     api_client->GetPlaylists();
+    std::cout << "100" << std::endl;
 }
 
 

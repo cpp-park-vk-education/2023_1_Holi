@@ -3,33 +3,32 @@
 //
 
 #include "client/client_https.h"
-
 void ClientHttps::Run(
         const std::string &host,
         const std::string &port,
         const std::string &target
 ) {
-    std::cout << host << " " << port << " " << target << std::endl;
+    std::cout << "client run start" << std::endl;
+//    std::this_thread::sleep_for(std::chrono::minutes(1));
 
     if (!SSL_set_tlsext_host_name(stream_.native_handle(), host.c_str())) {
         beast::error_code ec{static_cast<int>(::ERR_get_error()), net::error::get_ssl_category()};
         throw beast::system_error{ec};
     }   
 
-    std::cout << "1" << std::endl;
-
+    std::cout << "11" << std::endl;
     auto const results = resolver_.resolve(host, port);
 
-    std::cout << "2" << std::endl;
+    std::cout << "22" << std::endl;
 
-    beast::get_lowest_layer(stream_).expires_after(std::chrono::seconds(30));
+//    beast::get_lowest_layer(stream_).expires_after(std::chrono::seconds(30));
 
-    std::cout << "3" << std::endl;
+    std::cout << "33" << std::endl;
 
     beast::get_lowest_layer(stream_).connect(results);
-    std::cout << "4" << std::endl;
+    std::cout << "44" << std::endl;
     stream_.handshake(ssl::stream_base::client);
-    std::cout << "5" << std::endl;
+    std::cout << "55" << std::endl;
     
     Write();
 }
@@ -42,8 +41,6 @@ void ClientHttps::Write() {
     http::write(stream_, request_);
 
     std::cout << "\t--- write: end " << std::endl;
-
-    GetResponse();
 }
 
 MessageInfo ClientHttps::GetResponse() {
@@ -58,7 +55,6 @@ MessageInfo ClientHttps::GetResponse() {
     auto message_info = response_handler->Handle(std::move(response_));
     std::cout << message_info.status_ << std::endl;
     std::cout << message_info.body_ << std::endl;
-
     beast::error_code ec;
     stream_.shutdown(ec);
     if (ec == net::error::eof)
