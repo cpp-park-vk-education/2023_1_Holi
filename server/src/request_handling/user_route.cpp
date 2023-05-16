@@ -41,12 +41,6 @@ MessageInfo UserRoute::Get(int id) {
 }
 
 MessageInfo UserRoute::Post(json::value body) {
-    if (user_id_ <= 0) {
-        std::cerr << "Non-positive  id" << std::endl;
-        return {{}, http::status::not_found};
-    }
-
-    // todo check json empty
     json::object video_info;
     try {
         video_info = body.as_object();
@@ -58,7 +52,7 @@ MessageInfo UserRoute::Post(json::value body) {
         return {{}, http::status::bad_request};
     }
 
-    std::string sql = R"(insert into "Video" (name, exported_from, user_id) values (?, ?, ?, ?, ?) returning id)";
+    std::string sql = R"(insert into "User" (name, surname, email, login, password) values (?, ?, ?, ?, ?) returning id)";
 
     std::vector<std::string> values;
     std::vector<std::string> keys{"name", "surname", "email", "login", "password"};

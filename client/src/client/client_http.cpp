@@ -11,19 +11,22 @@ void ClientHttp::Run(
         const std::string &target
 ) {
     request_.version(11);
-    request_.method(http::verb::get);
+    request_.method(http::verb::post);
     request_.target(target);
     request_.set(http::field::host, host);
     request_.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
 
-//    std::string s = R"(
-//    {
-//        "name": "playlist",
-//        "exported_from": "vk"
-//    }
-//    )";
-//    request_.body() = s;
-//    request_.content_length(s.length());
+    std::string s = R"(
+    {
+        "name": "name",
+        "surname": "surname",
+        "email": "email",
+        "login": "lgn",
+        "password": "pwd"
+    }
+    )";
+    request_.body() = s;
+    request_.content_length(s.length());
 
     stream_.expires_after(std::chrono::seconds(30));
 
