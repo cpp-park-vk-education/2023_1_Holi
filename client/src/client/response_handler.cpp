@@ -6,16 +6,6 @@
 
 #include <boost/beast/http.hpp>
 
-//    http::response<http::string_body> response{status, request.version()};
-//
-//    response.set(http::field::host, "localhost");
-//    response.set(http::field::server, BOOST_BEAST_VERSION_STRING);
-//    response.keep_alive(request.keep_alive());
-//    response.set(http::field::content_length, std::to_string(body.length()));
-//    response.set(http::field::content_type, "application/json");
-//    response.body() = body;
-//    response.prepare_payload();
-
 MessageInfo ResponseHandler::Handle(http::response<http::string_body> &&response) {
     response_ = std::move(response);
 
@@ -32,8 +22,4 @@ MessageInfo ResponseHandler::Handle(http::response<http::string_body> &&response
     }
 
     return message_info;
-}
-
-void ResponseHandler::ParseBody() {
-
 }

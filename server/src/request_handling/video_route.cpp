@@ -15,7 +15,6 @@ MessageInfo VideoRoute::Post(json::value body) {
         return {{}, http::status::not_found};
     }
 
-    // todo check json empty
     json::object video_info;
     try {
         video_info = body.as_object();
