@@ -8,7 +8,6 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlError>
-
 #include "i_db_connector.h"
 #include "orm/errors.h"
 

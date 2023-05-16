@@ -24,7 +24,7 @@
 #include <QUrl>
 #include <QWidget>
 
-
+#include "client/message_info.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -48,12 +48,12 @@ public:
 
   /*mainpage*/
   /*колбэки для вк*/
-  //void MP_VK_getAlbums(MessageInfo* info);
-  //void MP_VK_getVideo(MessageInfo* info);
+  void MP_VK_getAlbums();
+  void MP_VK_getVideo();
 
   /*Колбеки для ютуба*/
-  //void MP_YT_getAlbums(MessageInfo* info);
-  //void MP_YT_getVideo(MessageInfo* info);
+  void MP_YT_getAlbums();
+  void MP_YT_getVideo();
 
 private slots:
   void on_main_button_clicked();
@@ -71,6 +71,8 @@ private slots:
   void on_signUp_button_clicked();
 
   void on_VK_getAllAlboms_clicked();
+
+  void on_VK_main_import_items_clicked();
 
 private:
   Ui::MainWindow *ui;

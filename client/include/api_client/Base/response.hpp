@@ -3,7 +3,8 @@
 #include <vector>
 #include <string>
 #include <map>
-
+#include <mainwindow.h>
+#include <gui/mainwindow.h>
 #include "client/message_info.h"
 
 class Response{

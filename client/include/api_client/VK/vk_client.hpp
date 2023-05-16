@@ -3,7 +3,7 @@
 #include "vk_response.hpp"
 
 #include <memory>
-
+#include "functional"
 
 class VKClient: public APIClient{
 public:
