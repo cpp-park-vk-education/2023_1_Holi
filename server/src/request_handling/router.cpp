@@ -4,37 +4,14 @@
 
 #include "request_handling/router.h"
 
-//
-//ResultCode Router::GetParameter(std::string key, int &value) {
-//    auto parameter = request_.parameters_.find(key);
-//    if (parameter == request_.parameters_.end()) {
-//        std::cerr << "Error: improper url parameters" << std::endl;
-//        return bad_request;
-//    }
-//
-//    try {
-//        value = std::stoi((*parameter).value);
-//    } catch (std::invalid_argument const &ex) {
-//        std::cerr << "Error: invalid url parameters" << std::endl;
-//        return bad_request;
-//    } catch (...) {
-//        std::cerr << "Unexpected error with parameters" << std::endl;
-//        return bad_request;
-//    }
-//
-//    if (value <= 0) {
-//        std::cerr << "Error: Negative user id" << std::endl;
-//        return not_found;
-//    }
-//
-//    return success;
-//}
-
 
 MessageInfo Router::Route(const ParsedRequest &request) {
-    // todo убрать комменты и мб разбить на функции
-
     request_ = request;
+
+    if (request_.path_ == "/user" && request_.method_ == http::verb::post) {
+        return std::make_unique<UserRoute>()->Post(request_.body_);
+    }
+
 
     if (request_.path_.empty()) {
         std::cerr << "Error: empty path" << std::endl;
@@ -84,7 +61,6 @@ MessageInfo Router::Route(const ParsedRequest &request) {
         std::cerr << "Error: Non-positive resource id" << std::endl;
         return {{}, http::status::not_found};
     }
-
 
     std::unique_ptr<IRoute> route;
     if (request_.path_ == "/user") {
