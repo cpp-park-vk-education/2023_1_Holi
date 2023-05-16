@@ -1,11 +1,10 @@
 #include "response.hpp"
-#include "gui/mainwindow.h"
 //constexpr std::map<>
 
 
-class VKResponse: public Response{
+class VKResponse : public Response {
 public:
-    VKResponse(MainWindow* window): window_(window) {}
-    
+    VKResponse(MainWindow *window, int flag) : Response(window, flag) {}
+
     void parse_result() override;
 };

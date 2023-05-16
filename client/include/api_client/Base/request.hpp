@@ -5,8 +5,6 @@
 #include <memory>
 #include <string>
 
-#include "gui/mainwindow.h"
-
 
 class Request {
 protected:

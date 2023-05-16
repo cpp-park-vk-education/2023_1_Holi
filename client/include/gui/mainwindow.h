@@ -26,57 +26,59 @@
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
-class MainWindow;
+    class MainWindow;
 }
 QT_END_NAMESPACE
 
 class APIClient;
 
-class MainWindow : public QMainWindow
-
-{
-  Q_OBJECT
+class MainWindow : public QMainWindow {
+Q_OBJECT
 
 public:
-  MainWindow(QWidget *parent = nullptr);
-  ~MainWindow();
+    MainWindow(QWidget *parent = nullptr);
 
-  void OAuthVK(const std::function<void(QOAuth2AuthorizationCodeFlow *)> &onSuccess);
+    ~MainWindow();
 
-  void OAuthYT(const std::function<void(QOAuth2AuthorizationCodeFlow *)> &onSuccess);
+    void OAuthVK(const std::function<void(QOAuth2AuthorizationCodeFlow *)> &onSuccess);
+
+    void OAuthYT(const std::function<void(QOAuth2AuthorizationCodeFlow *)> &onSuccess);
     /*Callback Methods*/
 
-  /*mainpage*/
-  /*колбэки для вк*/
-  void MP_VK_getAlbums(MessageInfo info);
-  void MP_VK_getVideo();
+    /*mainpage*/
+    /*колбэки для вк*/
+    void MP_VK_getAlbums(MessageInfo info);
 
-  /*Колбеки для ютуба*/
-  void MP_YT_getAlbums();
-  void MP_YT_getVideo();
+    void MP_VK_getVideo(MessageInfo *info);
+
+    /*Колбеки для ютуба*/
+    void MP_YT_getAlbums();
+
+    void MP_YT_getVideo();
 
 private slots:
-  void on_main_button_clicked();
 
-  void on_AlbomsButton_clicked();
+    void on_main_button_clicked();
 
-  void on_VK_button_clicked();
+    void on_AlbomsButton_clicked();
 
-  void on_YT_Button_clicked();
+    void on_VK_button_clicked();
 
-  void on_Config_button_clicked();
+    void on_YT_Button_clicked();
 
-  void on_button_login_clicked();
+    void on_Config_button_clicked();
 
-  void on_signUp_button_clicked();
+    void on_button_login_clicked();
 
-  void on_VK_getAllAlboms_clicked();
+    void on_signUp_button_clicked();
 
-  void on_VK_main_import_items_clicked();
+    void on_VK_getAllAlboms_clicked();
+
+    void on_VK_main_import_items_clicked();
 
 private:
-  Ui::MainWindow *ui;
-  std::unique_ptr<APIClient> api_client;
+    Ui::MainWindow *ui;
+    std::unique_ptr<APIClient> api_client;
 };
 
 #endif // MAINWINDOW_H

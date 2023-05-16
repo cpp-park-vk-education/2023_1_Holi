@@ -22,7 +22,7 @@ public:
         parse_result();
     }  //Этот метод вызывается от RequestMaker'a
 
-    MainWindow *mw;
-
     virtual void parse_result() = 0;
 };
+
+#include "gui/mainwindow.h"

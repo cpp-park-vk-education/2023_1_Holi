@@ -5,7 +5,6 @@
 
 #include "request.hpp"
 
-class MainWindow;
 
 class APIClient{
 protected:
