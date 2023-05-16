@@ -92,7 +92,7 @@ MessageInfo Router::Route(const ParsedRequest &request) {
     }
 
     if (request_.path_ == "/video") {
-        route = std::make_unique<VideoListRoute>(user_id);
+        route = std::make_unique<VideoRoute>(user_id);
     }
 
     if (!route) {
@@ -119,4 +119,3 @@ MessageInfo Router::Route(const ParsedRequest &request) {
 
     return {{}, http::status::not_found};
 }
-

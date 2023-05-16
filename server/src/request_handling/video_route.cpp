@@ -68,10 +68,12 @@ MessageInfo VideoRoute::Post(json::value body) {
     std::vector<std::string> keys{"name", "exported_from", "user_id"};
     json::object init;
     if (query.next()) {
-        init[keys[0]] = query.value(keys[0].c_str()).toInt();
+        init["id"] = query.value("id").toInt();
     }
-    init[keys[1]] = query.value(keys[1].c_str()).toString().toStdString();
-    init[keys[2]] = query.value(keys[2].c_str()).toInt();
+    init[keys[0]] = video_info[keys[0]];
+    init[keys[1]] = video_info[keys[1]];
+    init[keys[2]] = user_id_;
+
 
     json::value response_body(init);
     std::cout << "\t\t--- Create json value" << std::endl;
