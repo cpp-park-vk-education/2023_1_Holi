@@ -5,6 +5,7 @@
 #include <memory>
 #include <string>
 
+
 class Request {
 protected:
     std::string access_token_;

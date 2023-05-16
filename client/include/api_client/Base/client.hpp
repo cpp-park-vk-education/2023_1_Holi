@@ -3,8 +3,8 @@
 #include <string>
 #include <memory>
 
-#include "response.hpp"
 #include "request.hpp"
+
 
 class APIClient{
 protected:

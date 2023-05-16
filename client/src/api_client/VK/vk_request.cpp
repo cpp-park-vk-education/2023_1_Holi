@@ -1,5 +1,6 @@
 #include "vk_request.hpp"
 #include "vk_response.hpp"
+#include <QDebug>
 
 void VKRequest::execute(){
 
@@ -9,12 +10,14 @@ void VKRequest::execute(){
     for (auto& param : params_) {
         params += param.first + "=" + param.second + "&";
     }
+    
     params += "access_token=" + access_token_ + "&v=5.131";
 
     auto response_ptr_ = std::make_unique<VKResponse>();
 
-    auto request_maker_ptr_ = std::make_unique<RequestMaker>(url, params, std::move(response_ptr_));
-    request_maker_ptr_->Get();
-
+    request_maker = std::make_unique<RequestMaker>(url, params, std::move(response_ptr_));
+    request_maker->Get();
+//    std::cout << "TEST" << std::endl;
+//    qDebug() << "TEST";
 }
 

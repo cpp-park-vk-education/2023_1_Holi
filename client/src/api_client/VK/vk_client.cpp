@@ -1,5 +1,6 @@
 #include "api_client/VK/vk_client.hpp"
 #include "api_client/VK/vk_request.hpp"
+#include "mainwindow.h"
 
 void VKClient::GetPlaylists(){
     std::string method = "video.getAlbums";
@@ -8,13 +9,13 @@ void VKClient::GetPlaylists(){
         {"owner_id", std::to_string(user_id_)},
         {"extended", std::to_string(1)}
     };
-    auto request_ptr_ = std::make_unique<VKRequest>();
+    vk_request = std::make_unique<VKRequest>();
 
-    request_ptr_->setAccessToken(access_token_);
-    request_ptr_->setMethod(method);
-    request_ptr_->setParams(params);
+    vk_request->setAccessToken(access_token_);
+    vk_request->setMethod(method);
+    vk_request->setParams(params);
 
-    request_ptr_->execute();
+    vk_request->execute();
 }
 
 
