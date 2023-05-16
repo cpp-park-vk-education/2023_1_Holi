@@ -1,12 +1,12 @@
 add_executable(server_test
-#        request_handling/user_route_test.cpp
+        request_handling/user_route_test.cpp
         main.cpp
 #        request_handling/user_friend_route_test.cpp
 #        request_handling/video_route_test.cpp
 #        request_handling/video_route_test.cpp
         constants.h
 #        request_handling/video_list_route.cpp
-        request_handling/router_test.cpp
+#        request_handling/router_test.cpp
 #        request_handling/request_handler_test.cpp
 
 #        orm/user_model_test.cpp
