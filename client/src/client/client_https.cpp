@@ -67,6 +67,5 @@ MessageInfo ClientHttps::GetResponse() {
     if (ec)
         std::cerr << ec.message() << "\n";
 
-//    return message_info;
-    return {};
+    return message_info;
 }

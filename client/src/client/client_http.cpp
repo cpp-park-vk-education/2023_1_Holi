@@ -57,9 +57,9 @@ MessageInfo ClientHttp::GetResponse() {
     std::cout << "\t--- read: end " << std::endl;
 
     std::cout << response_ << std::endl;
-//    auto message_info = response_handler->Handle(std::move(response_));
-//    std::cout << message_info.status_ << std::endl;
-//    std::cout << message_info.body_ << std::endl;
+    auto message_info = response_handler->Handle(std::move(response_));
+    std::cout << message_info.status_ << std::endl;
+    std::cout << message_info.body_ << std::endl;
 
     beast::error_code ec;
     stream_.socket().shutdown(tcp::socket::shutdown_both, ec);
@@ -67,5 +67,5 @@ MessageInfo ClientHttp::GetResponse() {
     if (ec && ec != beast::errc::not_connected)
         throw beast::system_error{ec};
 
-    return {};
+    return message_info;
 }
