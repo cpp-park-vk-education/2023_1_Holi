@@ -16,10 +16,10 @@
 
 class ClientHttp : public IClient {
 public:
-    explicit ClientHttp(net::io_context &ioc) :
-            resolver_(net::make_strand(ioc)),
-            stream_(net::make_strand(ioc)),
-            response_handler(std::make_unique<ResponseHandler>()) {}
+    explicit ClientHttp() :
+            resolver_(net::make_strand(ioc_)),
+            stream_(net::make_strand(ioc_)),
+            response_handler_(std::make_unique<ResponseHandler>()) {}
 
     void Run(
             const std::string &host,
@@ -30,12 +30,13 @@ public:
     MessageInfo GetResponse() override;
 
 private:
-    beast::tcp_stream stream_;
+    net::io_context ioc_;
     tcp::resolver resolver_;
-    http::response<http::string_body> response_;
+    beast::tcp_stream stream_;
     http::request<http::string_body> request_;
+    http::response<http::string_body> response_;
     beast::flat_buffer buffer_;
-    std::unique_ptr<IResponseHandler> response_handler;
+    std::unique_ptr<IResponseHandler> response_handler_;
 
 private:
     void Write();
