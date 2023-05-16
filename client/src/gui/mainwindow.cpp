@@ -138,19 +138,20 @@ void MainWindow::MP_VK_getAlbums(MessageInfo info){
     std::cout << "Response into GUI" << std::endl;
     std::cout << info << std::endl;
 }
-void MainWindow::MP_VK_getVideo(MessageInfo* info){
+
+void MainWindow::MP_VK_getVideo(MessageInfo info){
 
 }
 
 //*Колбеки для ютуба*//
-/*void MainWindow::MP_YT_getAlbums(MessageInfo* info){
+void MainWindow::MP_YT_getAlbums(MessageInfo info){
 
 }
 
-void MainWindow::MP_YT_getVideo(MessageInfo* info){
+void MainWindow::MP_YT_getVideo(MessageInfo info){
 
 }
-*/
+
 
 //Импорт в базу
 void MainWindow::on_VK_main_import_items_clicked()

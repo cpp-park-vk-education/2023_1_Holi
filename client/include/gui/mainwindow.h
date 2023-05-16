@@ -49,12 +49,12 @@ public:
     /*колбэки для вк*/
     void MP_VK_getAlbums(MessageInfo info);
 
-    void MP_VK_getVideo(MessageInfo *info);
+    void MP_VK_getVideo(MessageInfo info);
 
     /*Колбеки для ютуба*/
-    void MP_YT_getAlbums();
+    void MP_YT_getAlbums(MessageInfo info);
 
-    void MP_YT_getVideo();
+    void MP_YT_getVideo(MessageInfo info);
 
 private slots:
 

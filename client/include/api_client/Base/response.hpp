@@ -5,8 +5,8 @@
 #include <map>
 #include "client/message_info.h"
 
-class MainWindow;
 
+class MainWindow;
 
 class Response{
 protected:
@@ -14,7 +14,7 @@ protected:
     MainWindow* window_;
     int flag_;
 public:
-    Response(MainWindow* window, int flag): window_(window), flag_(flag) {}
+    Response() {}
     virtual ~Response(){}   
 
     void get_response(MessageInfo result){ 
@@ -26,3 +26,11 @@ public:
 };
 
 #include "gui/mainwindow.h"
+
+/*
+void MP_VK_getAlbums(MessageInfo* info);  -> 1
+void MP_VK_getVideo(MessageInfo* info);   -> 2
+
+void MP_YT_getAlbums(MessageInfo* info);  -> 3
+void MP_YT_getVideo(MessageInfo* info);   -> 4
+*/
