@@ -4,8 +4,10 @@
 
 #pragma once
 
-
 #include "request_handling/i_route.h"
+
+#include <vector>
+#include <string>
 
 
 class UserRoute : public IRoute {

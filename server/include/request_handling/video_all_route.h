@@ -1,5 +1,5 @@
 //
-// Created by Алексей on 01.05.2023.
+// Created by Алексей on 16.05.2023.
 //
 
 #pragma once
@@ -7,17 +7,16 @@
 #include "request_handling/i_route.h"
 
 
-class VideoRoute : public IRoute {
+class VideoAllRoute : public IRoute {
 private:
     int user_id_;
     std::unique_ptr<IDbModel> model_;
     std::unique_ptr<IDbConnectorTmp> db_connector_;
 
-
 public:
-    VideoRoute() = default;
+    VideoAllRoute() = default;
 
-    explicit VideoRoute(int user_id, std::unique_ptr<IDbModel> model = nullptr) :
+    explicit VideoAllRoute(int user_id, std::unique_ptr<IDbModel> model = nullptr) :
             user_id_(user_id),
             model_(model.release()),
             db_connector_(std::make_unique<DbConnectorTmp>()) {}

@@ -32,15 +32,7 @@
 
 
 MessageInfo Router::Route(const ParsedRequest &request) {
-//    return {json::parse(R"(
-//                {
-//                    "name": "name",
-//                    "image": "image",
-//                    "exported_from": "exported_from",
-//                    "user": "6",
-//                    "playlists": ["12", "2", "43"]
-//                }
-//            )"), http::status::ok};
+    // todo убрать комменты и мб разбить на функции
 
     request_ = request;
 
@@ -69,7 +61,27 @@ MessageInfo Router::Route(const ParsedRequest &request) {
         return {{}, http::status::bad_request};
     }
     if (user_id <= 0) {
-        std::cerr << "Error: Negative user id" << std::endl;
+        std::cerr << "Error: Non-positive user id" << std::endl;
+        return {{}, http::status::not_found};
+    }
+
+    int resource_id = 0;
+    parameter = request.parameters_.find("resource_id");
+    if (parameter == request.parameters_.end()) {
+        resource_id = user_id;
+    } else {
+        try {
+            resource_id = std::stoi((*parameter).value);
+        } catch (std::invalid_argument const &ex) {
+            std::cerr << "Error: invalid url parameters" << std::endl;
+            return {{}, http::status::bad_request};
+        } catch (...) {
+            std::cerr << "Unexpected error with parameters" << std::endl;
+            return {{}, http::status::bad_request};
+        }
+    }
+    if (resource_id <= 0) {
+        std::cerr << "Error: Non-positive resource id" << std::endl;
         return {{}, http::status::not_found};
     }
 
@@ -79,37 +91,20 @@ MessageInfo Router::Route(const ParsedRequest &request) {
         route = std::make_unique<UserRoute>(user_id);
     }
 
-
-    parameter = request.parameters_.find("resource_id");
-    if (parameter == request.parameters_.end() && !route) {
-        std::cerr << "Error: improper url parameters" << std::endl;
-        return {{}, http::status::bad_request};
-    }
-    int resource_id = 0;
-    if (route) {
-        resource_id = user_id;
-    } else {
-        try {
-            user_id = std::stoi((*parameter).value);
-        } catch (std::invalid_argument const &ex) {
-            std::cerr << "Error: invalid url parameters" << std::endl;
-            return {{}, http::status::bad_request};
-        } catch (...) {
-            std::cerr << "Unexpected error with parameters" << std::endl;
-            return {{}, http::status::bad_request};
-        }
-        if (user_id <= 0) {
-            std::cerr << "Error: Negative user id" << std::endl;
-            return {{}, http::status::not_found};
-        }
-    }
-
     if (request_.path_ == "/video") {
         route = std::make_unique<VideoRoute>(user_id);
     }
 
+    if (request_.path_ == "/video/all") {
+        route = std::make_unique<VideoAllRoute>(user_id);
+    }
+
     if (request_.path_ == "/video/list") {
         route = std::make_unique<VideoListRoute>(user_id);
+    }
+
+    if (request_.path_ == "/video/list/all") {
+        route = std::make_unique<VideoListAllRoute>(user_id);
     }
 
     if (!route) {
@@ -117,18 +112,17 @@ MessageInfo Router::Route(const ParsedRequest &request) {
         return {{}, http::status::not_found};
     }
 
+    // todo json check
 
     switch (request_.method_) {
         case (http::verb::get): {
             return route->Get(resource_id);
         }
         case (http::verb::post): {
-
-            break;
+            return route->Post(request.body_);
         }
         case (http::verb::delete_): {
-
-            break;
+            return route->Delete(resource_id);
         }
         default: {
 
@@ -137,4 +131,3 @@ MessageInfo Router::Route(const ParsedRequest &request) {
 
     return {{}, http::status::not_found};
 }
-
