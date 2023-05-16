@@ -18,11 +18,11 @@ void ClientHttp::Run(
 
     std::string s = R"(
     {
-        "name": "name",
-        "surname": "surname",
+        "name": "Ares",
+        "surname": "Sorm",
         "email": "email",
-        "login": "lgn",
-        "password": "pwd"
+        "login": "ggfd",
+        "password": "onirvsin;m[rwnviri[vo[rvivnikinrwoinrweejk;ninorrw"
     }
     )";
     request_.body() = s;
@@ -56,7 +56,7 @@ MessageInfo ClientHttp::GetResponse() {
 
     std::cout << "\t--- read: end " << std::endl;
 
-    std::cout << response_ << std::endl;
+//    std::cout << response_ << std::endl;
     auto message_info = response_handler->Handle(std::move(response_));
     std::cout << message_info.status_ << std::endl;
     std::cout << message_info.body_ << std::endl;
