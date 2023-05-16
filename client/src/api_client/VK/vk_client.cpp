@@ -1,13 +1,12 @@
 #include "api_client/VK/vk_client.hpp"
 #include "api_client/VK/vk_request.hpp"
-#include "mainwindow.h"
 
-void VKClient::GetPlaylists(){
+void VKClient::GetPlaylists(MainWindow* window, int flag){
     std::string method = "video.getAlbums";
     std::map<std::string, std::string> params = 
     {
         {"owner_id", std::to_string(user_id_)},
-        {"extended", std::to_string(1)}
+        {"extended", std::to_string(0)}
     };
     vk_request = std::make_unique<VKRequest>();
 
@@ -15,24 +14,24 @@ void VKClient::GetPlaylists(){
     vk_request->setMethod(method);
     vk_request->setParams(params);
 
-    vk_request->execute();
+    vk_request->execute(window, flag);
 }
 
 
-void VKClient::GetVideos(){
+void VKClient::GetVideos(MainWindow* window, int flag){
     std::string method = "video.get";
     std::map<std::string, std::string> params = 
     {
         {"owner_id", std::to_string(user_id_)},
-        {"extended", std::to_string(1)}
+        {"extended", std::to_string(0)}
     };
-    auto request_ptr_ = std::make_unique<VKRequest>();
-    
-    request_ptr_->setAccessToken(access_token_);
-    request_ptr_->setMethod(method);
-    request_ptr_->setParams(params);
+    vk_request = std::make_unique<VKRequest>();
 
-    request_ptr_->execute();
+    vk_request->setAccessToken(access_token_);
+    vk_request->setMethod(method);
+    vk_request->setParams(params);
+
+    vk_request->execute(window, flag);
 }
 
 

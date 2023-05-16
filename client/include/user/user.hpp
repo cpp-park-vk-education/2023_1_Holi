@@ -9,9 +9,10 @@
 
 class User {
     public:
-        User(): id(0), name(""), surname(""), email(""), avatar("") {}
+        User(const std::string& email_, const std::string& login_, const std::string& password_): 
+        id(0), name(""), surname(""), avatar(""), email(email_), login(login_), password(password_) {}
 
-        User(int id, std::string name, std::string surname, std::string email, std::string avatar) {
+        User(const std::string& login_, const std::string& password_): login(login_), password(password_){
             setId(id);
             setName(name);
             setSurname(surname);
@@ -62,6 +63,8 @@ class User {
         std::string name;
         std::string surname;
         std::string email;
+        std::string login;
+        std::string password;
         std::string avatar;
         std::string accessToken;
         std::string refreshToken;

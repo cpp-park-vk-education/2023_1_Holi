@@ -16,6 +16,6 @@ public:
 
     virtual ~APIClient(){}
 
-    virtual void GetPlaylists() = 0;
-    virtual void GetVideos() = 0;
+    virtual void GetPlaylists(MainWindow*, int) = 0;
+    virtual void GetVideos(MainWindow*, int) = 0;
 };

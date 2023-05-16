@@ -25,5 +25,5 @@ public:
         params_ = params;
     }
 
-    virtual void execute() = 0;
+    virtual void execute(MainWindow* window, int flag) = 0;
 };
