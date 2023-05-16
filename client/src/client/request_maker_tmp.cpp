@@ -9,7 +9,7 @@ int MakeRequest() {
     try {
         auto const host = "localhost";
         auto const port = "8080";
-        auto const target = "/video?user_id=3";
+        auto const target = "/video/list?user_id=7";
         net::io_context ioc;
         std::make_shared<ClientHttp>(ioc)->Run(host, port, target);
     }

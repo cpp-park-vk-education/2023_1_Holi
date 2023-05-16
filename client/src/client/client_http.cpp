@@ -18,8 +18,8 @@ void ClientHttp::Run(
 
     std::string s = R"(
     {
-        "name": "some",
-        "exported_from": "from"
+        "name": "playlist",
+        "exported_from": "vk"
     }
     )";
     request_.body() = s;
