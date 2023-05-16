@@ -1,20 +1,19 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "api_client/Base/client.hpp"
+//#include "client/message_info.h"
 #include "login.h"
-
 #include "oauthprovider.h"
-
 #include "signup.h"
-#include <QMainWindow>
 
+#include <QMainWindow>
 #include <QApplication>
 #include <QDesktopServices>
 #include <QFile>
 #include <QJsonArray>
-#include <QJsonDocument>
 
-#include "api_client/Base/client.hpp"
+#include <QJsonDocument>
 #include <memory>
 
 #include <QtNetwork/QNetworkReply>
@@ -23,7 +22,6 @@
 
 #include <QUrl>
 #include <QWidget>
-
 
 
 QT_BEGIN_NAMESPACE
@@ -48,12 +46,12 @@ public:
 
   /*mainpage*/
   /*колбэки для вк*/
-  //void MP_VK_getAlbums(MessageInfo* info);
-  //void MP_VK_getVideo(MessageInfo* info);
+  void MP_VK_getAlbums();
+  void MP_VK_getVideo();
 
   /*Колбеки для ютуба*/
-  //void MP_YT_getAlbums(MessageInfo* info);
-  //void MP_YT_getVideo(MessageInfo* info);
+  void MP_YT_getAlbums();
+  void MP_YT_getVideo();
 
 private slots:
   void on_main_button_clicked();
@@ -71,6 +69,8 @@ private slots:
   void on_signUp_button_clicked();
 
   void on_VK_getAllAlboms_clicked();
+
+  void on_VK_main_import_items_clicked();
 
 private:
   Ui::MainWindow *ui;

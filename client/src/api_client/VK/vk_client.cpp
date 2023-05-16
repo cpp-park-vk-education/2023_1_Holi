@@ -1,5 +1,6 @@
 #include "api_client/VK/vk_client.hpp"
 #include "api_client/VK/vk_request.hpp"
+#include "mainwindow.h"
 
 void VKClient::GetPlaylists(){
     std::string method = "video.getAlbums";
