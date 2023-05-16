@@ -5,7 +5,7 @@
 #include <memory>
 #include <string>
 
-#include "gui/mainwindow.h"
+
 class Request {
 protected:
     std::string access_token_;
@@ -24,6 +24,6 @@ public:
     void setParams(std::map<std::string, std::string> params) {
         params_ = params;
     }
-    MainWindow mw;
+
     virtual void execute() = 0;
 };

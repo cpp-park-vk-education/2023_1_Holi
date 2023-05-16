@@ -1,20 +1,19 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "api_client/Base/client.hpp"
+//#include "client/message_info.h"
 #include "login.h"
-
 #include "oauthprovider.h"
-
 #include "signup.h"
-#include <QMainWindow>
 
+#include <QMainWindow>
 #include <QApplication>
 #include <QDesktopServices>
 #include <QFile>
 #include <QJsonArray>
-#include <QJsonDocument>
 
-#include "api_client/Base/client.hpp"
+#include <QJsonDocument>
 #include <memory>
 
 #include <QtNetwork/QNetworkReply>
@@ -24,7 +23,6 @@
 #include <QUrl>
 #include <QWidget>
 
-#include "client/message_info.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {

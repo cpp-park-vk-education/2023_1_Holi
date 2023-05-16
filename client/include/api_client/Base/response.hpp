@@ -3,9 +3,10 @@
 #include <vector>
 #include <string>
 #include <map>
-#include <mainwindow.h>
-#include <gui/mainwindow.h>
 #include "client/message_info.h"
+
+class MainWindow;
+
 
 class Response{
 protected:
@@ -18,6 +19,8 @@ public:
         result_ = result; 
         parse_result();
     }  //Этот метод вызывается от RequestMaker'a
-    
+
+    MainWindow *mw;
+
     virtual void parse_result() = 0;
 };
