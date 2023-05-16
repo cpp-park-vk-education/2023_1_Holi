@@ -15,7 +15,7 @@ public:
     }
 
     void GetPlaylists(MainWindow* window, int flag) override;
-    void GetVideos() override;
+    void GetVideos(MainWindow* window, int flag) override;
 
 private:
     std::unique_ptr<VKRequest> vk_request;

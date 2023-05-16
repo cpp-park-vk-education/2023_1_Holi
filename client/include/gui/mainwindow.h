@@ -12,7 +12,8 @@
 #include <QDesktopServices>
 #include <QFile>
 #include <QJsonArray>
-
+#include <QListWidget>
+#include <QListWidgetItem>
 #include <QJsonDocument>
 #include <memory>
 
@@ -49,12 +50,12 @@ public:
     /*колбэки для вк*/
     void MP_VK_getAlbums(MessageInfo info);
 
-    void MP_VK_getVideo(MessageInfo *info);
+    void MP_VK_getVideo(MessageInfo info);
 
     /*Колбеки для ютуба*/
-    void MP_YT_getAlbums();
+    void MP_YT_getAlbums(MessageInfo info);
 
-    void MP_YT_getVideo();
+    void MP_YT_getVideo(MessageInfo info);
 
 private slots:
 
@@ -75,6 +76,8 @@ private slots:
     void on_VK_getAllAlboms_clicked();
 
     void on_VK_main_import_items_clicked();
+
+    void on_VK_main_list_item_itemDoubleClicked(QListWidgetItem *item);
 
 private:
     Ui::MainWindow *ui;
