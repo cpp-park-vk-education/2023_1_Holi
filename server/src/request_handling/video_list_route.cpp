@@ -12,7 +12,7 @@ MessageInfo VideoListRoute::Get(int id) {
 MessageInfo VideoListRoute::Post(json::value body) {
     // todo мб как-то объединить с video route post
     if (user_id_ <= 0) {
-        std::cerr << "Negative id" << std::endl;
+        std::cerr << "Non-positive  id" << std::endl;
         return {{}, http::status::not_found};
     }
 
@@ -69,11 +69,11 @@ MessageInfo VideoListRoute::Post(json::value body) {
     std::vector<std::string> keys{"name", "exported_from", "user_id"};
     json::object init;
     if (query.next()) {
-        init["id"] = query.value("id").toInt();
+        init["id"] = query.value("id").toString().toStdString();
     }
     init[keys[0]] = video_info[keys[0]];
     init[keys[1]] = video_info[keys[1]];
-    init[keys[2]] = user_id_;
+    init[keys[2]] = std::to_string(user_id_);
 
 
     json::value response_body(init);

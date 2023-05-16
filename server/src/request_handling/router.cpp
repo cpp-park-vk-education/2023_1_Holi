@@ -95,8 +95,16 @@ MessageInfo Router::Route(const ParsedRequest &request) {
         route = std::make_unique<VideoRoute>(user_id);
     }
 
+    if (request_.path_ == "/video/all") {
+        route = std::make_unique<VideoAllRoute>(user_id);
+    }
+
     if (request_.path_ == "/video/list") {
         route = std::make_unique<VideoListRoute>(user_id);
+    }
+
+    if (request_.path_ == "/video/list/all") {
+        route = std::make_unique<VideoListAllRoute>(user_id);
     }
 
     if (!route) {
