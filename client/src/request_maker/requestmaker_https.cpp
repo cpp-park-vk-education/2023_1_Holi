@@ -4,14 +4,6 @@
 void RequestMaker::Get()
 {
     std::string path = host_ + target_;
-//    net::io_context ioc;
-//    ssl::context ctx(ssl::context::tlsv12_client);
-//
-//    load_root_certificates(ctx);
-//
-//    ctx.set_verify_mode(ssl::verify_peer);
-//    tcp::resolver resolver(ioc);
-//    beast::ssl_stream<beast::tcp_stream> stream(ioc, ctx);
 
     http::request<http::string_body> request{http::verb::get, target_, 11};
     request.set(http::field::host, host_);

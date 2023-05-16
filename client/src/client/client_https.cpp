@@ -22,7 +22,6 @@ void ClientHttps::Run(
         const std::string &port,
         const std::string &target
 ) {
-    std::cout << "client run start" << std::endl;
 //    std::this_thread::sleep_for(std::chrono::minutes(1));
 
     if (!SSL_set_tlsext_host_name(stream_.native_handle(), host.c_str())) {
