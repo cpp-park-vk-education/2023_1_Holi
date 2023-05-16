@@ -30,6 +30,8 @@ class MainWindow;
 }
 QT_END_NAMESPACE
 
+class APIClient;
+
 class MainWindow : public QMainWindow
 
 {
@@ -46,7 +48,7 @@ public:
 
   /*mainpage*/
   /*колбэки для вк*/
-  void MP_VK_getAlbums();
+  void MP_VK_getAlbums(MessageInfo info);
   void MP_VK_getVideo();
 
   /*Колбеки для ютуба*/

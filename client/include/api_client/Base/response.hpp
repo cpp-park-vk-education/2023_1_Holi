@@ -11,8 +11,10 @@ class MainWindow;
 class Response{
 protected:
     MessageInfo result_;
+    MainWindow* window_;
+    int flag_;
 public:
-    Response(){}
+    Response(MainWindow* window, int flag): window_(window), flag_(flag) {}
     virtual ~Response(){}   
 
     void get_response(MessageInfo result){ 

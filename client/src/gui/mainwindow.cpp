@@ -133,15 +133,15 @@ void MainWindow::on_VK_getAllAlboms_clicked() {
 
 
 //*колбэки для вк*//
-/*void MainWindow::MP_VK_getAlbums(MessageInfo* info){
+void MainWindow::MP_VK_getAlbums(MessageInfo info){
     //info содержит статус и json
-     std::cout << "Response into GUI" << std::endl;
-
+    std::cout << "Response into GUI" << std::endl;
+    std::cout << info << std::endl;
 }
 void MainWindow::MP_VK_getVideo(MessageInfo* info){
 
 }
-*/
+
 //*Колбеки для ютуба*//
 /*void MainWindow::MP_YT_getAlbums(MessageInfo* info){
 

@@ -1,8 +1,7 @@
 #include "api_client/VK/vk_client.hpp"
 #include "api_client/VK/vk_request.hpp"
-#include "mainwindow.h"
 
-void VKClient::GetPlaylists(){
+void VKClient::GetPlaylists(MainWindow* window, int flag){
     std::string method = "video.getAlbums";
     std::map<std::string, std::string> params = 
     {
@@ -15,11 +14,12 @@ void VKClient::GetPlaylists(){
     vk_request->setMethod(method);
     vk_request->setParams(params);
 
-    vk_request->execute();
+    vk_request->execute(window, flag);
 }
 
 
 void VKClient::GetVideos(){
+    /*
     std::string method = "video.get";
     std::map<std::string, std::string> params = 
     {
@@ -33,6 +33,7 @@ void VKClient::GetVideos(){
     request_ptr_->setParams(params);
 
     request_ptr_->execute();
+    */
 }
 
 

@@ -13,7 +13,7 @@ public:
         std::cerr << "VKRequest destruct" << std::endl;
     }
 
-    void execute() override;
+    void execute(MainWindow*, int) override;
 
 private:
     std::unique_ptr<RequestMaker> request_maker;

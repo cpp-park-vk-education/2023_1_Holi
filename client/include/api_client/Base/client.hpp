@@ -5,6 +5,7 @@
 
 #include "request.hpp"
 
+class MainWindow;
 
 class APIClient{
 protected:
@@ -16,6 +17,6 @@ public:
 
     virtual ~APIClient(){}
 
-    virtual void GetPlaylists() = 0;
+    virtual void GetPlaylists(MainWindow*, int) = 0;
     virtual void GetVideos() = 0;
 };
