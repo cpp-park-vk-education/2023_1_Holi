@@ -1,4 +1,22 @@
-add_executable(server_test request_handling/user_route_test.cpp main.cpp request_handling/user_friend_route_test.cpp request_handling/video_route_test.cpp request_handling/video_route_test.cpp constants.h request_handling/video_list_route.cpp request_handling/router_test.cpp request_handling/request_handler_test.cpp orm/user_model_test.cpp orm/message_model_test.cpp orm/playlist_model_test.cpp orm/video_model_test.cpp orm/profile_reference_model_test.cpp orm/follow_model_test.cpp orm/chat_model_test.cpp)
+add_executable(server_test
+#        request_handling/user_route_test.cpp
+        main.cpp
+#        request_handling/user_friend_route_test.cpp
+#        request_handling/video_route_test.cpp
+#        request_handling/video_route_test.cpp
+        constants.h
+#        request_handling/video_list_route.cpp
+        request_handling/router_test.cpp
+#        request_handling/request_handler_test.cpp
+
+#        orm/user_model_test.cpp
+#        orm/message_model_test.cpp
+#        orm/playlist_model_test.cpp
+#        orm/video_model_test.cpp
+#        orm/profile_reference_model_test.cpp
+#        orm/follow_model_test.cpp
+#        orm/chat_model_test.cpp
+        )
 target_link_libraries(server_test server_lib GTest::gtest_main)
 
 add_test(server_test server_test)

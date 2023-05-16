@@ -68,7 +68,10 @@ include_directories(server PUBLIC include)
 
 if (BUILD_FOR_TEST)
     add_library(server_lib ${PROJECT_SOURCES})
-    target_link_libraries(server_lib PUBLIC Qt${QT_VERSION_MAJOR}::Widgets)
+    target_link_libraries(server_lib PUBLIC
+            Qt${QT_VERSION_MAJOR}::Widgets
+            Qt${QT_VERSION_MAJOR}::Core
+            Qt${QT_VERSION_MAJOR}::Sql)
     target_include_directories(server_lib PUBLIC include)
 
     add_subdirectory(tests)

@@ -26,7 +26,7 @@ MessageInfo UserRoute::Get(int id) {
         return {{}, http::status::internal_server_error};
     }
 
-    std::vector<std::string> keys{"id", "name", "surname", "email", "avatar", "login", "password"};
+    std::vector<std::string> keys{"id", "name", "surname", "email", "login", "password"};
     json::object init;
     while (query.next()) {
         for (const auto &i: keys) {
