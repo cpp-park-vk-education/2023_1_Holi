@@ -1,9 +1,8 @@
 #include "request_maker/requestmaker_https.hpp"
-#include "client/root_certificates.hpp"
 
 void RequestMaker::Get()
 {
-    std::string path = host_ + target_;
+    
 //    net::io_context ioc;
 //    ssl::context ctx(ssl::context::tlsv12_client);
 //
@@ -66,8 +65,16 @@ void RequestMaker::CallBack()
 {
     std::cout << "call back start" << std::endl;
     client_->Run(host_, port_, target_);
-    auto message = client_->GetResponse();
-    std::cout << message << std::endl;
+    MessageInfo message;
+    try
+    {
+        message = client_->GetResponse();
+        std::cout << message << std::endl;
+    } 
+    catch (const beast::system_error & e) 
+    {
+        std::cout<< e.what() << std::endl;
+    }
     response_->get_response(message);
     std::cout << "call back end" << std::endl;
 

@@ -8,6 +8,7 @@
 #include "client/client_https.h"
 #include "api_client/Base/response.hpp"
 #include "client/message_info.h"
+#include "client/root_certificates.hpp"
 
 class RequestMaker {
 public:

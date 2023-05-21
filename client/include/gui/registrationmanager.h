@@ -2,8 +2,9 @@
 #ifndef REGISTRATIONMANAGER_H
 #define REGISTRATIONMANAGER_H
 
-#include "user.h"
 #include <QRegularExpression>
+
+#include "user/user.hpp"
 
 class RegistrationManager {
 public:

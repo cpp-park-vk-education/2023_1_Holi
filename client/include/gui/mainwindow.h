@@ -56,6 +56,11 @@ public:
 
     void MP_YT_getVideo(MessageInfo info);
 
+    //
+    void get_response(MessageInfo info);
+    //
+
+
 private slots:
 
     void on_main_button_clicked();
@@ -79,6 +84,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     std::unique_ptr<APIClient> api_client;
+
 };
 
 #endif // MAINWINDOW_H

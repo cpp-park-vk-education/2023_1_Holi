@@ -159,3 +159,8 @@ void MainWindow::on_VK_main_import_items_clicked()
     //QString strToBase = "C++";
 }
 
+//get response
+void MainWindow::get_response(MessageInfo info)
+{
+  std::cout<<info<<std::endl;
+}

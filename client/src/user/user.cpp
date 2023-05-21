@@ -1,24 +1,33 @@
 
 #include "user.hpp"
 
-        void User::setId(int id) {
-            this->id = id;
+        void User::setId() {
+            
         }
 
-        void User::setName(std::string name) {
-            this->name = name;
+        void User::setName(std::string body) {
+
+            std::string target = "/user";
+            request_maker = std::make_unique<RequestMaker>(target);
+            request_maker->Set(body);
         }
 
-        void User::setSurname(std::string surname) {
-            this->surname = surname;
+        void User::setSurname() {
+            
         }
 
-        void User::setEmail(std::string email) {
-            this->email = email;
+        void User::setEmail() 
+        {
+ 
+        }
+
+        void User::setAvatar()
+        {
+
         }
 
         void User::setAvatar(std::string avatar) {
-            this->avatar = avatar;
+            
         }
         
         void User::setFriend(int id_friend){
@@ -33,49 +42,60 @@
             }
         }
 
-        void User::setAccessToken(std::string accessToken) {
-            this->accessToken = accessToken;
+        void User::setFriend()
+        {
         }
 
-        void User::setRefreshToken(std::string refreshToken) {
-            this->refreshToken = refreshToken;
+        void User::setAccessToken()
+        {
         }
 
-        void User::setExpiresIn(int expiresIn){
-            this->expriresIn = expiresIn;
+        void User::setRefreshToken() {
+            
         }
 
-        int User::getId() {
-            return id;
+        void User::setExpiresIn(){
+            
         }
 
-        std::string User::getName() {
-            return name;
+        void User::getId() {
+            
         }
 
-        std::string User::getSurname() {
-            return surname;
+        void User::getName()
+        {
         }
 
-        std::string User::getEmail() {
-            return email;
+        void User::getName(std::unique_ptr<MainWindow> window) {
+            
+            std::string target = "/user";
+            request_maker = std::make_unique<RequestMaker>(target, std::move(window));
+            request_maker->Get(); 
         }
 
-        std::string User::getAvatar() {
-            return avatar;
+        void User::getSurname() {
+            
         }
 
-        std::string User::getAccessToken() {
-            return accessToken;
+        void User::getEmail() {
+            
         }
 
-        std::string User::getRefreshToken() {
-            return refreshToken;
+        void User::getAvatar() {
+            
+        }
+
+        void User::getAccessToken() {
+            
+        }
+
+        void User::getRefreshToken() {
+            
         }
 
 
-        int User::getExpiresIn() {
-            return expriresIn;
+        void User::getExpiresIn() {
+            
         }
 
         bool User::isFriend(int id){
