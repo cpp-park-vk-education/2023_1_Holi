@@ -75,5 +75,6 @@ class User {
         std::unique_ptr<MainWindow> window;
 };
 
+
 #include "request_maker/requestmaker_http.hpp"
 #include "gui/mainwindow.h"

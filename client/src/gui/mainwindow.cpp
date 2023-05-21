@@ -195,6 +195,11 @@ void MainWindow::on_VK_main_import_items_clicked()
     //QString strToBase = "C++";
 }
 
+//get response
+void MainWindow::get_response(MessageInfo info)
+{
+  std::cout<<info<<std::endl;
+}
 
 void MainWindow::on_VK_main_list_item_itemDoubleClicked(QListWidgetItem *item)
 {
@@ -209,9 +214,3 @@ void MainWindow::on_VK_main_list_item_itemDoubleClicked(QListWidgetItem *item)
 }
 
 
-
-void MainWindow::get_response(MessageInfo info)
-{
-    std::cout<<"Ебать ты"<<std::endl;
-    std::cout<<info<<std::endl;
-};
