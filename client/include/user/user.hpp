@@ -1,13 +1,13 @@
 
 #pragma once
 
+#include <memory>
 #include <string>
 #include <iostream>
 #include <vector>
-#include "request_maker/requestmaker_https.hpp"
 
+class RequestMakerHttp;
 class MainWindow;
-
 
 class User {
     public:
@@ -33,7 +33,7 @@ class User {
 
         void setAvatar();
         
-        void setFriend();
+        void setFriend(int id_friend);
 
         void setAccessToken();
 
@@ -43,13 +43,11 @@ class User {
 
         void getId();
 
-        void getName();
+        void getName(std::unique_ptr<MainWindow> window);
 
         void getSurname();
 
         void getEmail();
-
-        void getAvatar();
 
         void getAccessToken();
 
@@ -73,7 +71,9 @@ class User {
         int expriresIn;
         std::vector<int> friends_id;
         bool is_friend;
-        std::unique_ptr<RequestMaker> request_maker;
+        std::unique_ptr<RequestMakerHttp> request_maker;
+        std::unique_ptr<MainWindow> window;
 };
 
+#include "request_maker/requestmaker_http.hpp"
 #include "gui/mainwindow.h"

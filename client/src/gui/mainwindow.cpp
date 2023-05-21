@@ -191,16 +191,10 @@ void MainWindow::MP_YT_getVideo(MessageInfo info){
 //Импорт в базу
 void MainWindow::on_VK_main_import_items_clicked()
 {
+    user->getName(std::make_unique<MainWindow>(this));
     //QString strToBase = "C++";
 }
 
-<<<<<<< HEAD
-//get response
-void MainWindow::get_response(MessageInfo info)
-{
-  std::cout<<info<<std::endl;
-}
-=======
 
 void MainWindow::on_VK_main_list_item_itemDoubleClicked(QListWidgetItem *item)
 {
@@ -214,4 +208,10 @@ void MainWindow::on_VK_main_list_item_itemDoubleClicked(QListWidgetItem *item)
     }
 }
 
->>>>>>> c98f5213f2e8d43f918ec8782d2e47008bf30fc4
+
+
+void MainWindow::get_response(MessageInfo info)
+{
+    std::cout<<"Ебать ты"<<std::endl;
+    std::cout<<info<<std::endl;
+};

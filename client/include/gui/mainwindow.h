@@ -87,7 +87,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     std::unique_ptr<APIClient> api_client;
-
+    std::unique_ptr<User> user;
 };
 
 #endif // MAINWINDOW_H

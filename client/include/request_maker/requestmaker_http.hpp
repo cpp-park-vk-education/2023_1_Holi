@@ -6,9 +6,9 @@
 #include <boost/beast/ssl.hpp>
 
 #include "client/client_http.h"
-#include "api_client/Base/response.hpp"
 #include "client/message_info.h"
 
+class MainWindow;
 
 class RequestMakerHttp {
 public:
@@ -40,3 +40,4 @@ public:
     std::string target_;
 };
 
+#include "gui/mainwindow.h"

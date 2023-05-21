@@ -70,15 +70,9 @@ include_directories(server PUBLIC include)
 if (BUILD_FOR_TEST)
     add_library(server_lib ${PROJECT_SOURCES})
     target_link_libraries(server_lib PUBLIC
-<<<<<<< HEAD
-            Qt${QT_VERSION_MAJOR}::Widgets
-            Qt${QT_VERSION_MAJOR}::Core
-            Qt${QT_VERSION_MAJOR}::Sql)
-=======
         Qt${QT_VERSION_MAJOR}::Widgets
         Qt${QT_VERSION_MAJOR}::Core
         Qt${QT_VERSION_MAJOR}::Sql)
->>>>>>> c98f5213f2e8d43f918ec8782d2e47008bf30fc4
 
     target_include_directories(server_lib PUBLIC include)
 

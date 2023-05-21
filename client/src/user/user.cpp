@@ -7,9 +7,9 @@
 
         void User::setName(std::string body) {
 
-            std::string target = "/user";
-            request_maker = std::make_unique<RequestMaker>(target);
-            request_maker->Set(body);
+            std::string target = "/user?user_id=7";
+            request_maker = std::make_unique<RequestMakerHttp>(target);
+            request_maker->Post(body);
         }
 
         void User::setSurname() {
@@ -21,15 +21,6 @@
  
         }
 
-        void User::setAvatar()
-        {
-
-        }
-
-        void User::setAvatar(std::string avatar) {
-            
-        }
-        
         void User::setFriend(int id_friend){
             isFriend(id_friend);
             if( is_friend == true)
@@ -40,10 +31,6 @@
             {
                 friends_id.push_back(id_friend);
             }
-        }
-
-        void User::setFriend()
-        {
         }
 
         void User::setAccessToken()
@@ -62,14 +49,10 @@
             
         }
 
-        void User::getName()
-        {
-        }
-
         void User::getName(std::unique_ptr<MainWindow> window) {
             
-            std::string target = "/user";
-            request_maker = std::make_unique<RequestMaker>(target, std::move(window));
+            std::string target = "/user?user_id=7";
+            request_maker = std::make_unique<RequestMakerHttp>(target, std::move(window));
             request_maker->Get(); 
         }
 
@@ -78,10 +61,6 @@
         }
 
         void User::getEmail() {
-            
-        }
-
-        void User::getAvatar() {
             
         }
 
