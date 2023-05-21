@@ -8,8 +8,8 @@
         void User::setName(std::string body) {
 
             std::string target = "/user";
-            request_maker = std::make_unique<RequestMaker>(target);
-            request_maker->Set(body);
+//            request_maker = std::make_unique<RequestMaker>(target);
+//            request_maker->Post(body);
         }
 
         void User::setSurname() {
@@ -26,9 +26,9 @@
 
         }
 
-        void User::setAvatar(std::string avatar) {
-            
-        }
+//        void User::setAvatar(std::string avatar) {
+//
+//        }
         
         void User::setFriend(int id_friend){
             isFriend(id_friend);
@@ -42,9 +42,9 @@
             }
         }
 
-        void User::setFriend()
-        {
-        }
+//        void User::setFriend()
+//        {
+//        }
 
         void User::setAccessToken()
         {
@@ -62,9 +62,9 @@
             
         }
 
-        void User::getName()
-        {
-        }
+//        void User::getName()
+//        {
+//        }
 
         void User::getName(std::unique_ptr<MainWindow> window) {
             

@@ -53,4 +53,5 @@ public:
                        const QString &email);
 };
 
+
 #endif // REGISTRATIONMANAGER_H

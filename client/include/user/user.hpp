@@ -4,10 +4,9 @@
 #include <string>
 #include <iostream>
 #include <vector>
-#include "request_maker/requestmaker_https.hpp"
 
 class MainWindow;
-
+class RequestMaker;
 
 class User {
     public:
@@ -33,7 +32,7 @@ class User {
 
         void setAvatar();
         
-        void setFriend();
+        void setFriend(int id_friend);
 
         void setAccessToken();
 
@@ -43,7 +42,7 @@ class User {
 
         void getId();
 
-        void getName();
+        void getName(std::unique_ptr<MainWindow> window);
 
         void getSurname();
 
@@ -76,4 +75,6 @@ class User {
         std::unique_ptr<RequestMaker> request_maker;
 };
 
+
+#include "request_maker/requestmaker_https.hpp"
 #include "gui/mainwindow.h"

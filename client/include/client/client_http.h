@@ -16,11 +16,7 @@
 
 class ClientHttp : public IClient {
 public:
-<<<<<<< HEAD
-    ClientHttp(http::request<http::string_body> request) :
-=======
     explicit ClientHttp(http::request<http::string_body> request) :
->>>>>>> c98f5213f2e8d43f918ec8782d2e47008bf30fc4
             resolver_(net::make_strand(ioc_)),
             stream_(net::make_strand(ioc_)),
             response_handler_(std::make_unique<ResponseHandler>()),
