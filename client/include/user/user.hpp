@@ -14,14 +14,14 @@ class User {
 
         User(): name("name: Алексей") {};
 
-        User(const std::string& email_, const std::string& login_, const std::string& password_): 
-        name("name: Алексей"),  email(email_), login(login_), password(password_) 
+        User(const std::string& email_, const std::string& login_, const std::string& password_):
+        name("name: Алексей"),  email(email_), login(login_), password(password_)
         {
         }
 
       /*User(const std::string& login_, const std::string& password_): login(login_), password(password_)
         {
-        }*/ 
+        }*/
 
         ~User() {};
 
@@ -34,7 +34,7 @@ class User {
         void setEmail();
 
         void setAvatar();
-        
+
         void setFriend(int id_friend);
 
         void setAccessToken();
@@ -45,7 +45,7 @@ class User {
 
         void getId();
 
-        void getName(std::unique_ptr<MainWindow> window);
+        void getName(MainWindow *window);
 
         void getSurname();
 
@@ -74,7 +74,6 @@ class User {
         std::vector<int> friends_id;
         bool is_friend;
         std::unique_ptr<RequestMakerHttp> request_maker;
-        std::unique_ptr<MainWindow> window;
 };
 
 

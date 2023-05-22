@@ -191,8 +191,10 @@ void MainWindow::MP_YT_getVideo(MessageInfo info){
 //Импорт в базу
 void MainWindow::on_VK_main_import_items_clicked()
 {
-    std::cout<<"mainWindow"<<std::endl;
-    user->getName(std::make_unique<MainWindow>(this));
+    std::cout<<"on_VK_main_import_items_clicked start"<<std::endl;
+    user = std::make_unique<User>();
+    user->getName(this);
+    std::cout<<"on_VK_main_import_items_clicked end"<<std::endl;
     //QString strToBase = "C++";
 }
 
