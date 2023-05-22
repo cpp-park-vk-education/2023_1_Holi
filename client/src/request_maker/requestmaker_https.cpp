@@ -61,6 +61,7 @@ void RequestMaker::CallBack()
     try
     {
         message = client_->GetResponse();
+        std::cout << "message: " << std::endl;
         std::cout << message << std::endl;
     } 
     catch (const beast::system_error & e) 

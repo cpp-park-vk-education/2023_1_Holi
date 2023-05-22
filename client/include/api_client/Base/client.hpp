@@ -14,6 +14,9 @@ public:
     APIClient(std::string& access_token, int user_id):
         access_token_(access_token), user_id_(user_id) {} 
 
+    APIClient(std::string& access_token):
+        access_token_(access_token) { user_id_ = 0; } 
+    
     virtual ~APIClient(){}
 
     virtual void GetPlaylists(MainWindow*, int) = 0;
