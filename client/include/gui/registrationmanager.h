@@ -2,8 +2,9 @@
 #ifndef REGISTRATIONMANAGER_H
 #define REGISTRATIONMANAGER_H
 
-#include "user.h"
 #include <QRegularExpression>
+
+#include "user/user.hpp"
 
 class RegistrationManager {
 public:
@@ -51,5 +52,6 @@ public:
   bool isPasswordValid(const QString &password, const QString &username,
                        const QString &email);
 };
+
 
 #endif // REGISTRATIONMANAGER_H

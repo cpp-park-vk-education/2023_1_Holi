@@ -131,11 +131,8 @@ void MainWindow::on_AlbomsButton_clicked() {
 
 void MainWindow::on_VK_getAllAlboms_clicked() {
     std::string token = accessTokenVK.toStdString();
-    std::cout << "99" << std::endl;
     api_client = std::make_unique<VKClient>(token, 478111331);
     api_client->GetPlaylists(this, 1);
-
-    std::cout << "100" << std::endl;
 }
 
 
@@ -201,9 +198,16 @@ void MainWindow::MP_YT_getVideo(MessageInfo info){
 //Импорт в базу
 void MainWindow::on_VK_main_import_items_clicked()
 {
+    std::cout<<"mainWindow"<<std::endl;
+    user->getName(std::make_unique<MainWindow>(this));
     //QString strToBase = "C++";
 }
 
+//get response
+void MainWindow::get_response(MessageInfo info)
+{
+  std::cout<<info<<std::endl;
+}
 
 void MainWindow::on_VK_main_list_item_itemDoubleClicked(QListWidgetItem *item)
 {
@@ -216,4 +220,5 @@ void MainWindow::on_VK_main_list_item_itemDoubleClicked(QListWidgetItem *item)
         }
     }
 }
+
 

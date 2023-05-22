@@ -1,60 +1,61 @@
 
 #pragma once
 
+#include <memory>
 #include <string>
 #include <iostream>
 #include <vector>
 
-
+class RequestMakerHttp;
+class MainWindow;
 
 class User {
     public:
-        User(const std::string& email_, const std::string& login_, const std::string& password_): 
-        id(0), name(""), surname(""), avatar(""), email(email_), login(login_), password(password_) {}
 
-        User(const std::string& login_, const std::string& password_): login(login_), password(password_){
-            setId(id);
-            setName(name);
-            setSurname(surname);
-            setEmail(email);
-            setAvatar(avatar);
+        User(): name("name: Алексей") {};
+
+        User(const std::string& email_, const std::string& login_, const std::string& password_): 
+        name("name: Алексей"),  email(email_), login(login_), password(password_) 
+        {
         }
+
+      /*User(const std::string& login_, const std::string& password_): login(login_), password(password_)
+        {
+        }*/ 
 
         ~User() {};
 
-        void setId(int id);
+        void setId();
 
-        void setName(std::string name);
+        void setName(std::string body);
 
-        void setSurname(std::string surname);
+        void setSurname();
 
-        void setEmail(std::string email);
+        void setEmail();
 
-        void setAvatar(std::string avatar);
+        void setAvatar();
         
         void setFriend(int id_friend);
 
-        void setAccessToken(std::string accessToken);
+        void setAccessToken();
 
-        void setRefreshToken(std::string refreshToken);
+        void setRefreshToken();
 
-        void setExpiresIn(int expiresIn);
+        void setExpiresIn();
 
-        int getId();
+        void getId();
 
-        std::string getName();
+        void getName(std::unique_ptr<MainWindow> window);
 
-        std::string getSurname();
+        void getSurname();
 
-        std::string getEmail();
+        void getEmail();
 
-        std::string getAvatar();
+        void getAccessToken();
 
-        std::string getAccessToken();
+        void getRefreshToken();
 
-        std::string getRefreshToken();
-
-        int getExpiresIn();
+        void getExpiresIn();
 
         bool isFriend(int id);
 
@@ -68,7 +69,14 @@ class User {
         std::string avatar;
         std::string accessToken;
         std::string refreshToken;
+        std::string body;
         int expriresIn;
         std::vector<int> friends_id;
         bool is_friend;
+        std::unique_ptr<RequestMakerHttp> request_maker;
+        std::unique_ptr<MainWindow> window;
 };
+
+
+#include "request_maker/requestmaker_http.hpp"
+#include "gui/mainwindow.h"
