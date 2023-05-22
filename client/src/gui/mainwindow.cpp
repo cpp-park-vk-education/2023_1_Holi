@@ -20,7 +20,7 @@ const QUrl authUrlYT{"https://accounts.google.com/o/oauth2/auth"};
 const QUrl tokenUrlYT{"https://oauth2.googleapis.com/token"};
 const QString clientSecretYT{"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"};
 const QString clientIdYT{"869025620327-u6eu9r31nr3p7qdaiqvkgd9g53vtah6q.apps.googleusercontent.com"};
-const QString scopeMaskYT = "video"; // https://dev.vk.com/reference/access-rights
+const QString scopeMaskYT = "https://www.googleapis.com/auth/youtube"; // https://dev.vk.com/reference/access-rights
 /* VK API Settings*/
 
 QUrl albumsUrl("https://api.vk.com/method/video.getAlbums");
@@ -57,9 +57,21 @@ void MainWindow::OAuthVK(
 void MainWindow::OAuthYT(
     const std::function<void(QOAuth2AuthorizationCodeFlow *)> &onSuccess) {
 
+    auto oauth = new QOAuth2AuthorizationCodeFlow;
+    auto replyHandler = new QOAuthHttpServerReplyHandler(8080, this);
 
+    oauth->setReplyHandler(replyHandler);
+    oauth->setAccessTokenUrl(tokenUrlYT);
+    oauth->setAuthorizationUrl(authUrlYT);
+    oauth->setClientIdentifier(clientIdYT);
+    oauth->setClientIdentifierSharedKey(clientSecretYT);
+    oauth->setScope((scopeMaskYT));
+    QObject::connect(oauth, &QOAuth2AuthorizationCodeFlow::authorizeWithBrowser,
+                     &QDesktopServices::openUrl);
 
-    GoogleAuth googleAuth;
+    QObject::connect(oauth, &QOAuth2AuthorizationCodeFlow::granted,
+                     [oauth, onSuccess, this]() { onSuccess(oauth); });
+    oauth->grant();
 
 }
 
@@ -88,18 +100,13 @@ void MainWindow::on_VK_button_clicked() {
 }
 
 void MainWindow::on_YT_Button_clicked() {
-    boost::json::value j = boost::json::parse(R"(
-    {
-        "name": "Name",
-        "image": "image"
-    }
-    )");
+    OAuthYT([this](QOAuth2AuthorizationCodeFlow *oauth) {
+      qDebug() << oauth->token();
 
-    boost::json::object obj = j.as_object();
+      oauthVK = oauth;
 
-    qDebug() << obj["name"].as_string().c_str();
-
-    ui->VK_main_list_item->addItem(obj["name"].as_string().c_str());
+      ui->statusbar->showMessage("Подключен профиль Ютуб");
+    });
 }
 
 void MainWindow::on_Config_button_clicked() {
