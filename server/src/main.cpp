@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
         std::cerr <<
                   "Usage: server <address> <port> <threads>\n" <<
                   "Example:\n" <<
-                  "    server 0.0.0.0 8080 1\n";
+                  "./server 0.0.0.0 8080 1\n";
         return EXIT_FAILURE;
     }
     auto const address = net::ip::make_address(argv[1]);

@@ -1,8 +1,4 @@
-file(GLOB TEST_SOURCES
-        ./*.cpp
-        ./*/*.cpp
-        ./*/*/*.cpp
-        )
+file(GLOB TEST_SOURCES ./response_handler_test.cpp main.cpp)
 
 add_executable(client_test ${TEST_SOURCES})
 

@@ -20,7 +20,7 @@ http::response<http::string_body> RequestHandler::Handle(http::request<http::str
 
     parsed_request.method_ = request_.method();
 
-    auto is_result = ParseUrl();
+    auto is_result = url::parse_origin_form(request_.target());
     url::url parsed_url;
     if (is_result) {
         parsed_url = *is_result;
@@ -45,14 +45,6 @@ http::response<http::string_body> RequestHandler::Handle(http::request<http::str
     return CreateResponse(message_info.status_, json::serialize(message_info.body_));
 }
 
-void RequestHandler::ParseHeader() {
-
-}
-
-json::value RequestHandler::ParseBody() {
-    return {};
-}
-
 http::response<http::string_body> RequestHandler::CreateResponse(http::status status, const std::string &body) {
     http::response<http::string_body> response{status, request_.version()};
 
@@ -65,8 +57,4 @@ http::response<http::string_body> RequestHandler::CreateResponse(http::status st
     response.prepare_payload();
 
     return response;
-}
-
-url::result<url::url> RequestHandler::ParseUrl() {
-    return url::parse_origin_form(request_.target());
 }
