@@ -10,13 +10,11 @@ MessageInfo VideoListRoute::Get(int id) {
 }
 
 MessageInfo VideoListRoute::Post(json::value body) {
-    // todo мб как-то объединить с video route post
     if (user_id_ <= 0) {
         std::cerr << "Non-positive  id" << std::endl;
         return {{}, http::status::not_found};
     }
 
-    // todo check json empty
     json::object video_info;
     try {
         video_info = body.as_object();

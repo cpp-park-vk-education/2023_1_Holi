@@ -2,6 +2,8 @@
 
 void RequestMakerHttp::Get()
 {
+    std::cout<<"GET start"<<std::endl;
+
     std::cout<<"requestHTTP"<<std::endl;
     http::request<http::string_body> request{http::verb::get, target_, 11};
     request.set(http::field::host, host_);
@@ -12,6 +14,7 @@ void RequestMakerHttp::Get()
     std::thread thr(&RequestMakerHttp::CallBack, this);
     thr.detach();
 
+    std::cout<<"GET end"<<std::endl;
 }
 
 void RequestMakerHttp::Post(std::string & body)

@@ -12,9 +12,6 @@
 
 class RequestHandler : public IRequestHandler {
 private:
-//    json::value body_;
-//    std::weak_ptr<Session> session_;
-
     std::unique_ptr<IAuthorizer> authorizer_;
     http::request<http::string_body> request_;
     std::unique_ptr<IRouter> router_;
@@ -27,11 +24,5 @@ public:
     http::response<http::string_body> Handle(http::request<http::string_body> &&request) override;
 
 private:
-    void ParseHeader();
-
-    json::value ParseBody();
-
     http::response<http::string_body> CreateResponse(http::status status, const std::string &body = "");
-
-    url::result<url::url> ParseUrl();
 };
