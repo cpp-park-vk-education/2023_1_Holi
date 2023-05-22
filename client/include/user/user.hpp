@@ -11,10 +11,12 @@ class MainWindow;
 
 class User {
     public:
+
+        User(): name("name: Алексей") {};
+
         User(const std::string& email_, const std::string& login_, const std::string& password_): 
         name("name: Алексей"),  email(email_), login(login_), password(password_) 
         {
-            setName(name);
         }
 
       /*User(const std::string& login_, const std::string& password_): login(login_), password(password_)

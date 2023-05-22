@@ -16,11 +16,23 @@
 
 class ClientHttp : public IClient {
 public:
+
+    ClientHttp() :
+    resolver_(net::make_strand(ioc_)),
+    stream_(net::make_strand(ioc_)),
+    response_handler_(std::make_unique<ResponseHandler>())
+    {
+        std::cout<<"client"<<std::endl;
+    }
+    
     explicit ClientHttp(http::request<http::string_body> request) :
             resolver_(net::make_strand(ioc_)),
             stream_(net::make_strand(ioc_)),
             response_handler_(std::make_unique<ResponseHandler>()),
-            request_(std::move(request)) {}
+            request_(std::move(request)) 
+            {
+                std::cout<<"client"<<std::endl;
+            }
 
     void Run(
             const std::string &host,

@@ -2,7 +2,7 @@
 
 void RequestMakerHttp::Get()
 {
-    
+    std::cout<<"requestHTTP"<<std::endl;
     http::request<http::string_body> request{http::verb::get, target_, 11};
     request.set(http::field::host, host_);
     request.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);

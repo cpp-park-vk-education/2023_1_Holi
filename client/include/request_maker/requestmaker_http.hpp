@@ -12,18 +12,16 @@ class MainWindow;
 
 class RequestMakerHttp {
 public:
-    RequestMakerHttp(const std::string& target, std::unique_ptr<MainWindow> window ) : 
+    RequestMakerHttp(const std::string& target, std::unique_ptr<MainWindow> window) : 
     target_(target), window_(std::move(window))
     {
         host_ = "localhost";
         port_ = "8080";
+        std::cout<<"Constr"<<std::endl;
+        std::cout<<target_<<std::endl;
+        //std::cout<<window_<<std::endl;
     }
 
-    RequestMakerHttp(const std::string& target) : target_(target) 
-    {
-        host_ = "localhost";
-        port_ = "8080";
-    }
     ~RequestMakerHttp() {
         std::cerr << "RequestMakerHttp destruct" << std::endl;
     }
