@@ -5,6 +5,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <QListWidgetItem>
 
 class RequestMakerHttp;
 class MainWindow;
@@ -58,6 +59,10 @@ class User {
         void getExpiresIn();
 
         bool isFriend(int id);
+
+        void addPlaylistOrChannel(std::string Playlist, std::string Service, MainWindow *window, QListWidgetItem *item);
+
+        void getPlaylistOrChannel(MainWindow *window);
 
     public:
         int id;

@@ -52,6 +52,7 @@ public:
 
     void MP_VK_getVideo(MessageInfo info);
 
+    void MP_VK_SuccesfullImportPlaylists(QListWidgetItem *item);
     /*Колбеки для ютуба*/
     void MP_YT_getAlbums(MessageInfo info);
 
@@ -90,6 +91,8 @@ private:
     Ui::MainWindow *ui;
     std::unique_ptr<APIClient> api_client;
     std::unique_ptr<User> user;
+
+
 };
 
 #endif // MAINWINDOW_H

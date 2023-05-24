@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 6.0.2, 2023-05-16T22:00:30. -->
+<!-- Written by QtCreator 6.0.2, 2023-05-24T20:44:06. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -183,6 +183,7 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">server</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">CMakeProjectManager.CMakeRunConfiguration.server</value>
     <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">server</value>
+    <value type="QString" key="RunConfiguration.Arguments">127.0.0.1 8080 4</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>

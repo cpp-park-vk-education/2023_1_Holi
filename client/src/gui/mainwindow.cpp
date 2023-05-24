@@ -121,6 +121,9 @@ MainWindow::~MainWindow() {
 /*БОКОВОЕ МЕНЮ*/
 void MainWindow::on_main_button_clicked() {
   ui->stackedWidget->setCurrentIndex(0);
+
+
+
 }
 
 void MainWindow::on_VK_button_clicked() {
@@ -211,6 +214,10 @@ void MainWindow::on_AlbomsButton_clicked() {
     int id = 1;
     QSettings settings("Holi", "UserConfig_" + QString::number(id));
     settings.setValue("YouTubeAccessToken", "444444");
+    //и загружаем плейлисты из базы данных
+
+    user = std::make_unique<User>();
+    user->getPlaylistOrChannel(this);
   ui->stackedWidget->setCurrentIndex(2); //страничка с альбомами пользователя
 }
 
@@ -289,10 +296,10 @@ void MainWindow::on_VK_main_import_items_clicked()
     std::cout<<"on_VK_main_import_items_clicked end"<<std::endl;
     //QString strToBase = "C++";
 
-    std::string token ="ya29.a0AWY7Ckl7gcpbiTMI_KFmvT7lQSE94JgbqJcUzC-xmw2pblaa8vdsIJ1-s9mRqLUbQp4qMQ5PAt7CjXJRGJFes36C3NLUPUvkug29maSh0ZVHQsCmzKUwAJNS0iaWIpmD9SnDzEl1m2eN3AD6Gpe9G7nOiHNaaCgYKAfUSARESFQG1tDrpY6_exaHWQOCVwcu7KyyiYQ0163";
+    /*std::string token ="ya29.a0AWY7Ckl7gcpbiTMI_KFmvT7lQSE94JgbqJcUzC-xmw2pblaa8vdsIJ1-s9mRqLUbQp4qMQ5PAt7CjXJRGJFes36C3NLUPUvkug29maSh0ZVHQsCmzKUwAJNS0iaWIpmD9SnDzEl1m2eN3AD6Gpe9G7nOiHNaaCgYKAfUSARESFQG1tDrpY6_exaHWQOCVwcu7KyyiYQ0163";
 
     api_client = std::make_unique<YTClient>(token);
-    api_client->GetPlaylists(this, 3);
+    api_client->GetPlaylists(this, 3);*/
 }
 
 //get response
@@ -303,17 +310,24 @@ void MainWindow::get_response(MessageInfo info)
 
 void MainWindow::on_VK_main_list_item_itemDoubleClicked(QListWidgetItem *item)
 {
-    qDebug() << item->text();
+    /*qDebug() << item->text();
     for(int i = 0; i < VK_vec.size(); i++){
         if(VK_vec[i].title == item->text()){
             QString urlStr = "https://vk.com/video/playlist/" + QString::number(VK_vec[i].owner_id) + "_" + QString::number(VK_vec[i].id);
             QUrl url(urlStr);
             QDesktopServices::openUrl(url);
         }
-    }
+    }*/
+
+    std::cout<<"Кладем в базу"<<std::endl;
+    user = std::make_unique<User>();
+    user->addPlaylistOrChannel(item->text().toStdString(), "VK", this, item);
+
 }
 
-
+void MainWindow::MP_VK_SuccesfullImportPlaylists(QListWidgetItem *item){
+    item->setBackground(Qt::red);
+}
 
 void MainWindow::on_YouTube_getAllAlboms_clicked()
 {

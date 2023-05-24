@@ -24,7 +24,7 @@ void RequestMakerHttp::Post(std::string & body)
     request.set(http::field::host, host_);
     request.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
     request.set(http::field::content_type, "application/json");
-    request.body() = json::serialize(body);
+    request.body() = (body);
     request.prepare_payload();
 
 
