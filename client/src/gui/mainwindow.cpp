@@ -3,9 +3,15 @@
 #include "oauthprovider.h"
 #include "client/message_info.h"
 #include "api_client/VK/vk_client.hpp"
+
 #include <QSettings>
 #include <QUrlQuery>
 #include <QJsonObject>
+
+#include "api_client/YT/yt_client.hpp"
+
+#include <chrono>
+
 #include <memory>
 //#include <boost/json/src.hpp>
 /*VK Settings Auth*/
@@ -266,7 +272,7 @@ void MainWindow::MP_VK_getVideo(MessageInfo info){
 
 //*Колбеки для ютуба*//
 void MainWindow::MP_YT_getAlbums(MessageInfo info){
-
+    std::cout << "Got YT Response" << std::endl;
 }
 
 void MainWindow::MP_YT_getVideo(MessageInfo info){
@@ -277,9 +283,16 @@ void MainWindow::MP_YT_getVideo(MessageInfo info){
 //Импорт в базу
 void MainWindow::on_VK_main_import_items_clicked()
 {
-    std::cout<<"mainWindow"<<std::endl;
-    user->getName(std::make_unique<MainWindow>(this));
+    std::cout<<"on_VK_main_import_items_clicked start"<<std::endl;
+    user = std::make_unique<User>();
+    user->getName(this);
+    std::cout<<"on_VK_main_import_items_clicked end"<<std::endl;
     //QString strToBase = "C++";
+
+    std::string token ="ya29.a0AWY7Ckl7gcpbiTMI_KFmvT7lQSE94JgbqJcUzC-xmw2pblaa8vdsIJ1-s9mRqLUbQp4qMQ5PAt7CjXJRGJFes36C3NLUPUvkug29maSh0ZVHQsCmzKUwAJNS0iaWIpmD9SnDzEl1m2eN3AD6Gpe9G7nOiHNaaCgYKAfUSARESFQG1tDrpY6_exaHWQOCVwcu7KyyiYQ0163";
+
+    api_client = std::make_unique<YTClient>(token);
+    api_client->GetPlaylists(this, 3);
 }
 
 //get response

@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "client/errors.h"
 #include "message_info.h"
 #include "namespaces.h"
 

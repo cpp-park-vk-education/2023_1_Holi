@@ -9,13 +9,9 @@
 
 class ResponseHandler : public IResponseHandler {
 public:
-//    explicit RespHandler(std::unique_ptr<IRouter> router) : router_(router.release()) {}
 
     MessageInfo Handle(http::response<http::string_body> &&response) override;
 
 private:
     http::response<http::string_body> response_;
-
-private:
-    void ParseBody();
 };

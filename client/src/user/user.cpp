@@ -46,15 +46,15 @@
             
         }
 
-        void User::getName(std::unique_ptr<MainWindow> window) {
+        void User::getName(MainWindow *window) {
             
-            std::cout<<window<<std::endl;
-            std::cout<<"user"<<std::endl;
+            std::cout<<"getName start"<<std::endl;
             std::string target = "/user?user_id=7";
             //std::unique_ptr<MainWindow> window_ = std::move(window);
-            request_maker = std::make_unique<RequestMakerHttp>(target, std::move(window));
+            request_maker = std::make_unique<RequestMakerHttp>(target, window);
             std::cout<<"GET user"<<std::endl;
-            request_maker->Get(); 
+            request_maker->Get();
+            std::cout<<"getName end"<<std::endl;
         }
 
         void User::getSurname() {

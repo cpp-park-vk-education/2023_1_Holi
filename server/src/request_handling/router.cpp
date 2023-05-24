@@ -12,7 +12,6 @@ MessageInfo Router::Route(const ParsedRequest &request) {
         return std::make_unique<UserRoute>()->Post(request_.body_);
     }
 
-
     if (request_.path_.empty()) {
         std::cerr << "Error: empty path" << std::endl;
         return {{}, http::status::bad_request};
@@ -88,8 +87,6 @@ MessageInfo Router::Route(const ParsedRequest &request) {
         return {{}, http::status::not_found};
     }
 
-    // todo json check
-
     switch (request_.method_) {
         case (http::verb::get): {
             return route->Get(resource_id);
@@ -101,9 +98,7 @@ MessageInfo Router::Route(const ParsedRequest &request) {
             return route->Delete(resource_id);
         }
         default: {
-
+            return {{}, http::status::method_not_allowed};
         }
     }
-
-    return {{}, http::status::not_found};
 }
