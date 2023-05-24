@@ -4,7 +4,7 @@
 
 
 #include <iostream>
-
+#include <QSettings>
 #include "mainwindow.h"
 #include "registrationmanager.h"
 #include <QApplication>

@@ -1,33 +1,30 @@
 #ifndef OAUTHPROVIDER_H
 #define OAUTHPROVIDER_H
 
-#include <QDebug>
-#include <QDesktopServices>
-#include <QFile>
-#include <QJsonDocument>
 #include <QtNetworkAuth/QOAuth2AuthorizationCodeFlow>
 #include <QtNetworkAuth/QOAuthHttpServerReplyHandler>
-#include <QObject>
+
 
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkReply>
-#include <QtNetwork/QNetworkReply>
-#include <QUrl>
-#include <QUrlQuery>
-
-#include <QDesktopServices>
 
 
-class GoogleAuth : public QObject {
-  Q_OBJECT
+
+
+class GoogleSSO : public QObject {
+    Q_OBJECT
 public:
-  explicit GoogleAuth(QObject *parent = nullptr);
-  Q_INVOKABLE void click();
+    GoogleSSO(QObject *parent=nullptr);
+    virtual ~GoogleSSO();
 
+public slots:
+    void authenticate();
+
+signals:
+    void gotToken(const QString& token);
 
 private:
-  QOAuth2AuthorizationCodeFlow * google;
-
+    QOAuth2AuthorizationCodeFlow * google;
 };
 
 #endif // OAUTHPROVIDER_H

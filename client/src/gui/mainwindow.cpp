@@ -3,8 +3,9 @@
 #include "oauthprovider.h"
 #include "client/message_info.h"
 #include "api_client/VK/vk_client.hpp"
-
-#include <chrono>
+#include <QSettings>
+#include <QUrlQuery>
+#include <QJsonObject>
 #include <memory>
 //#include <boost/json/src.hpp>
 /*VK Settings Auth*/
@@ -16,6 +17,10 @@ const QString scopeMaskVK = "video"; // https://dev.vk.com/reference/access-righ
 
 
 /*YT Settings Auth*/
+/*
+ACCESS_TOKEN TEST TEST 0451Nc11
+ya29.a0AWY7Ckl7gcpbiTMI_KFmvT7lQSE94JgbqJcUzC-xmw2pblaa8vdsIJ1-s9mRqLUbQp4qMQ5PAt7CjXJRGJFes36C3NLUPUvkug29maSh0ZVHQsCmzKUwAJNS0iaWIpmD9SnDzEl1m2eN3AD6Gpe9G7nOiHNaaCgYKAfUSARESFQG1tDrpY6_exaHWQOCVwcu7KyyiYQ0163
+*/
 const QUrl authUrlYT{"https://accounts.google.com/o/oauth2/auth"};
 const QUrl tokenUrlYT{"https://oauth2.googleapis.com/token"};
 const QString clientSecretYT{"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"};
@@ -58,20 +63,44 @@ void MainWindow::OAuthYT(
     const std::function<void(QOAuth2AuthorizationCodeFlow *)> &onSuccess) {
 
     auto oauth = new QOAuth2AuthorizationCodeFlow;
-    auto replyHandler = new QOAuthHttpServerReplyHandler(8080, this);
-
-    oauth->setReplyHandler(replyHandler);
-    oauth->setAccessTokenUrl(tokenUrlYT);
-    oauth->setAuthorizationUrl(authUrlYT);
-    oauth->setClientIdentifier(clientIdYT);
-    oauth->setClientIdentifierSharedKey(clientSecretYT);
     oauth->setScope((scopeMaskYT));
+
     QObject::connect(oauth, &QOAuth2AuthorizationCodeFlow::authorizeWithBrowser,
                      &QDesktopServices::openUrl);
 
-    QObject::connect(oauth, &QOAuth2AuthorizationCodeFlow::granted,
-                     [oauth, onSuccess, this]() { onSuccess(oauth); });
+    oauth->setAuthorizationUrl(authUrlYT);
+    oauth->setClientIdentifier(clientIdYT);
+    oauth->setAccessTokenUrl(tokenUrlYT);
+    oauth->setClientIdentifierSharedKey(clientSecretYT);
+
+    oauth->setModifyParametersFunction([this](QAbstractOAuth::Stage stage,QMultiMap<QString, QVariant>* parameters){
+        qDebug() << "modifyParametersFunction stage=" << static_cast<int>(stage);
+               if (stage == QAbstractOAuth::Stage::RequestingAuthorization)
+               {
+                   parameters->insert("access_type", "offline");
+                   parameters->insert("prompt", "consent");
+               }
+               else if (stage == QAbstractOAuth::Stage::RequestingAccessToken)
+               {
+                   QByteArray code = parameters->value("code").toByteArray();
+                   QString codeString = QUrl::fromPercentEncoding(code);
+
+
+                   parameters->replace("code", codeString);
+
+               }
+    });
+    auto replyHandler = new QOAuthHttpServerReplyHandler(8080, this);
+
+    oauth->setReplyHandler(replyHandler);
     oauth->grant();
+
+
+    QObject::connect(oauth, &QOAuth2AuthorizationCodeFlow::granted,
+                     [oauth, onSuccess, this]() {
+        qDebug() << oauth;
+        onSuccess(oauth); });
+
 
 }
 
@@ -89,28 +118,75 @@ void MainWindow::on_main_button_clicked() {
 }
 
 void MainWindow::on_VK_button_clicked() {
-  OAuthVK([this](QOAuth2AuthorizationCodeFlow *oauth) {
-    qDebug() << oauth->token();
+    int id = 1;//это id нашего пользователя
+    QSettings settings("Holi", "UserConfig_" + QString::number(id));// это все его настройки
+    QString token = settings.value("VKAccessToken", "default").toString();//токен
+    QDateTime token_getTime = settings.value("VKAccessToken_getTime").toDateTime();//когда получен
+    QDateTime now = QDateTime::currentDateTime();//текущее время
+ qDebug() << (token == "default" || token_getTime.daysTo(now) >= 1 || !QFile::exists(settings.fileName()));
+    if(token == "default" || token_getTime.daysTo(now) >= 1 || !QFile::exists(settings.fileName())){
+        //если прошло больше суток с момента получения токена
+        OAuthVK([this](QOAuth2AuthorizationCodeFlow *oauth) {
+        qDebug() << oauth->token();
 
-    oauthVK = oauth;
-    accessTokenVK = oauth->token();
-    ui->VK_button->setEnabled(false);
-    ui->statusbar->showMessage("Подключен профиль ВКонтакте");
-  });
+        oauthVK = oauth;
+        accessTokenVK = oauth->token();
+        int id = 1;
+         QDateTime now = QDateTime::currentDateTime();
+        QSettings settings("Holi", "UserConfig_" + QString::number(id));
+        settings.setValue("VKAccessToken", accessTokenVK);
+        settings.setValue("VKAccessToken_getTime",now);
+        ui->VK_button->setEnabled(false);
+        ui->statusbar->showMessage("Подключен профиль ВКонтакте");
+      });
+    } else if (token != "default"){
+        accessTokenVK = token;
+        qDebug() << "Токен из настроек пользователя\nПолучен: " << token_getTime;
+         qDebug() << token;
+
+        ui->VK_button->setEnabled(false);
+        ui->statusbar->showMessage("Подключен профиль ВКонтакте");
+    }
+
 }
 
 void MainWindow::on_YT_Button_clicked() {
-    OAuthYT([this](QOAuth2AuthorizationCodeFlow *oauth) {
-      qDebug() << oauth->token();
+    int id = 1;//это id нашего пользователя
+    QSettings settings("Holi", "UserConfig_" + QString::number(id));// это все его настройки
+    QString token = settings.value("YouTubeAccessToken", "default").toString();//токен
+    QDateTime token_getTime = settings.value("YouTubeAccessToken_getTime").toDateTime();//когда получен
+    QDateTime now = QDateTime::currentDateTime();//текущее время
+    qDebug() << (token == "default" || token_getTime.daysTo(now) >= 1 || !QFile::exists(settings.fileName()));
+    if(token == "default" || token_getTime.daysTo(now) >= 1 || !QFile::exists(settings.fileName())){
+        OAuthYT([this](QOAuth2AuthorizationCodeFlow *oauth) {
+    qDebug() << "swrgwrg";
+          qDebug() << oauth->token();
+          accessTokenYT = oauth->token();
+          int id = 1;
+           QDateTime now = QDateTime::currentDateTime();
+          QSettings settings("Holi", "UserConfig_" + QString::number(id));
+          settings.setValue("YouTubeAccessToken", accessTokenYT);
+          settings.setValue("YouTubeAccessToken_getTime",now);
+          ui->YT_Button->setEnabled(false);
+          ui->statusbar->showMessage("Подключен профиль Ютуб");
+        });
+    } else if (token != "default"){
+        accessTokenYT = token;
+         qDebug() << "Токен из настроек пользователя\nПолучен: " << token_getTime;
+         qDebug() << token;
 
-      oauthVK = oauth;
+         ui->YT_Button->setEnabled(false);
+         ui->statusbar->showMessage("Подключен профиль Ютуб");
+    }
 
-      ui->statusbar->showMessage("Подключен профиль Ютуб");
-    });
+
 }
 
 void MainWindow::on_Config_button_clicked() {
   ui->stackedWidget->setCurrentIndex(1);
+
+
+
 }
 
 void MainWindow::on_button_login_clicked() {
@@ -126,6 +202,9 @@ void MainWindow::on_signUp_button_clicked() {
 }
 
 void MainWindow::on_AlbomsButton_clicked() {
+    int id = 1;
+    QSettings settings("Holi", "UserConfig_" + QString::number(id));
+    settings.setValue("YouTubeAccessToken", "444444");
   ui->stackedWidget->setCurrentIndex(2); //страничка с альбомами пользователя
 }
 
@@ -221,4 +300,10 @@ void MainWindow::on_VK_main_list_item_itemDoubleClicked(QListWidgetItem *item)
     }
 }
 
+
+
+void MainWindow::on_YouTube_getAllAlboms_clicked()
+{
+
+}
 

@@ -84,6 +84,8 @@ private slots:
 
     void on_VK_main_list_item_itemDoubleClicked(QListWidgetItem *item);
 
+    void on_YouTube_getAllAlboms_clicked();
+
 private:
     Ui::MainWindow *ui;
     std::unique_ptr<APIClient> api_client;
