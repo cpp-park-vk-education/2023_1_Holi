@@ -6,6 +6,7 @@
 
 #include <memory>
 #include <vector>
+#include <string>
 
 #include "request_handling/i_router.h"
 #include "orm/room.h"
@@ -15,7 +16,12 @@
 #include "video_route.h"
 #include "video_all_route.h"
 #include "video_list_all_route.h"
+#include "user_auth_check_route.h"
 
+enum ErrorCode {
+    error,
+    success
+};
 
 
 class Router : public IRouter {
@@ -29,4 +35,9 @@ public:
     explicit Router(std::unique_ptr<IRoute> route) : route_(route.release()) {}
 
     MessageInfo Route(const ParsedRequest &request);
+
+private:
+    ErrorCode GetParam(const std::string &param, url::params_base::iterator &iter);
+
+    ErrorCode ToIntWithCheck(const url::params_base::iterator &iterm, int &param);
 };
