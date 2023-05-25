@@ -35,7 +35,7 @@ MessageInfo Router::Route(const ParsedRequest &request) {
     if (request_.parameters_.find("user_id") == request_.parameters_.end() &&
         request_.path_.find("/user/auth") != std::string::npos) {
         if (request_.path_ == "/user/auth/check") {
-            if (request_.method_ == http::verb::post) {
+            if (request_.method_ == http::verb::get) {
                 url::params_base::iterator param;
                 if (GetParam("login", param) == error) {
                     return {{}, http::status::bad_request};
