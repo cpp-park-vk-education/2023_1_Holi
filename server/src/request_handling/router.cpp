@@ -69,7 +69,7 @@ MessageInfo Router::Route(const ParsedRequest &request) {
         return {{}, http::status::not_found};
     }
 
-    if (GetParam("resource_id", param) == error) { return {{}, http::status::bad_request}; }
+    GetParam("resource_id", param);
     int resource_id = 0;
     if (ToIntWithCheck(param, resource_id) == error) { resource_id = user_id; }
     if (resource_id <= 0) {

@@ -14,7 +14,7 @@ private:
     std::unique_ptr<IDbConnectorTmp> db_connector_;
 
 public:
-    explicit UserAuthCheckRoute(int user_id = 0, std::unique_ptr<IDbConnectorTmp> db_connector = nullptr) :
+    explicit UserAuthCheckRoute(std::unique_ptr<IDbConnectorTmp> db_connector = nullptr) :
             db_connector_(std::make_unique<DbConnectorTmp>()) {}
 
     MessageInfo Get(int id) override;

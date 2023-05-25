@@ -65,7 +65,6 @@
             std::string target = "/video/list?user_id=1";
             //std::unique_ptr<MainWindow> window_ = std::move(window);
             request_maker = std::make_unique<RequestMakerHttp>(target, window);
-            std::cout<<"GET user"<<std::endl;
             json::object obj;
             obj["name"] = Playlist;
             obj["exported_from"] = Service;
