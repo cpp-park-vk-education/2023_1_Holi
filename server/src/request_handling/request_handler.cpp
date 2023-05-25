@@ -20,6 +20,9 @@ http::response<http::string_body> RequestHandler::Handle(http::request<http::str
 
     parsed_request.method_ = request_.method();
 
+    std::cerr << request_.target() << std::endl;
+    std::cerr << request_.body() << std::endl;
+
     auto is_result = url::parse_origin_form(request_.target());
     url::url parsed_url;
     if (is_result) {
