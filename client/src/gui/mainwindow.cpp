@@ -138,8 +138,9 @@ void MainWindow::on_main_button_clicked() {
 }
 
 void MainWindow::on_VK_button_clicked() {
-    int id = 1;//это id нашего пользователя
-    QSettings settings("Holi", "UserConfig_" + QString::number(id));// это все его настройки
+    QSettings current("Holi", "CurrentUser");// это все его настройки
+    QString id = current.value("id", "null").toString();
+    QSettings settings("Holi", "UserConfig_" + (id));// это все его настройки
     QString token = settings.value("VKAccessToken", "default").toString();//токен
     QDateTime token_getTime = settings.value("VKAccessToken_getTime").toDateTime();//когда получен
     QDateTime now = QDateTime::currentDateTime();//текущее время
@@ -171,8 +172,9 @@ void MainWindow::on_VK_button_clicked() {
 }
 
 void MainWindow::on_YT_Button_clicked() {
-    int id = 1;//это id нашего пользователя
-    QSettings settings("Holi", "UserConfig_" + QString::number(id));// это все его настройки
+    QSettings current("Holi", "CurrentUser");// это все его настройки
+    QString id = current.value("id", "null").toString();
+    QSettings settings("Holi", "UserConfig_" + (id));// это все его настройки
     QString token = settings.value("YouTubeAccessToken", "default").toString();//токен
     QDateTime token_getTime = settings.value("YouTubeAccessToken_getTime").toDateTime();//когда получен
     QDateTime now = QDateTime::currentDateTime();//текущее время
@@ -275,6 +277,14 @@ void MainWindow::MP_VK_getAlbums(MessageInfo info){
 
 
         }
+    QSettings current("Holi", "CurrentUser");// это все его настройки
+    QString id = current.value("id", "null").toString();
+    QSettings Playlists("Holi", "Playlist_" + id);
+    QStringList list = Playlists.allKeys();
+
+    for (int i = 0; i < list.size(); i++) {
+        ui->VK_main_list_item->item(Playlists.value(list[i]).toInt())->setBackground(Qt::red);
+    }
     }
         else{
         QMessageBox msgBox;
@@ -349,38 +359,40 @@ void MainWindow::on_VK_main_import_items_clicked()
     user = std::make_unique<User>();
     user->getName(this);
     std::cout<<"on_VK_main_import_items_clicked end"<<std::endl;
-    //QString strToBase = "C++";
-
-    /*std::string token ="ya29.a0AWY7Ckl7gcpbiTMI_KFmvT7lQSE94JgbqJcUzC-xmw2pblaa8vdsIJ1-s9mRqLUbQp4qMQ5PAt7CjXJRGJFes36C3NLUPUvkug29maSh0ZVHQsCmzKUwAJNS0iaWIpmD9SnDzEl1m2eN3AD6Gpe9G7nOiHNaaCgYKAfUSARESFQG1tDrpY6_exaHWQOCVwcu7KyyiYQ0163";
-
-    ;*/
 }
 
 //get response
 void MainWindow::get_response(MessageInfo info)
 {
     std::cout <<"roigjfb";
-  std::cout<<info<<std::endl;
+  std::cout<<info<<std::endl;  QSettings current("Holi", "CurrentUser");// это все его настройки
+  QString name = current.value("name", "null").toString();
 }
 
 void MainWindow::on_VK_main_list_item_itemDoubleClicked(QListWidgetItem *item)
 {
-    /*qDebug() << item->text();
-    for(int i = 0; i < VK_vec.size(); i++){
-        if(VK_vec[i].title == item->text()){
-            QString urlStr = "https://vk.com/video/playlist/" + QString::number(VK_vec[i].owner_id) + "_" + QString::number(VK_vec[i].id);
-            QUrl url(urlStr);
-            QDesktopServices::openUrl(url);
-        }
-    }*/
 
+    QSettings current("Holi", "CurrentUser");// это все его настройки
+    QString id = current.value("id", "null").toString();
+    QSettings Playlists("Holi", "Playlist_" + id);
+    Playlists.setValue(item->text(), item->listWidget()->row(item));
+    std::cout << Playlists.fileName().toStdString();
     std::cout<<"Кладем в базу"<<std::endl;
-    user = std::make_unique<User>();
-    user->addPlaylistOrChannel(item->text().toStdString(), "VK", this, item);
+    if(!Playlists.allKeys().contains(item->text())){
+        user = std::make_unique<User>();
+        user->addPlaylistOrChannel(item->text().toStdString(), "VK", this, item);
+        item->setBackground(Qt::red);
+
+    }else{
+        ui->statusbar->showMessage(item->text() + " уже добавлен в базу данных");
+        item->setBackground(Qt::red);
+    }
+
 
 }
 
 void MainWindow::MP_VK_SuccesfullImportPlaylists(QListWidgetItem *item){
+    std::cout << "srgsrg";
     item->setBackground(Qt::red);
 }
 

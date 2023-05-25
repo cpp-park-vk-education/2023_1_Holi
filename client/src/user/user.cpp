@@ -116,7 +116,7 @@
 
         void User::registrate(std::string name, std::string email, std::string password, MainWindow* window){
             std::cout<<"Регистрируем пользователя..."<<std::endl;
-            std::string target = "/user";
+            std::string target = "/user/auth";
 
             request_maker = std::make_unique<RequestMakerHttp>(target,window);
 
