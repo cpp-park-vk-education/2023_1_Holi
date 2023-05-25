@@ -60,6 +60,8 @@
         void User::getSurname() {
             
         }
+
+
         void User::addPlaylistOrChannel(std::string Playlist, std::string Service, MainWindow *window, QListWidgetItem *item){
             std::cout<<"getName start"<<std::endl;
             QSettings current("Holi", "CurrentUser");
@@ -113,6 +115,21 @@
         void User::getExpiresIn() {
             
         }
+
+        void User::singin(std::string login, std::string password, MainWindow *window)
+        {
+            std::string target = "user/auth/login";
+            request_maker = std::make_unique<RequestMakerHttp>(target,window);
+            json::object obj;
+            obj["login"] = login;
+            obj["password"] = password;
+
+            std::string str = boost::json::serialize( boost::json::value_from(obj));
+            std::cout << str;
+            request_maker->Post(str,1);
+
+        }
+
 
         void User::registrate(std::string name, std::string email, std::string password, MainWindow* window){
             std::cout<<"Регистрируем пользователя..."<<std::endl;
