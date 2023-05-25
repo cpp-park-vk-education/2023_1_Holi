@@ -17,6 +17,7 @@
 #include "video_all_route.h"
 #include "video_list_all_route.h"
 #include "user_auth_check_route.h"
+#include "user_auth_login_route.h"
 
 enum ErrorCode {
     error,

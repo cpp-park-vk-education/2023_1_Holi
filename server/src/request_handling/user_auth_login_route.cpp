@@ -52,9 +52,8 @@ MessageInfo UserAuthLoginRoute::Post(json::value body) {
     }
 
     std::string password_to_check;
-    if (query.next()) {
-        password_to_check = query.value("password").toString().toStdString();
-    }
+    query.first();
+    password_to_check = query.value("password").toString().toStdString();
 
     if (password_to_check != values["password"]) {
         return {{}, http::status::ok};
@@ -62,11 +61,10 @@ MessageInfo UserAuthLoginRoute::Post(json::value body) {
 
     std::vector<std::string> keys{"id", "name", "surname", "email", "login", "password"};
     json::object init;
-    int i = 0;
-    while(query.next() && i < keys.size()) {
-        init[keys[i]] = query.value(keys[i].c_str()).toString().toStdString();
-        ++i;
+    for (const auto &key: keys) {
+        init[key] = query.value(key.c_str()).toString().toStdString();
     }
+
     json::value response_body(init);
     std::cout << "\t\t--- Create json value" << std::endl;
 
