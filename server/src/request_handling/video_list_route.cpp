@@ -73,7 +73,7 @@ MessageInfo VideoListRoute::Post(json::value body) {
     }
     init["user_id"] = std::to_string(user_id_);
     for (const auto &col: cols) {
-        init[col.first] = video_info[col.second];
+        init[col.first] = video_info[col.first];
     }
 
     json::value response_body(init);
