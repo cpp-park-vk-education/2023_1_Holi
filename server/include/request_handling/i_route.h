@@ -15,6 +15,8 @@ class IRoute {
 public:
     virtual MessageInfo Get(int id) = 0;
 
+    virtual MessageInfo Get(const std::string &param) { return {}; }
+
     virtual MessageInfo Post(json::value body) = 0;
 
     virtual MessageInfo Delete(int id) = 0;

@@ -4,13 +4,58 @@
 
 #include "request_handling/router.h"
 
+ErrorMessage Router::GetParam(const std::string &param, url::params_base::iterator &iter) {
+    auto parameter = request_.parameters_.find(param);
+    if (parameter == request_.parameters_.end()) {
+        return {error, "Error: improper url parameters"};
+    }
+
+    iter = parameter;
+    return {success, ""};
+}
+
+ErrorMessage Router::ToIntWithCheck(const url::params_base::iterator &iter, int &param) {
+    try {
+        param = std::stoi((*iter).value);
+    } catch (std::invalid_argument const &ex) {
+        return {error, "Error: invalid url parameters"};
+    } catch (...) {
+        return {error, "Unexpected error with parameters"};
+
+    }
+
+    return {success, ""};
+}
 
 MessageInfo Router::Route(const ParsedRequest &request) {
     request_ = request;
 
-    if (request_.path_ == "/user" && request_.method_ == http::verb::post) {
-        return std::make_unique<UserRoute>()->Post(request_.body_);
+    if (request_.parameters_.find("user_id") == request_.parameters_.end() &&
+        request_.path_.find("/user/auth") != std::string::npos) {
+        if (request_.path_ == "/user/auth/check") {
+            if (request_.method_ == http::verb::get) {
+                url::params_base::iterator param;
+                auto result = GetParam("login", param);
+                if (result.code == error) {
+                    std::cerr << result.message << std::endl;
+                    return {{}, http::status::bad_request};
+                }
+                std::string login = (*param).value;
+
+                return std::make_unique<UserAuthCheckRoute>()->Get(login);
+            }
+        }
+
+        if (request_.path_ == "/user/auth") {
+            if (request_.method_ == http::verb::post) {
+                return std::make_unique<UserRoute>()->Post(request_.body_);
+            }
+        }
     }
+
+//    if (request_.path_ == "/user" && request_.method_ == http::verb::post) {
+//        return std::make_unique<UserRoute>()->Post(request_.body_);
+//    }
 
     if (request_.path_.empty()) {
         std::cerr << "Error: empty path" << std::endl;
@@ -21,19 +66,16 @@ MessageInfo Router::Route(const ParsedRequest &request) {
         return {{}, http::status::bad_request};
     }
 
-    auto parameter = request.parameters_.find("user_id");
-    if (parameter == request.parameters_.end()) {
-        std::cerr << "Error: improper url parameters" << std::endl;
+    url::params_base::iterator param;
+    auto result = GetParam("user_id", param);
+    if (result.code == error) {
+        std::cerr << result.message << std::endl;
         return {{}, http::status::bad_request};
     }
     int user_id = 0;
-    try {
-        user_id = std::stoi((*parameter).value);
-    } catch (std::invalid_argument const &ex) {
-        std::cerr << "Error: invalid url parameters" << std::endl;
-        return {{}, http::status::bad_request};
-    } catch (...) {
-        std::cerr << "Unexpected error with parameters" << std::endl;
+    result = ToIntWithCheck(param, user_id);
+    if (result.code == error) {
+        std::cerr << result.message << std::endl;
         return {{}, http::status::bad_request};
     }
     if (user_id <= 0) {
@@ -41,21 +83,10 @@ MessageInfo Router::Route(const ParsedRequest &request) {
         return {{}, http::status::not_found};
     }
 
+    GetParam("resource_id", param);
     int resource_id = 0;
-    parameter = request.parameters_.find("resource_id");
-    if (parameter == request.parameters_.end()) {
-        resource_id = user_id;
-    } else {
-        try {
-            resource_id = std::stoi((*parameter).value);
-        } catch (std::invalid_argument const &ex) {
-            std::cerr << "Error: invalid url parameters" << std::endl;
-            return {{}, http::status::bad_request};
-        } catch (...) {
-            std::cerr << "Unexpected error with parameters" << std::endl;
-            return {{}, http::status::bad_request};
-        }
-    }
+    result = ToIntWithCheck(param, resource_id);
+    if (result.code== error) { resource_id = user_id; }
     if (resource_id <= 0) {
         std::cerr << "Error: Non-positive resource id" << std::endl;
         return {{}, http::status::not_found};
@@ -92,7 +123,7 @@ MessageInfo Router::Route(const ParsedRequest &request) {
             return route->Get(resource_id);
         }
         case (http::verb::post): {
-            return route->Post(request.body_);
+            return route->Post(request_.body_);
         }
         case (http::verb::delete_): {
             return route->Delete(resource_id);

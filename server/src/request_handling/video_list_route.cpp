@@ -11,7 +11,7 @@ MessageInfo VideoListRoute::Get(int id) {
 
 MessageInfo VideoListRoute::Post(json::value body) {
     if (user_id_ <= 0) {
-        std::cerr << "Non-positive  id" << std::endl;
+        std::cerr << "Non-positive id" << std::endl;
         return {{}, http::status::not_found};
     }
 
@@ -26,13 +26,15 @@ MessageInfo VideoListRoute::Post(json::value body) {
         return {{}, http::status::bad_request};
     }
 
-    std::string sql = R"(insert into "Playlist" (name, exported_from, user_id) values (?, ?, ?) returning id)";
+    std::string sql = R"(insert into "Playlist" (name, exported_from, user_id, id_in_service, description) values (?, ?, ?, ?, ?) returning id)";
 
-    std::string name;
-    std::string exported_from;
+    std::map<std::string, std::string> cols;
     try {
-        name = video_info.at("name").as_string();
-        exported_from = video_info.at("exported_from").as_string();
+        cols["name"] = video_info.at("name").as_string();
+        cols["exported_from"] = video_info.at("exported_from").as_string();
+        cols["id_in_service"] = video_info.at("id_in_service").as_string();
+        cols["description"] = video_info.at("description").as_string();
+
 
     } catch (const std::out_of_range &e) {
         std::cerr << "Not enough data to post:" << e.what() << std::endl;
@@ -50,9 +52,11 @@ MessageInfo VideoListRoute::Post(json::value body) {
         query = QSqlQuery(db_connector_->Connect());
 
         query.prepare(sql.c_str());
-        query.bindValue(0, name.c_str());
-        query.bindValue(1, exported_from.c_str());
         query.bindValue(2, user_id_);
+        for (int i = 0; const auto &col: cols) {
+            if (i == 2) { ++i; }
+            query.bindValue(i++, col.second.c_str());
+        }
 
         query = db_connector_->MakeQuery(std::move(query));
     } catch (const ConditionError &e) {
@@ -63,16 +67,14 @@ MessageInfo VideoListRoute::Post(json::value body) {
         return {{}, http::status::internal_server_error};
     }
 
-
-    std::vector<std::string> keys{"name", "exported_from", "user_id"};
     json::object init;
     if (query.next()) {
         init["id"] = query.value("id").toString().toStdString();
     }
-    init[keys[0]] = video_info[keys[0]];
-    init[keys[1]] = video_info[keys[1]];
-    init[keys[2]] = std::to_string(user_id_);
-
+    init["user_id"] = std::to_string(user_id_);
+    for (const auto &col: cols) {
+        init[col.first] = video_info[col.first];
+    }
 
     json::value response_body(init);
     std::cout << "\t\t--- Create json value" << std::endl;
