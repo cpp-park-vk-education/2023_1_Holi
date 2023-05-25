@@ -45,11 +45,17 @@ MessageInfo Router::Route(const ParsedRequest &request) {
                 return std::make_unique<UserAuthCheckRoute>()->Get(login);
             }
         }
+
+        if (request_.path_ == "/user/auth") {
+            if (request_.method_ == http::verb::post) {
+                return std::make_unique<UserRoute>()->Post(request_.body_);
+            }
+        }
     }
 
-    if (request_.path_ == "/user" && request_.method_ == http::verb::post) {
-        return std::make_unique<UserRoute>()->Post(request_.body_);
-    }
+//    if (request_.path_ == "/user" && request_.method_ == http::verb::post) {
+//        return std::make_unique<UserRoute>()->Post(request_.body_);
+//    }
 
     if (request_.path_.empty()) {
         std::cerr << "Error: empty path" << std::endl;
