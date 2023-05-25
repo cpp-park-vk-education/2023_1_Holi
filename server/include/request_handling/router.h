@@ -23,6 +23,11 @@ enum ErrorCode {
     success
 };
 
+struct ErrorMessage {
+    ErrorCode code;
+    std::string message;
+};
+
 
 class Router : public IRouter {
 private:
@@ -37,7 +42,7 @@ public:
     MessageInfo Route(const ParsedRequest &request);
 
 private:
-    ErrorCode GetParam(const std::string &param, url::params_base::iterator &iter);
+    ErrorMessage GetParam(const std::string &param, url::params_base::iterator &iter);
 
-    ErrorCode ToIntWithCheck(const url::params_base::iterator &iterm, int &param);
+    ErrorMessage ToIntWithCheck(const url::params_base::iterator &iterm, int &param);
 };

@@ -4,29 +4,27 @@
 
 #include "request_handling/router.h"
 
-ErrorCode Router::GetParam(const std::string &param, url::params_base::iterator &iter) {
+ErrorMessage Router::GetParam(const std::string &param, url::params_base::iterator &iter) {
     auto parameter = request_.parameters_.find(param);
     if (parameter == request_.parameters_.end()) {
-        std::cerr << "Error: improper url parameters" << std::endl;
-        return error;
+        return {error, "Error: improper url parameters"};
     }
 
     iter = parameter;
-    return success;
+    return {success, ""};
 }
 
-ErrorCode Router::ToIntWithCheck(const url::params_base::iterator &iter, int &param) {
+ErrorMessage Router::ToIntWithCheck(const url::params_base::iterator &iter, int &param) {
     try {
         param = std::stoi((*iter).value);
     } catch (std::invalid_argument const &ex) {
-        std::cerr << "Error: invalid url parameters" << std::endl;
-        return error;
+        return {error, "Error: invalid url parameters"};
     } catch (...) {
-        std::cerr << "Unexpected error with parameters" << std::endl;
-        return error;
+        return {error, "Unexpected error with parameters"};
+
     }
 
-    return success;
+    return {success, ""};
 }
 
 MessageInfo Router::Route(const ParsedRequest &request) {
@@ -37,7 +35,9 @@ MessageInfo Router::Route(const ParsedRequest &request) {
         if (request_.path_ == "/user/auth/check") {
             if (request_.method_ == http::verb::get) {
                 url::params_base::iterator param;
-                if (GetParam("login", param) == error) {
+                auto result = GetParam("login", param);
+                if (result.code == error) {
+                    std::cerr << result.message << std::endl;
                     return {{}, http::status::bad_request};
                 }
                 std::string login = (*param).value;
@@ -61,9 +61,17 @@ MessageInfo Router::Route(const ParsedRequest &request) {
     }
 
     url::params_base::iterator param;
-    if (GetParam("user_id", param) == error) { return {{}, http::status::bad_request}; }
+    auto result = GetParam("user_id", param);
+    if (result.code == error) {
+        std::cerr << result.message << std::endl;
+        return {{}, http::status::bad_request};
+    }
     int user_id = 0;
-    if (ToIntWithCheck(param, user_id) == error) { return {{}, http::status::bad_request}; }
+    result = ToIntWithCheck(param, user_id);
+    if (result.code == error) {
+        std::cerr << result.message << std::endl;
+        return {{}, http::status::bad_request};
+    }
     if (user_id <= 0) {
         std::cerr << "Error: Non-positive user id" << std::endl;
         return {{}, http::status::not_found};
@@ -71,9 +79,10 @@ MessageInfo Router::Route(const ParsedRequest &request) {
 
     GetParam("resource_id", param);
     int resource_id = 0;
-    if (ToIntWithCheck(param, resource_id) == error) { resource_id = user_id; }
+    result = ToIntWithCheck(param, resource_id);
+    if (result.code== error) { resource_id = user_id; }
     if (resource_id <= 0) {
-        std::cerr << "Error: Non-positive user id" << std::endl;
+        std::cerr << "Error: Non-positive resource id" << std::endl;
         return {{}, http::status::not_found};
     }
 
