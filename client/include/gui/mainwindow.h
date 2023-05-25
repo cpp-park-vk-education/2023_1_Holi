@@ -99,6 +99,10 @@ private slots:
 
     void on_logout_clicked();
 
+    void on_signin_button_2_clicked();
+
+    void on_login_button_clicked();
+
 private:
     Ui::MainWindow *ui;
     std::unique_ptr<APIClient> api_client;

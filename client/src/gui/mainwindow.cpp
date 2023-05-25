@@ -494,3 +494,15 @@ void MainWindow::on_logout_clicked()
 
 }
 
+
+void MainWindow::on_signin_button_2_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(4);
+}
+
+
+void MainWindow::on_login_button_clicked()
+{
+    //Тут логика по входу при нажати на войти
+}
+
