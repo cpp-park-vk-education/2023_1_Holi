@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include "api_client/Base/client.hpp"
-#include "login.h"
 #include "oauthprovider.h"
 
 #include <QMessageBox>

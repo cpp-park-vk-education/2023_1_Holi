@@ -205,26 +205,24 @@ void MainWindow::on_YT_Button_clicked() {
 }
 
 void MainWindow::on_Config_button_clicked() {
-  ui->stackedWidget->setCurrentIndex(1);
+  ui->stackedWidget->setCurrentIndex(2);
 
 
 
 }
 
 void MainWindow::on_button_login_clicked() {
-  Login dialog;
-  dialog.setModal(true);
-  dialog.exec();
+  ui->stackedWidget->setCurrentIndex(1);
 }
 
 void MainWindow::on_signUp_button_clicked() {
-  ui->stackedWidget->setCurrentIndex(3);//Панель регистрации
+  ui->stackedWidget->setCurrentIndex(4);//Панель регистрации
 }
 
 void MainWindow::on_AlbomsButton_clicked() {
     //user = std::make_unique<User>();
     //user->getPlaylistOrChannel(this);
-  ui->stackedWidget->setCurrentIndex(2); //страничка с альбомами пользователя
+  ui->stackedWidget->setCurrentIndex(3); //страничка с альбомами пользователя
 }
 
 void MainWindow::on_VK_getAllAlboms_clicked() {
