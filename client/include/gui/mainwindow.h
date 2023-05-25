@@ -2,11 +2,9 @@
 #define MAINWINDOW_H
 
 #include "api_client/Base/client.hpp"
-//#include "client/message_info.h"
-#include "login.h"
 #include "oauthprovider.h"
-#include "signup.h"
 
+#include <QMessageBox>
 #include <QMainWindow>
 #include <QApplication>
 #include <QDesktopServices>
@@ -23,6 +21,13 @@
 
 #include <QUrl>
 #include <QWidget>
+
+
+#include "registrationmanager.h"
+
+#include <chrono>
+
+#include <memory>
 
 
 QT_BEGIN_NAMESPACE
@@ -61,8 +66,9 @@ public:
     //
     void get_response(MessageInfo info);
     //
+    void CallBack_Registration(MessageInfo info);
 
-
+    void MP_DB_getPC(MessageInfo info);
 private slots:
 
     void on_main_button_clicked();
@@ -87,10 +93,21 @@ private slots:
 
     void on_YouTube_getAllAlboms_clicked();
 
+    void on_signin_button_clicked();
+
+
+
+    void on_logout_clicked();
+
+    void on_signin_button_2_clicked();
+
+    void on_login_button_clicked();
+
 private:
     Ui::MainWindow *ui;
     std::unique_ptr<APIClient> api_client;
     std::unique_ptr<User> user;
+    std::unique_ptr<RegistrationManager> reg;
 
 
 };

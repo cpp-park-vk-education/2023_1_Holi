@@ -1,6 +1,6 @@
 #include "request_maker/requestmaker_http.hpp"
-
-void RequestMakerHttp::Get()
+#include <functional>
+void RequestMakerHttp::Get(int flag)
 {
     std::cout<<"GET start"<<std::endl;
 
@@ -11,13 +11,13 @@ void RequestMakerHttp::Get()
 
     client_ = std::make_unique<ClientHttp>(request);
     std::cout << "thread start" << std::endl;
-    std::thread thr(&RequestMakerHttp::CallBack, this);
+    std::thread thr([this,flag] {CallBack(flag);});
     thr.detach();
 
     std::cout<<"GET end"<<std::endl;
 }
 
-void RequestMakerHttp::Post(std::string & body)
+void RequestMakerHttp::Post(std::string & body, int flag)
 {
 
     http::request<http::string_body> request{http::verb::post, target_, 11};
@@ -30,7 +30,8 @@ void RequestMakerHttp::Post(std::string & body)
 
     client_ = std::make_unique<ClientHttp>(request);
     std::cout << "thread start" << std::endl;
-    std::thread thr(&RequestMakerHttp::CallBack, this);
+    std::thread thr([this,flag] {CallBack(flag);});
+
     thr.detach();
 
 }
@@ -52,9 +53,9 @@ void RequestMakerHttp::Post(std::string & body)
 //    std::thread thr(&RequestMaker::CallBack, this);
 //}
 
-void RequestMakerHttp::CallBack()
+void RequestMakerHttp::CallBack(int flag)
 {
-    std::cout << "call back start" << std::endl;
+    std::cout << "call back start" << flag << std::endl;
     client_->Run(host_, port_, target_);
     MessageInfo message;
     try
@@ -65,8 +66,15 @@ void RequestMakerHttp::CallBack()
     catch (const beast::system_error & e) 
     {
         std::cout<< e.what() << std::endl;
+
     }
-    window_->get_response(message);
+    //window_->get_response(message);
     std::cout << "call back end" << std::endl;
+    if(flag == 1)//РЕГИСТРАЦИЯ
+    {
+        window_->CallBack_Registration(message);
+    }else if(flag == 100){//getPlaylistOrChannel
+        window_->MP_DB_getPC(message);
+    }
 
 }

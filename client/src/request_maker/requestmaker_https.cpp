@@ -67,6 +67,7 @@ void RequestMaker::CallBack()
     catch (const beast::system_error & e) 
     {
         std::cout<< e.what() << std::endl;
+
     }
     response_->get_response(message);
     std::cout << "call back end" << std::endl;

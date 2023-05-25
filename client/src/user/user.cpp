@@ -1,6 +1,6 @@
 
 #include "user.hpp"
-
+#include <QSettings>
         void User::setId() {
             
         }
@@ -53,16 +53,21 @@
             //std::unique_ptr<MainWindow> window_ = std::move(window);
             request_maker = std::make_unique<RequestMakerHttp>(target, window);
             std::cout<<"GET user"<<std::endl;
-            request_maker->Get();
+            request_maker->Get(0);
             std::cout<<"getName end"<<std::endl;
         }
 
         void User::getSurname() {
             
         }
+
+
         void User::addPlaylistOrChannel(std::string Playlist, std::string Service, MainWindow *window, QListWidgetItem *item){
             std::cout<<"getName start"<<std::endl;
-            std::string target = "/video/list?user_id=1";
+            QSettings current("Holi", "CurrentUser");
+            std::string id = current.value("id").toString().toStdString();
+            std::string target = "/video/list?user_id="+id;
+            std::cout << target;
             //std::unique_ptr<MainWindow> window_ = std::move(window);
             request_maker = std::make_unique<RequestMakerHttp>(target, window);
             json::object obj;
@@ -71,7 +76,7 @@
 
             std::string str = boost::json::serialize( boost::json::value_from(obj));
             std::cout << str;
-            request_maker->Post(str);
+            request_maker->Post(str,0);
             std::cout<<"getName end"<<std::endl;
 
             window->MP_VK_SuccesfullImportPlaylists(item);
@@ -79,7 +84,9 @@
 
         void User::getPlaylistOrChannel(MainWindow *window){
             std::cout<<"getName start"<<std::endl;
-            std::string target = "/video/list/all?user_id=1";
+            QSettings current("Holi", "CurrentUser");
+            std::string id = current.value("id").toString().toStdString();
+            std::string target = "/video/list/all?user_id="+id;
 
             request_maker = std::make_unique<RequestMakerHttp>(target, window);
             std::cout<<"GET user"<<std::endl;
@@ -87,7 +94,7 @@
 
 
 
-            request_maker->Get();
+            request_maker->Get(100);
 
 
 
@@ -107,6 +114,44 @@
 
         void User::getExpiresIn() {
             
+        }
+
+        void User::signin(std::string login, std::string password, MainWindow *window)
+        {
+            std::string target = "user/auth/login";
+            request_maker = std::make_unique<RequestMakerHttp>(target,window);
+            json::object obj;
+            obj["login"] = login;
+            obj["password"] = password;
+
+            std::string str = boost::json::serialize( boost::json::value_from(obj));
+            std::cout << str;
+            request_maker->Post(str,1);
+
+        }
+
+
+        void User::registrate(std::string name, std::string email, std::string password, MainWindow* window){
+            std::cout<<"Регистрируем пользователя..."<<std::endl;
+            std::string target = "/user/auth";
+
+            request_maker = std::make_unique<RequestMakerHttp>(target,window);
+
+            json::object obj;
+            obj["email"] = email;
+            obj["login"] = name;
+
+            obj["name"] = name;
+            obj["surname"] = name;
+
+            obj["password"] = password;
+
+            std::string str = boost::json::serialize( boost::json::value_from(obj));
+            std::cout << str;
+            request_maker->Post(str,1);
+            std::cout<<"Запрос отправлен"<<std::endl;
+
+
         }
 
         bool User::isFriend(int id){

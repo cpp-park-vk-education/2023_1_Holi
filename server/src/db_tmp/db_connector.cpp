@@ -29,8 +29,8 @@ QSqlDatabase DbConnectorTmp::Connect() {
     connection_ = QSqlDatabase::addDatabase("QPSQL");
     connection_.setDatabaseName(db_name_);
     connection_.setHostName("localhost");
-    connection_.setUserName("aleksej");
-    connection_.setPassword("postgres");
+    connection_.setUserName("postgres");
+    connection_.setPassword("11022003ks");
 
     bool is_open = connection_.open();
 
