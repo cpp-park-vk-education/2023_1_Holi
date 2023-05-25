@@ -64,6 +64,8 @@ class User {
 
         void getPlaylistOrChannel(MainWindow *window);
 
+        void registrate(std::string name, std::string email, std::string password, MainWindow* window);
+
     public:
         int id;
         std::string name;

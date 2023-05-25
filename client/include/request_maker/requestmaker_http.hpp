@@ -30,11 +30,11 @@ public:
     ~RequestMakerHttp() {
         std::cerr << "RequestMakerHttp destruct" << std::endl;
     }
-    void Get();
-    void Post(std::string & body);
+    void Get(int flag);
+    void Post(std::string & body, int flag);
     void Delete();
     private:
-    void CallBack();
+    void CallBack(int flag);
 
     MainWindow *window_;
     std::unique_ptr<ClientHttp> client_;

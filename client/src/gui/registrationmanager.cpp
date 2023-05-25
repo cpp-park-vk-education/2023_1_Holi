@@ -1,7 +1,8 @@
 
 #include "registrationmanager.h"
 #include <QDebug>
-RegistrationManager::RegistrationManager() {}
+#include <QSettings>
+
 
 /*
 @brief Функция создания пользователя
@@ -12,16 +13,15 @@ RegistrationManager::RegistrationManager() {}
 @return Возвращает обьект user который становится текущим и записывается в базу
 данных
 */
-User RegistrationManager::registerUser(const QString &name,
+void RegistrationManager::registerUser(const QString &name,
                                        const QString &email,
-                                       const QString &password) {
-  /*User user(name, email, password);
-  if (saveUserToDatabase(user)) {
-    return user;
+                                       const QString &password, MainWindow *window) {
+  //User user(name.toStdString(), email.toStdString(), password.toStdString());
+  if (saveUserToDatabase(name,email,password, window)) {
   } else {
     qDebug() << "Пользователь уже существует";
-    return User();
-  }*/
+
+  }
 }
 
 /*
@@ -50,10 +50,15 @@ bool RegistrationManager::validateUserDetails(const QString &name,
 @return Возвращает true если имя уникальное, false если такой пользователь уже
 есть
 */
-bool RegistrationManager::saveUserToDatabase(const User &user) {
-  /*if (!isUsernameAvailable(user.name())) {
-    return false;
-  }*/
+bool RegistrationManager::saveUserToDatabase(const QString &name,
+                                             const QString &email,
+                                             const QString &password, MainWindow *window) {
+  QSettings current("Holi", "CurrentUser");// это все его настройки
+  current.setValue("user_id",0);
+
+  user = std::make_unique<User>();
+    std::cout << "SAVE";
+  user->registrate(name.toStdString(), email.toStdString(),password.toStdString(), window);
   // TODO: сохранить пользователя в базу данных
   return true;
 }

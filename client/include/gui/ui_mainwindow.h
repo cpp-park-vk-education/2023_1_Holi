@@ -10,6 +10,7 @@
 #define UI_MAINWINDOW_H
 
 #include <QtCore/QVariant>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QFrame>
@@ -66,6 +67,17 @@ public:
     QTextBrowser *textBrowser;
     QLabel *IMG;
     QTreeWidget *treeWidget;
+    QWidget *signup;
+    QLineEdit *password_input;
+    QLineEdit *signin_input;
+    QFrame *line_2;
+    QPushButton *password_mask;
+    QLabel *label_create;
+    QLabel *password_label;
+    QLabel *signin_label;
+    QLabel *signin_label_2;
+    QPushButton *signin_button;
+    QLineEdit *signin_input_2;
     QWidget *verticalWidget_2;
     QVBoxLayout *verticalLayout_3;
     QPushButton *main_button;
@@ -78,6 +90,7 @@ public:
     QSpacerItem *verticalSpacer_3;
     QPushButton *button_login;
     QPushButton *signUp_button;
+    QPushButton *logout;
     QLabel *label;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -254,6 +267,7 @@ public:
         QFont font;
         font.setFamily(QString::fromUtf8("Play"));
         font.setBold(true);
+
         vk_auth_config->setFont(font);
         vk_auth_config->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "	background-color: rgb(72, 49, 157);\n"
@@ -368,6 +382,111 @@ public:
 "border-radius: 5px;\n"
 "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0.140704 rgba(153, 193, 241, 255), stop:0.894472 rgba(226, 225, 249, 255));"));
         stackedWidget->addWidget(albums);
+        signup = new QWidget();
+        signup->setObjectName(QString::fromUtf8("signup"));
+        password_input = new QLineEdit(signup);
+        password_input->setObjectName(QString::fromUtf8("password_input"));
+        password_input->setGeometry(QRect(180, 256, 348, 33));
+        password_input->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:1 rgba(0, 0, 0, 0));\n"
+"border: 0.5px solid #000000;\n"
+"border-radius: 10px;"));
+        password_input->setEchoMode(QLineEdit::Password);
+        signin_input = new QLineEdit(signup);
+        signin_input->setObjectName(QString::fromUtf8("signin_input"));
+        signin_input->setGeometry(QRect(180, 127, 348, 33));
+        signin_input->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:1 rgba(0, 0, 0, 0));\n"
+"border: 0.5px solid #000000;\n"
+"border-radius: 10px;"));
+        line_2 = new QFrame(signup);
+        line_2->setObjectName(QString::fromUtf8("line_2"));
+        line_2->setGeometry(QRect(180, 89, 348, 1));
+        line_2->setStyleSheet(QString::fromUtf8("border: 0.2px solid #E8E7FF;\n"
+"background-color: rgb(232, 231, 255);\n"
+"color: #E8E7FF;\n"
+""));
+        line_2->setFrameShape(QFrame::HLine);
+        line_2->setFrameShadow(QFrame::Sunken);
+        password_mask = new QPushButton(signup);
+        password_mask->setObjectName(QString::fromUtf8("password_mask"));
+        password_mask->setGeometry(QRect(497, 261, 24, 24));
+        password_mask->setCursor(QCursor(Qt::ArrowCursor));
+        password_mask->setMouseTracking(true);
+        password_mask->setStyleSheet(QString::fromUtf8("QPushButton{\n"
+"background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:1 rgba(0, 0, 0, 0));\n"
+"border: none;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	border-bottom: 1px solid rgb(72, 49, 157);\n"
+"}"));
+        QIcon icon;
+        icon.addFile(QString::fromUtf8("../../../vks/static/svg/password_mask_icon.svg"), QSize(), QIcon::Normal, QIcon::Off);
+        password_mask->setIcon(icon);
+        password_mask->setIconSize(QSize(24, 24));
+        password_mask->setCheckable(true);
+        label_create = new QLabel(signup);
+        label_create->setObjectName(QString::fromUtf8("label_create"));
+        label_create->setGeometry(QRect(180, 25, 354, 51));
+        QFont font1;
+        font1.setFamily(QString::fromUtf8("Play"));
+        font1.setPointSize(28);
+        label_create->setFont(font1);
+        label_create->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:1 rgba(0, 0, 0, 0));\n"
+"\n"
+"color: rgb(29, 35, 77);"));
+        password_label = new QLabel(signup);
+        password_label->setObjectName(QString::fromUtf8("password_label"));
+        password_label->setGeometry(QRect(180, 236, 61, 17));
+        QFont font2;
+        font2.setFamily(QString::fromUtf8("Play"));
+        font2.setPointSize(12);
+        password_label->setFont(font2);
+        password_label->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:1 rgba(0, 0, 0, 0));\n"
+"color: rgb(29, 35, 77);"));
+        signin_label = new QLabel(signup);
+        signin_label->setObjectName(QString::fromUtf8("signin_label"));
+        signin_label->setGeometry(QRect(180, 107, 141, 17));
+        signin_label->setFont(font2);
+        signin_label->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:1 rgba(0, 0, 0, 0));\n"
+"color: rgb(29, 35, 77);"));
+        signin_label_2 = new QLabel(signup);
+        signin_label_2->setObjectName(QString::fromUtf8("signin_label_2"));
+        signin_label_2->setGeometry(QRect(180, 169, 47, 17));
+        signin_label_2->setFont(font2);
+        signin_label_2->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:1 rgba(0, 0, 0, 0));\n"
+"color: rgb(29, 35, 77);"));
+        signin_button = new QPushButton(signup);
+        signin_button->setObjectName(QString::fromUtf8("signin_button"));
+        signin_button->setGeometry(QRect(180, 360, 348, 41));
+        QFont font3;
+        font3.setFamily(QString::fromUtf8("Play"));
+        font3.setPointSize(14);
+        signin_button->setFont(font3);
+        signin_button->setCursor(QCursor(Qt::ArrowCursor));
+        signin_button->setTabletTracking(false);
+        signin_button->setFocusPolicy(Qt::StrongFocus);
+        signin_button->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"	background-color: rgb(72, 49, 157);\n"
+"	border-radius: 20px;\n"
+"	color: rgb(255, 255, 255);\n"
+"\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(102, 64, 191, 169);\n"
+"	border-radius: 20px;\n"
+"	color: rgb(255, 255, 255);\n"
+"	\n"
+"}\n"
+"\n"
+""));
+        signin_input_2 = new QLineEdit(signup);
+        signin_input_2->setObjectName(QString::fromUtf8("signin_input_2"));
+        signin_input_2->setGeometry(QRect(180, 190, 348, 33));
+        signin_input_2->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:1 rgba(0, 0, 0, 0));\n"
+"border: 0.5px solid #000000;\n"
+"border-radius: 10px;"));
+        stackedWidget->addWidget(signup);
         verticalWidget_2 = new QWidget(centralwidget);
         verticalWidget_2->setObjectName(QString::fromUtf8("verticalWidget_2"));
         verticalWidget_2->setGeometry(QRect(10, 80, 160, 451));
@@ -377,10 +496,7 @@ public:
         main_button = new QPushButton(verticalWidget_2);
         main_button->setObjectName(QString::fromUtf8("main_button"));
         main_button->setMinimumSize(QSize(62, 19));
-        QFont font1;
-        font1.setFamily(QString::fromUtf8("Play"));
-        font1.setPointSize(12);
-        main_button->setFont(font1);
+        main_button->setFont(font2);
         main_button->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "	border: none;\n"
 "	color: rgb(255, 255, 255);\n"
@@ -399,7 +515,7 @@ public:
 
         AlbomsButton = new QPushButton(verticalWidget_2);
         AlbomsButton->setObjectName(QString::fromUtf8("AlbomsButton"));
-        AlbomsButton->setFont(font1);
+        AlbomsButton->setFont(font2);
         AlbomsButton->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "	border: none;\n"
 "	color: rgb(255, 255, 255);\n"
@@ -422,11 +538,12 @@ public:
 
         label_3 = new QLabel(verticalWidget_2);
         label_3->setObjectName(QString::fromUtf8("label_3"));
-        QFont font2;
-        font2.setFamily(QString::fromUtf8("Play"));
-        font2.setPointSize(12);
-        font2.setBold(true);
-        label_3->setFont(font2);
+        QFont font4;
+        font4.setFamily(QString::fromUtf8("Play"));
+        font4.setPointSize(12);
+        font4.setBold(true);
+
+        label_3->setFont(font4);
         label_3->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:1 rgba(0, 0, 0, 0));\n"
 "color: rgb(232, 231, 255);\n"
 ""));
@@ -435,7 +552,7 @@ public:
 
         VK_button = new QPushButton(verticalWidget_2);
         VK_button->setObjectName(QString::fromUtf8("VK_button"));
-        VK_button->setFont(font1);
+        VK_button->setFont(font2);
         VK_button->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "	border: none;\n"
 "	color: rgb(255, 255, 255);\n"
@@ -454,7 +571,7 @@ public:
 
         YT_Button = new QPushButton(verticalWidget_2);
         YT_Button->setObjectName(QString::fromUtf8("YT_Button"));
-        YT_Button->setFont(font1);
+        YT_Button->setFont(font2);
         YT_Button->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "	border: none;\n"
 "	color: rgb(255, 255, 255);\n"
@@ -473,7 +590,7 @@ public:
 
         Config_button = new QPushButton(verticalWidget_2);
         Config_button->setObjectName(QString::fromUtf8("Config_button"));
-        Config_button->setFont(font1);
+        Config_button->setFont(font2);
         Config_button->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "	border: none;\n"
 "	color: rgb(255, 255, 255);\n"
@@ -490,7 +607,7 @@ public:
 
         verticalLayout_3->addWidget(Config_button, 0, Qt::AlignLeft);
 
-        verticalSpacer_3 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        verticalSpacer_3 = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         verticalLayout_3->addItem(verticalSpacer_3);
 
@@ -537,14 +654,37 @@ public:
 
         verticalLayout_3->addWidget(signUp_button);
 
+        logout = new QPushButton(verticalWidget_2);
+        logout->setObjectName(QString::fromUtf8("logout"));
+        logout->setEnabled(true);
+        logout->setMinimumSize(QSize(0, 30));
+        logout->setFont(font);
+        logout->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"	background-color: rgb(72, 49, 157);\n"
+"	border-radius: 5px;\n"
+"	color: rgb(255, 255, 255);\n"
+"\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(102, 64, 191, 169);\n"
+"	border-radius: 5px;\n"
+"	color: rgb(255, 255, 255);\n"
+"	\n"
+"}\n"
+""));
+
+        verticalLayout_3->addWidget(logout);
+
         label = new QLabel(centralwidget);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(10, 0, 161, 91));
-        QFont font3;
-        font3.setFamily(QString::fromUtf8("Play"));
-        font3.setPointSize(44);
-        font3.setBold(true);
-        label->setFont(font3);
+        QFont font5;
+        font5.setFamily(QString::fromUtf8("Play"));
+        font5.setPointSize(44);
+        font5.setBold(true);
+
+        label->setFont(font5);
         label->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:1 rgba(0, 0, 0, 0));\n"
 "color: rgb(232, 231, 255);\n"
 ""));
@@ -606,11 +746,8 @@ public:
         Label_Video->setText(QCoreApplication::translate("MainWindow", "\320\235\320\260\320\267\320\262\320\260\320\275\320\270\320\265", nullptr));
         Service->setText(QCoreApplication::translate("MainWindow", "\320\241\320\265\321\200\320\262\320\270\321\201", nullptr));
         textBrowser->setHtml(QCoreApplication::translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"hr { height: 1px; border-width: 0; }\n"
-"li.unchecked::marker { content: \"\\2610\"; }\n"
-"li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'Segoe UI'; font-size:9pt;\">\320\255\321\202\320\276 \320\261\321\203\320\264\320\265\321\202 \320\276\320\277\320\270\321\201\320\260\320\275\320\270\320\265 \320\262\320\270\320\264\320\276\321\201\320\270\320\272\320\260</span></p></body></html>", nullptr));
         IMG->setText(QCoreApplication::translate("MainWindow", "\320\230\320\267\320\276\320\261\321\200\320\260\320\266\320\265\320\275\320\270\320\265", nullptr));
@@ -637,6 +774,12 @@ public:
         ___qtreewidgetitem8->setText(0, QCoreApplication::translate("MainWindow", "\320\222\320\270\320\264\320\276\321\201\320\270\320\272", nullptr));
         treeWidget->setSortingEnabled(__sortingEnabled1);
 
+        password_mask->setText(QString());
+        label_create->setText(QCoreApplication::translate("MainWindow", "\320\241\320\276\320\267\320\264\320\260\321\202\321\214 \320\260\320\272\320\272\320\260\321\203\320\275\321\202", nullptr));
+        password_label->setText(QCoreApplication::translate("MainWindow", "\320\237\320\260\321\200\320\276\320\273\321\214", nullptr));
+        signin_label->setText(QCoreApplication::translate("MainWindow", "\320\230\320\274\321\217 \320\277\320\276\320\273\321\214\320\267\320\276\320\262\320\260\321\202\320\265\320\273\321\217", nullptr));
+        signin_label_2->setText(QCoreApplication::translate("MainWindow", "Email", nullptr));
+        signin_button->setText(QCoreApplication::translate("MainWindow", "\320\241\320\276\320\267\320\264\320\260\321\202\321\214", nullptr));
         main_button->setText(QCoreApplication::translate("MainWindow", "\320\223\320\273\320\260\320\262\320\275\320\260\321\217", nullptr));
         AlbomsButton->setText(QCoreApplication::translate("MainWindow", "\320\234\320\276\320\270 \320\260\320\273\321\214\320\261\320\276\320\274\321\213", nullptr));
         label_3->setText(QCoreApplication::translate("MainWindow", "\320\241\320\265\321\200\320\262\320\270\321\201\321\213", nullptr));
@@ -645,6 +788,7 @@ public:
         Config_button->setText(QCoreApplication::translate("MainWindow", "\320\235\320\260\321\201\321\202\321\200\320\276\320\271\320\272\320\270", nullptr));
         button_login->setText(QCoreApplication::translate("MainWindow", "\320\222\320\276\320\271\321\202\320\270", nullptr));
         signUp_button->setText(QCoreApplication::translate("MainWindow", "\320\240\320\265\320\263\320\270\321\201\321\202\321\200\320\260\321\206\320\270\321\217", nullptr));
+        logout->setText(QCoreApplication::translate("MainWindow", "\320\222\321\213\320\271\321\202\320\270", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "HOLI", nullptr));
     } // retranslateUi
 

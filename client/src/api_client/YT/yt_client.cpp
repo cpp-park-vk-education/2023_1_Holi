@@ -2,12 +2,13 @@
 #include "api_client/YT/yt_request.hpp"
 
 void YTClient::GetPlaylists(MainWindow* window, int flag){
-    std::string method = "youtube/v3/playlists";
+    std::string method = "youtube/v3/search";
     std::map<std::string, std::string> params = 
     {
-        {"maxResults", "25"},
-        {"part", "snippet,contentDetails"},
-        {"mine", "true"}
+
+        {"part", "snippet"},
+        {"forMine", "true"},
+        {"type", "video"}
     };
     yt_request = std::make_unique<YTRequest>();
 

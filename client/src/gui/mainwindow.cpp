@@ -3,7 +3,7 @@
 #include "oauthprovider.h"
 #include "client/message_info.h"
 #include "api_client/VK/vk_client.hpp"
-
+#include "registrationmanager.h"
 #include <QSettings>
 #include <QUrlQuery>
 #include <QJsonObject>
@@ -41,7 +41,18 @@ QUrl albumsUrl("https://api.vk.com/method/video.getAlbums");
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow) {
   ui->setupUi(this);
-  ui->statusbar->showMessage("Имя Пользователя");
+  QSettings current("Holi", "CurrentUser");// это все его настройки
+    QString name = current.value("name", "null").toString();
+  if (QFile::exists(current.fileName()) && name != "null"){
+          ui->statusbar->showMessage(name);
+          ui->button_login->hide();
+          ui->signUp_button->hide();
+
+
+  }else
+  {
+      ui->logout->hide();
+  }
 }
 
 void MainWindow::OAuthVK(
@@ -96,7 +107,7 @@ void MainWindow::OAuthYT(
 
                }
     });
-    auto replyHandler = new QOAuthHttpServerReplyHandler(8080, this);
+    auto replyHandler = new QOAuthHttpServerReplyHandler(4040, this);
 
     oauth->setReplyHandler(replyHandler);
     oauth->grant();
@@ -205,19 +216,12 @@ void MainWindow::on_button_login_clicked() {
 }
 
 void MainWindow::on_signUp_button_clicked() {
-  SignUp dialog;
-  dialog.setModal(true);
-  dialog.exec();
+  ui->stackedWidget->setCurrentIndex(3);//Панель регистрации
 }
 
 void MainWindow::on_AlbomsButton_clicked() {
-    int id = 1;
-    QSettings settings("Holi", "UserConfig_" + QString::number(id));
-    settings.setValue("YouTubeAccessToken", "444444");
-    //и загружаем плейлисты из базы данных
-
-    user = std::make_unique<User>();
-    user->getPlaylistOrChannel(this);
+    //user = std::make_unique<User>();
+    //user->getPlaylistOrChannel(this);
   ui->stackedWidget->setCurrentIndex(2); //страничка с альбомами пользователя
 }
 
@@ -244,8 +248,9 @@ void MainWindow::MP_VK_getAlbums(MessageInfo info){
      VK_vec.clear();
     //info содержит статус и json
     std::cout << "Response into GUI" << std::endl;
-    std::cout << info << std::endl;
 
+    std::cout << info << std::endl;
+    if(info.status_ == http::status::ok){
     boost::json::object jsonObject = info.body_.as_object();
     int count = jsonObject["response"].as_object()["count"].as_int64();
     std::cout << "Count: " << count << std::endl;
@@ -270,22 +275,72 @@ void MainWindow::MP_VK_getAlbums(MessageInfo info){
 
 
         }
+    }
+        else{
+        QMessageBox msgBox;
+        msgBox.setText("Что то пошло не так");
+        msgBox.exec();
+}
 
 }
 
 void MainWindow::MP_VK_getVideo(MessageInfo info){
 
 }
+struct YTAlbums{
+    QString title ;
+    QString description ;
+    QString channelId;
+    QString videoId;
+};
 
+QVector<YTAlbums> YT_vec;
 //*Колбеки для ютуба*//
 void MainWindow::MP_YT_getAlbums(MessageInfo info){
+    ui->YouTube_main_list_item->clear();
+    YT_vec.clear();
     std::cout << "Got YT Response" << std::endl;
+    if(info.status_ == http::status::ok){
+
+     boost::json::object jsonObject = info.body_.as_object();
+
+    boost::json::array itemsArray = jsonObject["items"].as_array();
+
+     for (const auto& item : itemsArray) {
+         QList<QString> playlist;
+
+        boost::json::object itemObject = item.as_object();
+        auto elem  = itemObject["snippet"];
+        auto id    = itemObject["id"];
+        QString title = elem.as_object()["title"].as_string().c_str();
+        QString description = elem.as_object()["description"].as_string().c_str();
+        QString channelId = elem.as_object()["channelId"].as_string().c_str();
+        QString videoId = id.as_object()["videoId"].as_string().c_str();
+        YTAlbums album;
+        album.channelId = channelId;
+        album.videoId = videoId;
+        album.title = title;
+        album.description = description;
+        YT_vec.push_back(album);
+        ui->YouTube_main_list_item->addItem(title);
+     }
+
+    } else{
+        QMessageBox msgBox;
+        msgBox.setText("Что то пошло не так");
+        msgBox.exec();
+
+    }
+
 }
 
 void MainWindow::MP_YT_getVideo(MessageInfo info){
 
 }
 
+void MainWindow::MP_DB_getPC(MessageInfo info){
+    std::cout << "info\n" << info;
+}
 
 //Импорт в базу
 void MainWindow::on_VK_main_import_items_clicked()
@@ -298,13 +353,13 @@ void MainWindow::on_VK_main_import_items_clicked()
 
     /*std::string token ="ya29.a0AWY7Ckl7gcpbiTMI_KFmvT7lQSE94JgbqJcUzC-xmw2pblaa8vdsIJ1-s9mRqLUbQp4qMQ5PAt7CjXJRGJFes36C3NLUPUvkug29maSh0ZVHQsCmzKUwAJNS0iaWIpmD9SnDzEl1m2eN3AD6Gpe9G7nOiHNaaCgYKAfUSARESFQG1tDrpY6_exaHWQOCVwcu7KyyiYQ0163";
 
-    api_client = std::make_unique<YTClient>(token);
-    api_client->GetPlaylists(this, 3);*/
+    ;*/
 }
 
 //get response
 void MainWindow::get_response(MessageInfo info)
 {
+    std::cout <<"roigjfb";
   std::cout<<info<<std::endl;
 }
 
@@ -331,6 +386,101 @@ void MainWindow::MP_VK_SuccesfullImportPlaylists(QListWidgetItem *item){
 
 void MainWindow::on_YouTube_getAllAlboms_clicked()
 {
+     std::string token = accessTokenYT.toStdString();
+    api_client = std::make_unique<YTClient>(token);
+    api_client->GetPlaylists(this, 3);
+}
+
+
+/*
+ * ===============
+SIGNUP РЕГИСТРАЦИЯ
+==================
+*/
+
+
+void MainWindow::on_signin_button_clicked()
+{
+    //Создаем менеджер регистрации
+
+    reg = std::make_unique<RegistrationManager>();
+    //Получаем данные формы
+    QString username = ui->signin_input->text();
+    QString email = ui->signin_input_2->text();
+    QString password = ui->password_input->text();
+
+    QString username_valid;
+    if (reg->isUsernameAvailable(username)) {
+      username_valid = "Допустимо";
+    } else {
+      username_valid = "Недопустимое имя пользователя";
+    }
+
+    QString password_valid;
+    if (reg->isPasswordValid(password, username, email)) {
+      password_valid = "+";
+    } else {
+      password_valid = "-";
+    }
+
+    QString email_valid;
+    if (reg->isEmailValid(email)) {
+      email_valid = "+";
+    } else {
+      email_valid = "-";
+    }
+    if (username.isEmpty() && email.isEmpty() && password.isEmpty()) {
+      QMessageBox msgBox;
+      msgBox.setText("Не все поля заполнены");
+      msgBox.exec();
+    }
+
+    bool state = reg->validateUserDetails(username, email, password);
+
+    if (state) {
+      reg->registerUser(username,email,password, this);
+    } else {
+      QMessageBox msgBox;
+      QString er = tr("Некорректно подобраны логин, почта или пароль\nИмя "
+                      "пользователя: %1\nEmail: %2\nПароль: %3")
+                       .arg(username_valid, email_valid, password_valid);
+      msgBox.setText(er);
+      msgBox.exec();
+    }
+}
+
+void MainWindow::CallBack_Registration(MessageInfo info){
+    boost::json::object jsonObject = info.body_.as_object();
+    if(info.status_ == http::status::ok){
+        std::string id = jsonObject["id"].as_string().c_str();
+        std::string name = jsonObject["name"].as_string().c_str();
+        std::string surname = jsonObject["surname"].as_string().c_str();
+        std::string email = jsonObject["email"].as_string().c_str();
+        std::string login = jsonObject["login"].as_string().c_str();
+        std::string password = jsonObject["password"].as_string().c_str();
+
+        QSettings current("Holi", "CurrentUser");// это все его настройки
+        current.setValue("id", id.c_str());
+        current.setValue("name", name.c_str());
+        current.setValue("surname", surname.c_str());
+        current.setValue("email", email.c_str());
+        current.setValue("login", login.c_str());
+        current.setValue("password", password.c_str());
+
+        qDebug() << current.fileName();
+
+        //ui->stackedWidget->setCurrentIndex(0);
+        ui->button_login->hide();
+        ui->signUp_button->hide();
+        ui->logout->show();
+    }
+
+}
+
+void MainWindow::on_logout_clicked()
+{
+    QSettings current("Holi", "CurrentUser");// это все его настройки
+    QFile::remove(current.fileName());
 
 }
 
