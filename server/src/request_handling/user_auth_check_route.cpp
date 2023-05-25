@@ -9,7 +9,7 @@ MessageInfo UserAuthCheckRoute::Get(int id) {
     return {};
 }
 MessageInfo UserAuthCheckRoute::Get(const std::string &param) {
-    std::string sql = R"(select * from "User" where login = )" + param;
+    std::string sql = R"(select * from "User" where login = ')" + param + "\'";
 
     QSqlQuery query;
     try {
