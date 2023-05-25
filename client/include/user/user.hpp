@@ -60,7 +60,7 @@ class User {
 
         bool isFriend(int id);
 
-        void singin(std::string login, std::string password, MainWindow *window);
+        void signin(std::string login, std::string password, MainWindow *window);
 
         void addPlaylistOrChannel(std::string Playlist, std::string Service, MainWindow *window, QListWidgetItem *item);
 

@@ -510,6 +510,6 @@ void MainWindow::on_login_button_clicked()
     QString password = ui->password_input_2->text();
 
     user = std::make_unique<User>();
-    user->sigin(name.toStdString(), ,password.toStdString(), this);
+    user->signin(username.toStdString(), password.toStdString(), this);
 }
 

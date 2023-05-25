@@ -116,7 +116,7 @@
             
         }
 
-        void User::singin(std::string login, std::string password, MainWindow *window)
+        void User::signin(std::string login, std::string password, MainWindow *window)
         {
             std::string target = "user/auth/login";
             request_maker = std::make_unique<RequestMakerHttp>(target,window);
