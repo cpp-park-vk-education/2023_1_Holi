@@ -20,5 +20,5 @@ public:
     virtual ~APIClient(){}
 
     virtual void GetPlaylists(MainWindow*, int) = 0;
-    virtual void GetVideos(MainWindow*, int) = 0;
+    virtual void GetVideos(MainWindow*, int, std::string) = 0;
 };
