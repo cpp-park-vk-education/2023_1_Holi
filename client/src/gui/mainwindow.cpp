@@ -47,6 +47,7 @@ MainWindow::MainWindow(QWidget *parent)
         ui->statusbar->showMessage(name);
         ui->button_login->hide();
         ui->signUp_button->hide();
+        ui->stackedWidget->setCurrentIndex(0);
 
 
     }else
@@ -557,7 +558,8 @@ void MainWindow::CallBack_Registration(MessageInfo info){
 
         qDebug() << current.fileName();
 
-        //ui->stackedWidget->setCurrentIndex(0);
+        ui->stackedWidget->setCurrentIndex(0);
+        ui->statusbar->showMessage(name.c_str());
         ui->button_login->hide();
         ui->signUp_button->hide();
         ui->logout->show();
