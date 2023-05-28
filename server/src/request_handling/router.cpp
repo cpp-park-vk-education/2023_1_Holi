@@ -51,8 +51,13 @@ MessageInfo Router::Route(const ParsedRequest &request) {
                 return std::make_unique<UserRoute>()->Post(request_.body_);
             }
         }
-    }
 
+        if (request_.path_ == "/user/auth/login") {
+            if (request_.method_ == http::verb::post) {
+                return std::make_unique<UserAuthLoginRoute>()->Post(request_.body_);
+            }
+        }
+    }
 //    if (request_.path_ == "/user" && request_.method_ == http::verb::post) {
 //        return std::make_unique<UserRoute>()->Post(request_.body_);
 //    }
