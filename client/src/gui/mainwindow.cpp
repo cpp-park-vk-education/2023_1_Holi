@@ -489,6 +489,14 @@ void MainWindow::on_logout_clicked()
     QSettings current("Holi", "CurrentUser");// это все его настройки
     QFile::remove(current.fileName());
 
+    ui->logout->hide();
+    ui->button_login->show();
+    ui->signUp_button->show();
+    ui->stackedWidget->setCurrentIndex(1);
+
+    ui->statusbar->showMessage("Вы вышли");
+
+
 }
 
 
