@@ -502,8 +502,10 @@ void MainWindow::on_signin_button_2_clicked()
 void MainWindow::on_login_button_clicked()
 {
     //Тут логика по входу при нажати на войти
+    std::cerr << 1 << std::endl;
     QString username = ui->login_input->text();
     QString password = ui->password_input_2->text();
+    user = std::make_unique<User>();
     user->auth(username.toStdString(), password.toStdString(), this);
 }
 

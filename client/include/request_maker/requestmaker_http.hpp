@@ -27,6 +27,10 @@ public:
         //std::cout<<window_<<std::endl;
     }
 
+    RequestMakerHttp(RequestMakerHttp &req) {
+        std::cerr << "copy" << std::endl;
+    }
+
     ~RequestMakerHttp() {
         std::cerr << "RequestMakerHttp destruct" << std::endl;
     }
