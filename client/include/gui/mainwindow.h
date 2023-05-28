@@ -87,7 +87,7 @@ private slots:
 
     void on_VK_getAllAlboms_clicked();
 
-    void on_VK_main_import_items_clicked();
+
 
     void on_VK_main_list_item_itemDoubleClicked(QListWidgetItem *item);
 
@@ -104,6 +104,8 @@ private slots:
     void on_login_button_clicked();
 
     void on_YouTube_main_list_item_itemDoubleClicked(QListWidgetItem *item);
+
+
 
 private:
     Ui::MainWindow *ui;

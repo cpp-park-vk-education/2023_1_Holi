@@ -434,14 +434,6 @@ void MainWindow::MP_DB_getPC(MessageInfo info){
     std::cout << "info\n" << info;
 }
 
-//Импорт в базу
-void MainWindow::on_VK_main_import_items_clicked()
-{
-    std::cout<<"on_VK_main_import_items_clicked start"<<std::endl;
-    user = std::make_unique<User>();
-    user->getName(this);
-    std::cout<<"on_VK_main_import_items_clicked end"<<std::endl;
-}
 
 //get response
 void MainWindow::get_response(MessageInfo info)
@@ -585,6 +577,7 @@ void MainWindow::on_login_button_clicked()
 {
     //Тут логика по входу при нажати на войти
 }
+
 
 
 
