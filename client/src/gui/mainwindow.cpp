@@ -504,6 +504,8 @@ void MainWindow::on_login_button_clicked()
     //Тут логика по входу при нажати на войти
     QString username = ui->login_input->text();
     QString password = ui->password_input_2->text();
+
+    std::cout << username.toStdString() << std::endl << password.toStdString() << std::endl;
     user->auth(username.toStdString(), password.toStdString(), this);
 }
 

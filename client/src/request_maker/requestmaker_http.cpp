@@ -20,6 +20,7 @@ void RequestMakerHttp::Get(int flag)
 void RequestMakerHttp::Post(std::string & body, int flag)
 {
 
+    std::cout << "Auth start";
     http::request<http::string_body> request{http::verb::post, target_, 11};
     request.set(http::field::host, host_);
     request.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
