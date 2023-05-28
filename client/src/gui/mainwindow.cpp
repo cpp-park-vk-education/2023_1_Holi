@@ -119,11 +119,11 @@ void MainWindow::on_VK_button_clicked() {
     qDebug() << (token == "default" || token_getTime.daysTo(now) >= 1 || !QFile::exists(settings.fileName()));
     if(token == "default" || token_getTime.daysTo(now) >= 1 || !QFile::exists(settings.fileName())){
         //если прошло больше суток с момента получения токена
-        OAuthVK([this](QOAuth2AuthorizationCodeFlow *oauth) {
+        OAuthVK([&, this](QOAuth2AuthorizationCodeFlow *oauth) {
             accessTokenVK = oauth->token();
-            int id = 1;
+
             QDateTime now = QDateTime::currentDateTime();
-            QSettings settings("Holi", "UserConfig_" + QString::number(id));
+            QSettings settings("Holi", "UserConfig_" + id);
             settings.setValue("VKAccessToken", accessTokenVK);
             settings.setValue("VKAccessToken_getTime",now);
             ui->VK_button->setEnabled(false);
@@ -147,15 +147,16 @@ void MainWindow::on_YT_Button_clicked() {
     QDateTime now = QDateTime::currentDateTime();//текущее время
     qDebug() << (token == "default" || token_getTime.daysTo(now) >= 1 || !QFile::exists(settings.fileName()));
     if(token == "default" || token_getTime.daysTo(now) >= 1 || !QFile::exists(settings.fileName())){
-        OAuthYT([this](QOAuth2AuthorizationCodeFlow *oauth) {
+        OAuthYT([&,this](QOAuth2AuthorizationCodeFlow *oauth) {
             qDebug() << "swrgwrg";
             qDebug() << oauth->token();
             accessTokenYT = oauth->token();
-            int id = 1;
+
             QDateTime now = QDateTime::currentDateTime();
-            QSettings settings("Holi", "UserConfig_" + QString::number(id));
+            QSettings settings("Holi", "UserConfig_" + id);
             settings.setValue("YouTubeAccessToken", accessTokenYT);
             settings.setValue("YouTubeAccessToken_getTime",now);
+            qDebug() << settings.fileName();
             ui->YT_Button->setEnabled(false);
             ui->statusbar->showMessage("Подключен профиль Ютуб");
         });
@@ -464,9 +465,10 @@ void MainWindow::CallBack_Registration(MessageInfo info){
         std::string email = jsonObject["email"].as_string().c_str();
         std::string login = jsonObject["login"].as_string().c_str();
         std::string password = jsonObject["password"].as_string().c_str();
-
+        std::cout << "Пишем в кеш" << std::endl;
         QSettings current("Holi", "CurrentUser");// это все его настройки
         current.setValue("id", id.c_str());
+         std::cout << id << std::endl;
         current.setValue("name", name.c_str());
         current.setValue("surname", surname.c_str());
         current.setValue("email", email.c_str());
