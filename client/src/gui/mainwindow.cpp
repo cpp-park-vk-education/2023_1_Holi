@@ -480,6 +480,10 @@ void MainWindow::CallBack_Registration(MessageInfo info){
         ui->button_login->hide();
         ui->signUp_button->hide();
         ui->logout->show();
+    } else{
+        QMessageBox msgBox;
+        msgBox.setText("Что то пошло не так");
+        msgBox.exec();
     }
 
 }
