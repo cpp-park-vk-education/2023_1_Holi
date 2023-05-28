@@ -40,13 +40,11 @@ public:
     QStackedWidget *stackedWidget;
     QWidget *mainpage;
     QComboBox *YouTube_main_type_request;
-    QPushButton *YouTube_main_import_items;
     QComboBox *VK_main_playists;
     QPushButton *VK_getAllAlboms;
     QComboBox *VK_main_type_request;
     QPushButton *YouTube_getAllAlboms;
     QComboBox *YouTube_main_playists;
-    QPushButton *VK_main_import_items;
     QListWidget *VK_main_list_item;
     QListWidget *YouTube_main_list_item;
     QWidget *login;
@@ -134,24 +132,6 @@ public:
         YouTube_main_type_request->setObjectName(QString::fromUtf8("YouTube_main_type_request"));
         YouTube_main_type_request->setGeometry(QRect(470, 10, 81, 22));
         YouTube_main_type_request->setStyleSheet(QString::fromUtf8("background-color: rgb(153, 193, 241);"));
-        YouTube_main_import_items = new QPushButton(mainpage);
-        YouTube_main_import_items->setObjectName(QString::fromUtf8("YouTube_main_import_items"));
-        YouTube_main_import_items->setGeometry(QRect(380, 460, 71, 25));
-        YouTube_main_import_items->setContextMenuPolicy(Qt::NoContextMenu);
-        YouTube_main_import_items->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"	background-color: rgb(72, 49, 157);\n"
-"	border-radius: 5px;\n"
-"	color: rgb(255, 255, 255);\n"
-"\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(102, 64, 191, 169);\n"
-"	border-radius: 5px;\n"
-"	color: rgb(255, 255, 255);\n"
-"	\n"
-"}\n"
-""));
         VK_main_playists = new QComboBox(mainpage);
         VK_main_playists->setObjectName(QString::fromUtf8("VK_main_playists"));
         VK_main_playists->setGeometry(QRect(220, 10, 111, 22));
@@ -203,24 +183,6 @@ public:
         YouTube_main_playists->setGeometry(QRect(560, 10, 101, 22));
         YouTube_main_playists->setStyleSheet(QString::fromUtf8("background-color: rgb(153, 193, 241);"));
         YouTube_main_playists->setEditable(false);
-        VK_main_import_items = new QPushButton(mainpage);
-        VK_main_import_items->setObjectName(QString::fromUtf8("VK_main_import_items"));
-        VK_main_import_items->setGeometry(QRect(50, 460, 71, 25));
-        VK_main_import_items->setContextMenuPolicy(Qt::NoContextMenu);
-        VK_main_import_items->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"	background-color: rgb(72, 49, 157);\n"
-"	border-radius: 5px;\n"
-"	color: rgb(255, 255, 255);\n"
-"\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(102, 64, 191, 169);\n"
-"	border-radius: 5px;\n"
-"	color: rgb(255, 255, 255);\n"
-"	\n"
-"}\n"
-""));
         VK_main_list_item = new QListWidget(mainpage);
         VK_main_list_item->setObjectName(QString::fromUtf8("VK_main_list_item"));
         VK_main_list_item->setGeometry(QRect(50, 40, 281, 411));
@@ -269,7 +231,7 @@ public:
         font2.setFamily(QString::fromUtf8("Play"));
         font2.setPointSize(90);
         font2.setBold(true);
-
+        font2.setWeight(75);
         label_2->setFont(font2);
         label_2->setStyleSheet(QString::fromUtf8("color: rgb(72, 49, 157);\n"
 "background-color: qlineargradient(0);"));
@@ -382,7 +344,7 @@ public:
         QFont font4;
         font4.setFamily(QString::fromUtf8("Play"));
         font4.setBold(true);
-
+        font4.setWeight(75);
         vk_auth_config->setFont(font4);
         vk_auth_config->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "	background-color: rgb(72, 49, 157);\n"
@@ -651,7 +613,7 @@ public:
         font6.setFamily(QString::fromUtf8("Play"));
         font6.setPointSize(12);
         font6.setBold(true);
-
+        font6.setWeight(75);
         label_3->setFont(font6);
         label_3->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:1 rgba(0, 0, 0, 0));\n"
 "color: rgb(232, 231, 255);\n"
@@ -792,7 +754,7 @@ public:
         font7.setFamily(QString::fromUtf8("Play"));
         font7.setPointSize(44);
         font7.setBold(true);
-
+        font7.setWeight(75);
         label->setFont(font7);
         label->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:1 rgba(0, 0, 0, 0));\n"
 "color: rgb(232, 231, 255);\n"
@@ -822,7 +784,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(1);
+        stackedWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -834,13 +796,11 @@ public:
         YouTube_main_type_request->setItemText(0, QCoreApplication::translate("MainWindow", "\320\220\320\273\321\214\320\261\320\276\320\274\321\213", nullptr));
         YouTube_main_type_request->setItemText(1, QCoreApplication::translate("MainWindow", "\320\222\320\270\320\264\320\265\320\276", nullptr));
 
-        YouTube_main_import_items->setText(QCoreApplication::translate("MainWindow", "\320\230\320\274\320\277\320\276\321\200\321\202", nullptr));
         VK_getAllAlboms->setText(QCoreApplication::translate("MainWindow", "\320\222\320\232", nullptr));
         VK_main_type_request->setItemText(0, QCoreApplication::translate("MainWindow", "\320\220\320\273\321\214\320\261\320\276\320\274\321\213", nullptr));
         VK_main_type_request->setItemText(1, QCoreApplication::translate("MainWindow", "\320\222\320\270\320\264\320\265\320\276", nullptr));
 
         YouTube_getAllAlboms->setText(QCoreApplication::translate("MainWindow", "YouTube", nullptr));
-        VK_main_import_items->setText(QCoreApplication::translate("MainWindow", "\320\230\320\274\320\277\320\276\321\200\321\202", nullptr));
         password_label_2->setText(QCoreApplication::translate("MainWindow", "\320\237\320\260\321\200\320\276\320\273\321\214", nullptr));
         log_in_label_main->setText(QCoreApplication::translate("MainWindow", "\320\222\320\276\320\271\321\202\320\270", nullptr));
         label_2->setText(QCoreApplication::translate("MainWindow", "HOLI", nullptr));

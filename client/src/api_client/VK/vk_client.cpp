@@ -18,7 +18,7 @@ void VKClient::GetPlaylists(MainWindow* window, int flag){
 }
 
 
-void VKClient::GetVideos(MainWindow* window, int flag){
+void VKClient::GetVideos(MainWindow* window, int flag, std::string playlistId){
     std::string method = "video.get";
     std::map<std::string, std::string> params = 
     {
