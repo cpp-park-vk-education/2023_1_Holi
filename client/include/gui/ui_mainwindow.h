@@ -231,7 +231,7 @@ public:
         font2.setFamily(QString::fromUtf8("Play"));
         font2.setPointSize(90);
         font2.setBold(true);
-        font2.setWeight(75);
+
         label_2->setFont(font2);
         label_2->setStyleSheet(QString::fromUtf8("color: rgb(72, 49, 157);\n"
 "background-color: qlineargradient(0);"));
@@ -344,7 +344,7 @@ public:
         QFont font4;
         font4.setFamily(QString::fromUtf8("Play"));
         font4.setBold(true);
-        font4.setWeight(75);
+
         vk_auth_config->setFont(font4);
         vk_auth_config->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "	background-color: rgb(72, 49, 157);\n"
@@ -613,7 +613,7 @@ public:
         font6.setFamily(QString::fromUtf8("Play"));
         font6.setPointSize(12);
         font6.setBold(true);
-        font6.setWeight(75);
+
         label_3->setFont(font6);
         label_3->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:1 rgba(0, 0, 0, 0));\n"
 "color: rgb(232, 231, 255);\n"
@@ -754,7 +754,7 @@ public:
         font7.setFamily(QString::fromUtf8("Play"));
         font7.setPointSize(44);
         font7.setBold(true);
-        font7.setWeight(75);
+
         label->setFont(font7);
         label->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:1 rgba(0, 0, 0, 0));\n"
 "color: rgb(232, 231, 255);\n"

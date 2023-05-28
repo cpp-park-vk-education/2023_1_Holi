@@ -7,55 +7,19 @@
 #include <QSettings>
 #include <QUrlQuery>
 #include <QJsonObject>
-
 #include "api_client/YT/yt_client.hpp"
-
 #include <chrono>
-
 #include <memory>
-//#include <boost/json/src.hpp>
+
 /*VK Settings Auth*/
 const QUrl authUrlVK{"https://oauth.vk.com/authorize"};
 const QUrl tokenUrlVK{"https://oauth.vk.com/access_token"};
 const QString clientSecretVK{"d4rZuR8zHiYHgntXC1kp"};
 const QString clientIdVK{"51400815"};
 const QString scopeMaskVK = "video"; // https://dev.vk.com/reference/access-rights
+QString accessTokenVK;
 
-
-/*YT Settings Auth*/
-/*
-ACCESS_TOKEN TEST TEST 0451Nc11
-ya29.a0AWY7Ckl7gcpbiTMI_KFmvT7lQSE94JgbqJcUzC-xmw2pblaa8vdsIJ1-s9mRqLUbQp4qMQ5PAt7CjXJRGJFes36C3NLUPUvkug29maSh0ZVHQsCmzKUwAJNS0iaWIpmD9SnDzEl1m2eN3AD6Gpe9G7nOiHNaaCgYKAfUSARESFQG1tDrpY6_exaHWQOCVwcu7KyyiYQ0163
-*/
-const QUrl authUrlYT{"https://accounts.google.com/o/oauth2/auth"};
-const QUrl tokenUrlYT{"https://oauth2.googleapis.com/token"};
-const QString clientSecretYT{"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"};
-const QString clientIdYT{"869025620327-u6eu9r31nr3p7qdaiqvkgd9g53vtah6q.apps.googleusercontent.com"};
-const QString scopeMaskYT = "https://www.googleapis.com/auth/youtube"; // https://dev.vk.com/reference/access-rights
-/* VK API Settings*/
-
-QUrl albumsUrl("https://api.vk.com/method/video.getAlbums");
-
-/*\VK API Settings*/
-
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow) {
-    ui->setupUi(this);
-    QSettings current("Holi", "CurrentUser");// это все его настройки
-    QString name = current.value("name", "null").toString();
-    if (QFile::exists(current.fileName()) && name != "null"){
-        ui->statusbar->showMessage(name);
-        ui->button_login->hide();
-        ui->signUp_button->hide();
-        ui->stackedWidget->setCurrentIndex(0);
-
-
-    }else
-    {
-        ui->logout->hide();
-    }
-}
-
+//Метод авторизации ВК
 void MainWindow::OAuthVK(
         const std::function<void(QOAuth2AuthorizationCodeFlow *)> &onSuccess) {
     auto oauth = new QOAuth2AuthorizationCodeFlow;
@@ -75,6 +39,13 @@ void MainWindow::OAuthVK(
     oauth->grant();
 }
 
+/*YT Settings Auth*/
+const QUrl authUrlYT{"https://accounts.google.com/o/oauth2/auth"};
+const QUrl tokenUrlYT{"https://oauth2.googleapis.com/token"};
+const QString clientSecretYT{"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"};
+const QString clientIdYT{"869025620327-u6eu9r31nr3p7qdaiqvkgd9g53vtah6q.apps.googleusercontent.com"};
+const QString scopeMaskYT = "https://www.googleapis.com/auth/youtube"; // https://dev.vk.com/reference/access-rights
+QString accessTokenYT;
 
 //Метод авторизации в YT
 void MainWindow::OAuthYT(
@@ -102,41 +73,41 @@ void MainWindow::OAuthYT(
         {
             QByteArray code = parameters->value("code").toByteArray();
             QString codeString = QUrl::fromPercentEncoding(code);
-
-
             parameters->replace("code", codeString);
-
         }
     });
     auto replyHandler = new QOAuthHttpServerReplyHandler(4040, this);
-
     oauth->setReplyHandler(replyHandler);
     oauth->grant();
-
-
     QObject::connect(oauth, &QOAuth2AuthorizationCodeFlow::granted,
                      [oauth, onSuccess, this]() {
         qDebug() << oauth;
         onSuccess(oauth); });
-
-
 }
 
-QString accessTokenVK;
-QString accessTokenYT;
-QOAuth2AuthorizationCodeFlow *oauthVK;
+
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent), ui(new Ui::MainWindow) {
+    ui->setupUi(this);
+    QSettings current("Holi", "CurrentUser");// это все его настройки
+    QString name = current.value("name", "null").toString();
+    if (QFile::exists(current.fileName()) && name != "null"){
+        ui->statusbar->showMessage(name);
+        ui->button_login->hide();
+        ui->signUp_button->hide();
+        ui->stackedWidget->setCurrentIndex(0);
+    }
+    else
+    {
+        ui->logout->hide();
+    }
+}
 
 MainWindow::~MainWindow() {
     std::cerr << "mwindow destruct" << std::endl;
     delete ui; }
 
-/*БОКОВОЕ МЕНЮ*/
-void MainWindow::on_main_button_clicked() {
-    ui->stackedWidget->setCurrentIndex(0);
-
-
-
-}
+void MainWindow::on_main_button_clicked() { ui->stackedWidget->setCurrentIndex(0);}
 
 void MainWindow::on_VK_button_clicked() {
     QSettings current("Holi", "CurrentUser");// это все его настройки
@@ -149,9 +120,6 @@ void MainWindow::on_VK_button_clicked() {
     if(token == "default" || token_getTime.daysTo(now) >= 1 || !QFile::exists(settings.fileName())){
         //если прошло больше суток с момента получения токена
         OAuthVK([this](QOAuth2AuthorizationCodeFlow *oauth) {
-            qDebug() << oauth->token();
-
-            oauthVK = oauth;
             accessTokenVK = oauth->token();
             int id = 1;
             QDateTime now = QDateTime::currentDateTime();
@@ -163,9 +131,7 @@ void MainWindow::on_VK_button_clicked() {
         });
     } else if (token != "default"){
         accessTokenVK = token;
-        qDebug() << "Токен из настроек пользователя\nПолучен: " << token_getTime;
-        qDebug() << token;
-
+        qDebug() << "Токен из настроек пользователя";
         ui->VK_button->setEnabled(false);
         ui->statusbar->showMessage("Подключен профиль ВКонтакте");
     }
@@ -205,26 +171,10 @@ void MainWindow::on_YT_Button_clicked() {
 
 }
 
-void MainWindow::on_Config_button_clicked() {
-    ui->stackedWidget->setCurrentIndex(2);
-
-
-
-}
-
-void MainWindow::on_button_login_clicked() {
-    ui->stackedWidget->setCurrentIndex(1);
-}
-
-void MainWindow::on_signUp_button_clicked() {
-    ui->stackedWidget->setCurrentIndex(4);//Панель регистрации
-}
-
-void MainWindow::on_AlbomsButton_clicked() {
-    //user = std::make_unique<User>();
-    //user->getPlaylistOrChannel(this);
-    ui->stackedWidget->setCurrentIndex(3); //страничка с альбомами пользователя
-}
+void MainWindow::on_button_login_clicked() { ui->stackedWidget->setCurrentIndex(1);}
+void MainWindow::on_Config_button_clicked() { ui->stackedWidget->setCurrentIndex(2);}
+void MainWindow::on_AlbomsButton_clicked() {ui->stackedWidget->setCurrentIndex(3);}
+void MainWindow::on_signUp_button_clicked() {ui->stackedWidget->setCurrentIndex(4);}
 
 void MainWindow::on_VK_getAllAlboms_clicked() {
     std::string token = accessTokenVK.toStdString();
@@ -233,17 +183,14 @@ void MainWindow::on_VK_getAllAlboms_clicked() {
 }
 
 
-
 struct VKAlbums{
     int id;
     int owner_id;
     QString title;
     QString responseType;
 };
-
 QVector<VKAlbums> VK_vec;
 
-//*колбэки для вк*//
 void MainWindow::MP_VK_getAlbums(MessageInfo info){
     ui->VK_main_list_item->clear();
     VK_vec.clear();
@@ -273,8 +220,6 @@ void MainWindow::MP_VK_getAlbums(MessageInfo info){
             ui->VK_main_list_item->addItem(res);
             std::cout << "Item: id=" << id << ", owner_id=" << ownerId
                       << ", title=" << title << ", response_type=" << responseType << std::endl;
-
-
         }
         QSettings current("Holi", "CurrentUser");// это все его настройки
         QString id = current.value("id", "null").toString();
@@ -293,35 +238,28 @@ void MainWindow::MP_VK_getAlbums(MessageInfo info){
 
 }
 
-void MainWindow::MP_VK_getVideo(MessageInfo info){
+void MainWindow::MP_VK_getVideo(MessageInfo info){}
 
-}
 struct YTAlbums{
     QString title ;
     QString description ;
     QString channelId;
     QString id;
 };
-
 QVector<YTAlbums> YT_vec;
-//*Колбеки для ютуба*//
+
 void MainWindow::MP_YT_getAlbums(MessageInfo info){
     ui->YouTube_main_list_item->clear();
     ui->YouTube_main_playists->clear();
     YT_vec.clear();
     std::cout << "Got YT Response" << std::endl;
     if(info.status_ == http::status::ok){
-
         boost::json::object jsonObject = info.body_.as_object();
-
         boost::json::array itemsArray = jsonObject["items"].as_array();
-
         for (const auto& item : itemsArray) {
             QList<QString> playlist;
-
             boost::json::object itemObject = item.as_object();
             auto elem  = itemObject["snippet"];
-
             QString title = elem.as_object()["title"].as_string().c_str();
             QString description = elem.as_object()["description"].as_string().c_str();
             QString channelId = elem.as_object()["channelId"].as_string().c_str();
@@ -333,17 +271,13 @@ void MainWindow::MP_YT_getAlbums(MessageInfo info){
             album.description = description;
             YT_vec.push_back(album);
             ui->YouTube_main_list_item->addItem(title);
-
             ui->YouTube_main_playists->addItem(title);
         }
-
     } else{
         QMessageBox msgBox;
         msgBox.setText("Что то пошло не так");
         msgBox.exec();
-
     }
-
 }
 
 void MainWindow::MP_YT_getVideo(MessageInfo info){
@@ -399,18 +333,15 @@ void MainWindow::on_YouTube_main_list_item_itemDoubleClicked(QListWidgetItem *it
             //user = std::make_unique<User>();
             //user->addPlaylistOrChannel(item->text().toStdString(), "YT", this, item);
             item->setBackground(Qt::red);
-
         }else{
             ui->statusbar->showMessage(item->text() + " уже добавлен в базу данных");
             item->setBackground(Qt::red);
         }
     }
-
 }
 
 void MainWindow::on_VK_main_list_item_itemDoubleClicked(QListWidgetItem *item)
 {
-
     QSettings current("Holi", "CurrentUser");// это все его настройки
     QString id = current.value("id", "null").toString();
     QSettings Playlists("Holi", "Playlist_" + id);
@@ -421,13 +352,10 @@ void MainWindow::on_VK_main_list_item_itemDoubleClicked(QListWidgetItem *item)
         user = std::make_unique<User>();
         user->addPlaylistOrChannel(item->text().toStdString(), "VK", this, item);
         item->setBackground(Qt::red);
-
     }else{
         ui->statusbar->showMessage(item->text() + " уже добавлен в базу данных");
         item->setBackground(Qt::red);
     }
-
-
 }
 
 void MainWindow::MP_DB_getPC(MessageInfo info){
@@ -452,7 +380,6 @@ void MainWindow::MP_VK_SuccesfullImportPlaylists(QListWidgetItem *item){
 
 void MainWindow::on_YouTube_getAllAlboms_clicked()
 {
-
     std::string token = accessTokenYT.toStdString();
     api_client = std::make_unique<YTClient>(token);
     if(ui->YouTube_main_type_request->currentIndex() == 0){
@@ -460,7 +387,6 @@ void MainWindow::on_YouTube_getAllAlboms_clicked()
     }else if(ui->YouTube_main_type_request->currentIndex() == 1){
         std::string playlistId;
         QString playlistName = ui->YouTube_main_playists->currentText();
-
         for (YTAlbums elem : YT_vec) {
             if(elem.title == playlistName){
                 playlistId = elem.id.toStdString();
@@ -469,7 +395,6 @@ void MainWindow::on_YouTube_getAllAlboms_clicked()
         api_client->GetVideos(this,4, playlistId);
         qDebug() << playlistName;
     }
-
 }
 
 
@@ -569,7 +494,8 @@ void MainWindow::on_logout_clicked()
 
 void MainWindow::on_signin_button_2_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(4);
+    //В форме авторизации кнопка перехода на регистрацию
+    ui->stackedWidget->setCurrentIndex(1);
 }
 
 
