@@ -66,6 +66,8 @@ class User {
 
         void registrate(std::string name, std::string email, std::string password, MainWindow* window);
 
+        void auth(std::string username, std::string password, MainWindow* window);
+
     public:
         int id;
         std::string name;

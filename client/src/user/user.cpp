@@ -123,10 +123,8 @@
             json::object obj;
             obj["email"] = email;
             obj["login"] = name;
-
             obj["name"] = name;
             obj["surname"] = name;
-
             obj["password"] = password;
 
             std::string str = boost::json::serialize( boost::json::value_from(obj));
@@ -135,6 +133,17 @@
             std::cout<<"Запрос отправлен"<<std::endl;
 
 
+        }
+
+        void User::auth(std::string username, std::string password, MainWindow* window){
+            std::string target = "/user/auth/login";
+            request_maker = std::make_unique<RequestMakerHttp>(target, window);
+            json::object obj;
+            obj["login"] = username;
+            obj["password"] = password;
+
+            std::string str = boost::json::serialize(boost::json::value_from(obj));
+            request_maker->Post(str, 1);
         }
 
         bool User::isFriend(int id){
