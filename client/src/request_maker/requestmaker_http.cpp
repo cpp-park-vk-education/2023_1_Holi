@@ -73,7 +73,14 @@ void RequestMakerHttp::CallBack(int flag)
     if(flag == 1)//РЕГИСТРАЦИЯ
     {
         window_->CallBack_Registration(message);
-    }else if(flag == 100){//getPlaylistOrChannel
+    }
+    if(flag == 2){
+        //auth
+        std::cout << "AUTH" <<std::endl;
+        std::cout << message << std:: endl;
+
+    }
+    if(flag == 100){//getPlaylistOrChannel
         window_->MP_DB_getPC(message);
     }
 
