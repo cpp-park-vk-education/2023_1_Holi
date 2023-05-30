@@ -76,38 +76,6 @@
        </property>
       </item>
      </widget>
-     <widget class="QPushButton" name="YouTube_main_import_items">
-      <property name="geometry">
-       <rect>
-        <x>380</x>
-        <y>460</y>
-        <width>71</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="contextMenuPolicy">
-       <enum>Qt::NoContextMenu</enum>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton {
-	background-color: rgb(72, 49, 157);
-	border-radius: 5px;
-	color: rgb(255, 255, 255);
-
-}
-
-QPushButton:hover {
-	background-color: rgba(102, 64, 191, 169);
-	border-radius: 5px;
-	color: rgb(255, 255, 255);
-	
-}
-</string>
-      </property>
-      <property name="text">
-       <string>Импорт</string>
-      </property>
-     </widget>
      <widget class="QComboBox" name="VK_main_playists">
       <property name="geometry">
        <rect>
@@ -222,38 +190,6 @@ QPushButton:hover {
       </property>
       <property name="editable">
        <bool>false</bool>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="VK_main_import_items">
-      <property name="geometry">
-       <rect>
-        <x>50</x>
-        <y>460</y>
-        <width>71</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="contextMenuPolicy">
-       <enum>Qt::NoContextMenu</enum>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QPushButton {
-	background-color: rgb(72, 49, 157);
-	border-radius: 5px;
-	color: rgb(255, 255, 255);
-
-}
-
-QPushButton:hover {
-	background-color: rgba(102, 64, 191, 169);
-	border-radius: 5px;
-	color: rgb(255, 255, 255);
-	
-}
-</string>
-      </property>
-      <property name="text">
-       <string>Импорт</string>
       </property>
      </widget>
      <widget class="QListWidget" name="VK_main_list_item">

@@ -53,8 +53,6 @@ bool RegistrationManager::validateUserDetails(const QString &name,
 bool RegistrationManager::saveUserToDatabase(const QString &name,
                                              const QString &email,
                                              const QString &password, MainWindow *window) {
-  QSettings current("Holi", "CurrentUser");// это все его настройки
-  current.setValue("user_id",0);
 
   user = std::make_unique<User>();
     std::cout << "SAVE";

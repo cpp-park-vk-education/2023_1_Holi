@@ -15,7 +15,7 @@ public:
     }
 
     void GetPlaylists(MainWindow* window, int flag) override;
-    void GetVideos(MainWindow* window, int flag) override;
+    void GetVideos(MainWindow* window, int flag, std::string  PlaylistID) override;
 
 private:
     std::unique_ptr<YTRequest> yt_request;

@@ -19,6 +19,7 @@ void RequestMakerHttp::Get(int flag) {
 
 void RequestMakerHttp::Post(std::string &body, int flag) {
 
+    std::cout << "Auth start";
     http::request<http::string_body> request{http::verb::post, target_, 11};
     request.set(http::field::host, host_);
     request.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
@@ -69,7 +70,14 @@ void RequestMakerHttp::CallBack(int flag) {
     if (flag == 1)//РЕГИСТРАЦИЯ
     {
         window_->CallBack_Registration(message);
-    } else if (flag == 100) {//getPlaylistOrChannel
+    }
+    if(flag == 2){
+        //auth
+        std::cout << "AUTH" <<std::endl;
+        std::cout << message << std:: endl;
+
+    }
+    if(flag == 100){//getPlaylistOrChannel
         window_->MP_DB_getPC(message);
     }
 
