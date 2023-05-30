@@ -356,13 +356,17 @@ void MainWindow::on_VK_main_list_item_itemDoubleClicked(QListWidgetItem *item)
 
     std::string owner_id;
     std::string description;
-
-    for (VKAlbums elem : VK_vec) {
-        if(elem.title == item->text()){
-            owner_id = elem.owner_id;
-            description = elem.owner_id;
+    try {
+        for (VKAlbums elem: VK_vec) {
+            if (elem.title == item->text()) {
+                owner_id = std::to_string(elem.owner_id);
+                description = elem.owner_id;
+            }
         }
+    } catch (...) {
+        std::cerr << "problem with owner_id convers in on_VK_main_list_item_itemDoubleClicked" << std::endl;
     }
+
 
     std::cout << "params" << owner_id << std::endl << description;
 
