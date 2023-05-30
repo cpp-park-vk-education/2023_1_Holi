@@ -219,6 +219,7 @@ void MainWindow::MP_VK_getAlbums(MessageInfo info){
         }
         QSettings current("current.ini", QSettings::IniFormat);// это все его настройки
         QString id = current.value("id", "null").toString();
+<<<<<<< HEAD
         QSettings Playlists("Holi", "Playlist_" + id);
 
         QStringList list = Playlists.allKeys();
@@ -226,6 +227,16 @@ void MainWindow::MP_VK_getAlbums(MessageInfo info){
             qDebug() << s;
         }
         std::cout << list.size();
+=======
+        QSettings Playlists("playlists.ini", QSettings::IniFormat);
+
+        QStringList list = Playlists.allKeys();
+
+        std::cout << list.size() << std::endl;
+        for (QString s : list) {
+          qDebug() << s;
+        }
+>>>>>>> 32b88f72115b239f4150fe37abdda01d6413fabe
         for (int i = 0; i < list.size(); i++) {
             ui->VK_main_list_item->item(Playlists.value(list[i]).toInt())->setBackground(Qt::red);
         }
@@ -344,17 +355,18 @@ void MainWindow::on_VK_main_list_item_itemDoubleClicked(QListWidgetItem *item)
 {
     QSettings current("Holi", "CurrentUser");// это все его настройки
     QString id = current.value("id", "null").toString();
-    /*QSettings Playlists("playlist" + id + ".ini", QSettings::IniFormat);
+
+    QSettings Playlists("playlists.ini", QSettings::IniFormat);
     qDebug() << Playlists.fileName();
 
     std::cout << Playlists.fileName().toStdString();*/
     std::cout<<"Кладем в базу"<<std::endl;
 
-        user = std::make_unique<User>();
-        user->addPlaylistOrChannel(item->text().toStdString(), "VK", this, item);
-        item->setBackground(Qt::red);
+    user = std::make_unique<User>();
+    user->addPlaylistOrChannel(item->text().toStdString(), "VK", this, item);
+    item->setBackground(Qt::red);
 
-       /* ui->statusbar->showMessage(item->text() + " уже добавлен в базу данных");
+    /* ui->statusbar->showMessage(item->text() + " уже добавлен в базу данных");
         item->setBackground(Qt::red);*/
 
     //Playlists.setValue(item->text(), item->listWidget()->row(item));

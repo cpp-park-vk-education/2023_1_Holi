@@ -1,24 +1,23 @@
 #include "request_maker/requestmaker_http.hpp"
 #include <functional>
-void RequestMakerHttp::Get(int flag)
-{
-    std::cout<<"GET start"<<std::endl;
 
-    std::cout<<"requestHTTP"<<std::endl;
+void RequestMakerHttp::Get(int flag) {
+    std::cout << "GET start" << std::endl;
+
+    std::cout << "requestHTTP" << std::endl;
     http::request<http::string_body> request{http::verb::get, target_, 11};
     request.set(http::field::host, host_);
     request.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
 
     client_ = std::make_unique<ClientHttp>(request);
     std::cout << "thread start" << std::endl;
-    std::thread thr([this,flag] {CallBack(flag);});
+    std::thread thr([this, flag] { CallBack(flag); });
     thr.detach();
 
-    std::cout<<"GET end"<<std::endl;
+    std::cout << "GET end" << std::endl;
 }
 
-void RequestMakerHttp::Post(std::string & body, int flag)
-{
+void RequestMakerHttp::Post(std::string &body, int flag) {
 
     std::cout << "Auth start";
     http::request<http::string_body> request{http::verb::post, target_, 11};
@@ -31,7 +30,7 @@ void RequestMakerHttp::Post(std::string & body, int flag)
 
     client_ = std::make_unique<ClientHttp>(request);
     std::cout << "thread start" << std::endl;
-    std::thread thr([this,flag] {CallBack(flag);});
+    std::thread thr([this, flag] { CallBack(flag); });
 
     thr.detach();
 
@@ -54,24 +53,21 @@ void RequestMakerHttp::Post(std::string & body, int flag)
 //    std::thread thr(&RequestMaker::CallBack, this);
 //}
 
-void RequestMakerHttp::CallBack(int flag)
-{
+void RequestMakerHttp::CallBack(int flag) {
     std::cout << "call back start" << flag << std::endl;
     client_->Run(host_, port_, target_);
     MessageInfo message;
-    try
-    {
+    try {
         message = client_->GetResponse();
         std::cout << message << std::endl;
-    } 
-    catch (const beast::system_error & e) 
-    {
-        std::cout<< e.what() << std::endl;
+    }
+    catch (const beast::system_error &e) {
+        std::cout << e.what() << std::endl;
 
     }
     //window_->get_response(message);
     std::cout << "call back end" << std::endl;
-    if(flag == 1)//РЕГИСТРАЦИЯ
+    if (flag == 1)//РЕГИСТРАЦИЯ
     {
         window_->CallBack_Registration(message);
     }
