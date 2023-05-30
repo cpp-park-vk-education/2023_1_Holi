@@ -217,11 +217,16 @@ void MainWindow::MP_VK_getAlbums(MessageInfo info){
             std::cout << "Item: id=" << id << ", owner_id=" << ownerId
                       << ", title=" << title << ", response_type=" << responseType << std::endl;
         }
-        QSettings current("Holi", "CurrentUser");// это все его настройки
+        QSettings current("current.ini", QSettings::IniFormat);// это все его настройки
         QString id = current.value("id", "null").toString();
-        QSettings Playlists("Holi", "Playlist_" + id);
+        QSettings Playlists("playlists.ini", QSettings::IniFormat);
+
         QStringList list = Playlists.allKeys();
-        std::cout << list.size();
+
+        std::cout << list.size() << std::endl;
+        for (QString s : list) {
+          qDebug() << s;
+        }
         for (int i = 0; i < list.size(); i++) {
             ui->VK_main_list_item->item(Playlists.value(list[i]).toInt())->setBackground(Qt::red);
         }
@@ -340,7 +345,7 @@ void MainWindow::on_VK_main_list_item_itemDoubleClicked(QListWidgetItem *item)
 {
     QSettings current("Holi", "CurrentUser");// это все его настройки
     QString id = current.value("id", "null").toString();
-    QSettings Playlists("Holi", "Playlist_" + id);
+    QSettings Playlists("playlists.ini", QSettings::IniFormat);
     qDebug() << Playlists.fileName();
     Playlists.setValue(item->text(), item->listWidget()->row(item));
     std::cout << Playlists.fileName().toStdString();
