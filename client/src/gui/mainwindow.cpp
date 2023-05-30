@@ -112,59 +112,54 @@ void MainWindow::on_main_button_clicked() { ui->stackedWidget->setCurrentIndex(0
 void MainWindow::on_VK_button_clicked() {
     QSettings current("Holi", "CurrentUser");// это все его настройки
     QString id = current.value("id", "null").toString();
-    QSettings settings("Holi", "UserConfig_" + (id));// это все его настройки
-    QString token = settings.value("VKAccessToken", "default").toString();//токен
-    QDateTime token_getTime = settings.value("VKAccessToken_getTime").toDateTime();//когда получен
+    QString token = current.value("VKAccessToken", "default").toString();//токен
+    QDateTime token_getTime = current.value("VKAccessToken_getTime").toDateTime();//когда получен
     QDateTime now = QDateTime::currentDateTime();//текущее время
-    qDebug() << (token == "default" || token_getTime.daysTo(now) >= 1 || !QFile::exists(settings.fileName()));
-    if(token == "default" || token_getTime.daysTo(now) >= 1 || !QFile::exists(settings.fileName())){
+    qDebug() << (token == "default" || token_getTime.daysTo(now) >= 1 || !QFile::exists(current.fileName()));
+    if(token == "default" || token_getTime.daysTo(now) >= 1 || !QFile::exists(current.fileName())){
         //если прошло больше суток с момента получения токена
         OAuthVK([&, this](QOAuth2AuthorizationCodeFlow *oauth) {
             accessTokenVK = oauth->token();
-
-            QDateTime now = QDateTime::currentDateTime();
-            QSettings settings("Holi", "UserConfig_" + id);
-            settings.setValue("VKAccessToken", accessTokenVK);
-            settings.setValue("VKAccessToken_getTime",now);
+            QSettings current("Holi", "CurrentUser");// это все его настройки
+            QDateTime now = QDateTime::currentDateTime();//текущее время
+            current.setValue("VKAccessToken", accessTokenVK);
+            current.setValue("VKAccessToken_getTime", now);
             ui->VK_button->setEnabled(false);
             ui->statusbar->showMessage("Подключен профиль ВКонтакте");
         });
     } else if (token != "default"){
         accessTokenVK = token;
-        qDebug() << "Токен из настроек пользователя";
+        qDebug() << "Токен из настроек пользователя = " << token_getTime;
         ui->VK_button->setEnabled(false);
         ui->statusbar->showMessage("Подключен профиль ВКонтакте");
     }
 
 }
 
+void MainWindow::setVKoauth(QString& id){
+
+}
+
 void MainWindow::on_YT_Button_clicked() {
     QSettings current("Holi", "CurrentUser");// это все его настройки
     QString id = current.value("id", "null").toString();
-    QSettings settings("Holi", "UserConfig_" + (id));// это все его настройки
-    QString token = settings.value("YouTubeAccessToken", "default").toString();//токен
-    QDateTime token_getTime = settings.value("YouTubeAccessToken_getTime").toDateTime();//когда получен
+    QString token = current.value("YouTubeAccessToken", "default").toString();//токен
+    QDateTime token_getTime = current.value("YouTubeAccessToken_getTime").toDateTime();//когда получен
     QDateTime now = QDateTime::currentDateTime();//текущее время
-    qDebug() << (token == "default" || token_getTime.daysTo(now) >= 1 || !QFile::exists(settings.fileName()));
-    if(token == "default" || token_getTime.daysTo(now) >= 1 || !QFile::exists(settings.fileName())){
+    qDebug() << (token == "default" || token_getTime.daysTo(now) >= 1 || !QFile::exists(current.fileName()));
+    if(token == "default" || token_getTime.daysTo(now) >= 1 || !QFile::exists(current.fileName())){
         OAuthYT([&,this](QOAuth2AuthorizationCodeFlow *oauth) {
-            qDebug() << "swrgwrg";
-            qDebug() << oauth->token();
             accessTokenYT = oauth->token();
-
-            QDateTime now = QDateTime::currentDateTime();
-            QSettings settings("Holi", "UserConfig_" + id);
-            settings.setValue("YouTubeAccessToken", accessTokenYT);
-            settings.setValue("YouTubeAccessToken_getTime",now);
-            qDebug() << settings.fileName();
+            QSettings current("Holi", "CurrentUser");// это все его настройки
+            QDateTime now = QDateTime::currentDateTime();//текущее время
+            current.setValue("YouTubeAccessToken", accessTokenYT);
+            current.setValue("YouTubeAccessToken_getTime",now);
             ui->YT_Button->setEnabled(false);
             ui->statusbar->showMessage("Подключен профиль Ютуб");
         });
     } else if (token != "default"){
         accessTokenYT = token;
-        qDebug() << "Токен из настроек пользователя\nПолучен: " << token_getTime;
-        qDebug() << token;
-
+        qDebug() << "Токен из настроек пользователя = " << token_getTime;
         ui->YT_Button->setEnabled(false);
         ui->statusbar->showMessage("Подключен профиль Ютуб");
     }
@@ -474,7 +469,15 @@ void MainWindow::CallBack_Registration(MessageInfo info){
         current.setValue("email", email.c_str());
         current.setValue("login", login.c_str());
         current.setValue("password", password.c_str());
+        QString ID = id.c_str();
+        QSettings settings("Holi", "UserConfig_" + ID);// это все его настройкиF
+        settings.setValue("id", id.c_str());
 
+        settings.setValue("name", name.c_str());
+        settings.setValue("surname", surname.c_str());
+        settings.setValue("email", email.c_str());
+        settings.setValue("login", login.c_str());
+        settings.setValue("password", password.c_str());
         qDebug() << current.fileName();
 
         ui->stackedWidget->setCurrentIndex(0);
@@ -502,6 +505,8 @@ void MainWindow::on_logout_clicked()
 
     ui->statusbar->showMessage("Вы вышли");
 
+    ui->YT_Button->setEnabled(true);
+    ui->VK_button->setEnabled(true);
 
 }
 

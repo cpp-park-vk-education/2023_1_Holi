@@ -87,7 +87,7 @@ private slots:
 
     void on_VK_getAllAlboms_clicked();
 
-
+    void setVKoauth(QString& id);
 
     void on_VK_main_list_item_itemDoubleClicked(QListWidgetItem *item);
 
