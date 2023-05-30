@@ -146,7 +146,7 @@ void MainWindow::on_YT_Button_clicked() {
     QString token = current.value("YouTubeAccessToken", "default").toString();//токен
     QDateTime token_getTime = current.value("YouTubeAccessToken_getTime").toDateTime();//когда получен
     QDateTime now = QDateTime::currentDateTime();//текущее время
-    qDebug() << (token == "default" || token_getTime.daysTo(now) >= 1 || !QFile::exists(current.fileName()));
+    //qDebug() << (token == "default" || token_getTime.daysTo(now) >= 1 || !QFile::exists(current.fileName()));
     if(token == "default" || token_getTime.daysTo(now) >= 1 || !QFile::exists(current.fileName())){
         OAuthYT([&,this](QOAuth2AuthorizationCodeFlow *oauth) {
             accessTokenYT = oauth->token();
@@ -219,15 +219,7 @@ void MainWindow::MP_VK_getAlbums(MessageInfo info){
         }
         QSettings current("current.ini", QSettings::IniFormat);// это все его настройки
         QString id = current.value("id", "null").toString();
-<<<<<<< HEAD
-        QSettings Playlists("Holi", "Playlist_" + id);
 
-        QStringList list = Playlists.allKeys();
-        for (QString s : list) {
-            qDebug() << s;
-        }
-        std::cout << list.size();
-=======
         QSettings Playlists("playlists.ini", QSettings::IniFormat);
 
         QStringList list = Playlists.allKeys();
@@ -236,7 +228,7 @@ void MainWindow::MP_VK_getAlbums(MessageInfo info){
         for (QString s : list) {
           qDebug() << s;
         }
->>>>>>> 32b88f72115b239f4150fe37abdda01d6413fabe
+
         for (int i = 0; i < list.size(); i++) {
             ui->VK_main_list_item->item(Playlists.value(list[i]).toInt())->setBackground(Qt::red);
         }
@@ -328,7 +320,7 @@ void MainWindow::on_YouTube_main_list_item_itemDoubleClicked(QListWidgetItem *it
         std::cout<<"Кладем в базу"<<std::endl;
         if(!Playlists.allKeys().contains(item->text())){
             user = std::make_unique<User>();
-            user->addPlaylistOrChannel(item->text().toStdString(), "YT", this, item);
+            user->addPlaylistOrChannel(item->text().toStdString(),"1", "1", "YT", this, item);
             item->setBackground(Qt::red);
 
         }else{
@@ -359,11 +351,23 @@ void MainWindow::on_VK_main_list_item_itemDoubleClicked(QListWidgetItem *item)
     QSettings Playlists("playlists.ini", QSettings::IniFormat);
     qDebug() << Playlists.fileName();
 
-    std::cout << Playlists.fileName().toStdString();*/
+    std::cout << Playlists.fileName().toStdString();
     std::cout<<"Кладем в базу"<<std::endl;
 
+    std::string owner_id;
+    std::string description;
+
+    for (VKAlbums elem : VK_vec) {
+        if(elem.title == item->text()){
+            owner_id = elem.owner_id;
+            description = elem.owner_id;
+        }
+    }
+
+    std::cout << "params" << owner_id << std::endl << description;
+
     user = std::make_unique<User>();
-    user->addPlaylistOrChannel(item->text().toStdString(), "VK", this, item);
+    user->addPlaylistOrChannel(item->text().toStdString(), owner_id, "description",  "VK", this, item);
     item->setBackground(Qt::red);
 
     /* ui->statusbar->showMessage(item->text() + " уже добавлен в базу данных");

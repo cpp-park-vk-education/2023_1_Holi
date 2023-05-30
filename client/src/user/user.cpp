@@ -63,7 +63,7 @@
         }
 
 
-        void User::addPlaylistOrChannel(std::string Playlist, std::string Service, MainWindow *window, QListWidgetItem *item){
+        void User::addPlaylistOrChannel(std::string Playlist, std::string owner_id, std::string description, std::string Service, MainWindow *window, QListWidgetItem *item){
             std::cout<<"getName start"<<std::endl;
             QSettings current("Holi", "CurrentUser");
             std::string id = current.value("id").toString().toStdString();
@@ -74,7 +74,8 @@
             json::object obj;
             obj["name"] = Playlist;
             obj["exported_from"] = Service;
-
+            obj["id_in_service"] = owner_id;
+            obj["description"] = description;
             std::string str = boost::json::serialize( boost::json::value_from(obj));
             std::cout << str;
             request_maker->Post(str,0);
