@@ -181,7 +181,7 @@ void MainWindow::on_VK_getAllAlboms_clicked() {
 
 struct VKAlbums{
     int id;
-    int owner_id;
+    QString owner_id;
     QString title;
     QString responseType;
 };
@@ -190,32 +190,35 @@ QVector<VKAlbums> VK_vec;
 void MainWindow::MP_VK_getAlbums(MessageInfo info){
     ui->VK_main_list_item->clear();
     VK_vec.clear();
-    //info содержит статус и json
     std::cout << "Response into GUI" << std::endl;
 
-    std::cout << info << std::endl;
+
     if(info.status_ == http::status::ok){
         boost::json::object jsonObject = info.body_.as_object();
         int count = jsonObject["response"].as_object()["count"].as_int64();
-        std::cout << "Count: " << count << std::endl;
+
 
         boost::json::array itemsArray = jsonObject["response"].as_object()["items"].as_array();
         for (const auto& item : itemsArray) {
             boost::json::object itemObject = item.as_object();
             int id = itemObject["id"].as_int64();
-            int ownerId = itemObject["owner_id"].as_int64();
+            std::cerr << 1 << std::endl;
+            std::string ownerId = itemObject["owner_id"].as_string().c_str();
+            std::cerr << 2 << std::endl;
             std::string title = itemObject["title"].as_string().c_str();
+            std::cerr << 3 << std::endl;
             std::string responseType = itemObject["response_type"].as_string().c_str();
+            std::cerr << 4 << std::endl;
             QString res = title.c_str();
+            std::cerr << 5 << std::endl;
             VKAlbums album;
-            album.id = id;
-            album.owner_id = ownerId;
+
+            album.owner_id = ownerId.c_str();
             album.title = title.c_str();
             album.responseType = responseType.c_str();
             VK_vec.push_back(album);
             ui->VK_main_list_item->addItem(res);
-            std::cout << "Item: id=" << id << ", owner_id=" << ownerId
-                      << ", title=" << title << ", response_type=" << responseType << std::endl;
+
         }
         QSettings current("current.ini", QSettings::IniFormat);// это все его настройки
         QString id = current.value("id", "null").toString();
@@ -359,8 +362,8 @@ void MainWindow::on_VK_main_list_item_itemDoubleClicked(QListWidgetItem *item)
 
     for (VKAlbums elem : VK_vec) {
         if(elem.title == item->text()){
-            owner_id = elem.owner_id;
-            description = elem.owner_id;
+            owner_id = elem.owner_id.toStdString();
+            description = elem.owner_id.toStdString();
         }
     }
 
