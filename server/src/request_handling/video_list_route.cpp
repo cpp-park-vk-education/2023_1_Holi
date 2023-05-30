@@ -29,6 +29,7 @@ MessageInfo VideoListRoute::Post(json::value body) {
     std::string sql = R"(insert into "Playlist" (name, exported_from, user_id, id_in_service, description) values (?, ?, ?, ?, ?) returning id)";
 
     std::map<std::string, std::string> cols;
+    int id_in_service;
     try {
         cols["name"] = video_info.at("name").as_string();
         cols["exported_from"] = video_info.at("exported_from").as_string();
@@ -52,11 +53,17 @@ MessageInfo VideoListRoute::Post(json::value body) {
         query = QSqlQuery(db_connector_->Connect());
 
         query.prepare(sql.c_str());
+        query.bindValue(0, cols["name"].c_str());
+        query.bindValue(1, cols["exported_from"].c_str());
         query.bindValue(2, user_id_);
-        for (int i = 0; const auto &col: cols) {
-            if (i == 2) { ++i; }
-            query.bindValue(i++, col.second.c_str());
-        }
+        query.bindValue(3, cols["id_in_service"].c_str());
+        query.bindValue(4, cols["description"].c_str());
+
+//        query.bindValue(2, user_id_);
+//        for (int i = 0; const auto &col: cols) {
+//            if (i == 2) { ++i; }
+//            query.bindValue(i++, col.second.c_str());
+//        }
 
         query = db_connector_->MakeQuery(std::move(query));
     } catch (const ConditionError &e) {

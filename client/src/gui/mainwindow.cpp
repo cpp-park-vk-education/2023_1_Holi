@@ -181,7 +181,7 @@ void MainWindow::on_VK_getAllAlboms_clicked() {
 
 struct VKAlbums{
     int id;
-    QString owner_id;
+    int owner_id;
     QString title;
     QString responseType;
 };
@@ -202,18 +202,18 @@ void MainWindow::MP_VK_getAlbums(MessageInfo info){
         for (const auto& item : itemsArray) {
             boost::json::object itemObject = item.as_object();
             int id = itemObject["id"].as_int64();
-            std::cerr << 1 << std::endl;
-            std::string ownerId = itemObject["owner_id"].as_string().c_str();
-            std::cerr << 2 << std::endl;
-            std::string title = itemObject["title"].as_string().c_str();
-            std::cerr << 3 << std::endl;
-            std::string responseType = itemObject["response_type"].as_string().c_str();
-            std::cerr << 4 << std::endl;
-            QString res = title.c_str();
-            std::cerr << 5 << std::endl;
-            VKAlbums album;
 
-            album.owner_id = ownerId.c_str();
+            int ownerId = itemObject["owner_id"].as_int64();
+
+            std::string title = itemObject["title"].as_string().c_str();
+
+            std::string responseType = itemObject["response_type"].as_string().c_str();
+
+            QString res = title.c_str();
+
+            VKAlbums album;
+            album.id = id;
+            album.owner_id = ownerId;
             album.title = title.c_str();
             album.responseType = responseType.c_str();
             VK_vec.push_back(album);
@@ -359,18 +359,24 @@ void MainWindow::on_VK_main_list_item_itemDoubleClicked(QListWidgetItem *item)
 
     std::string owner_id;
     std::string description;
-
-    for (VKAlbums elem : VK_vec) {
-        if(elem.title == item->text()){
-            owner_id = elem.owner_id.toStdString();
-            description = elem.owner_id.toStdString();
+    std::string playlist_id;
+    try {
+        for (VKAlbums elem: VK_vec) {
+            if (elem.title == item->text()) {
+                owner_id = std::to_string(elem.owner_id);
+                description = elem.owner_id;
+                playlist_id = std::to_string(elem.id);
+            }
         }
+    } catch (...) {
+        std::cerr << "problem with owner_id convers in on_VK_main_list_item_itemDoubleClicked" << std::endl;
     }
+
 
     std::cout << "params" << owner_id << std::endl << description;
 
     user = std::make_unique<User>();
-    user->addPlaylistOrChannel(item->text().toStdString(), owner_id, "description",  "VK", this, item);
+    user->addPlaylistOrChannel(item->text().toStdString(), owner_id + "_" + playlist_id, "description",  "VK", this, item);
     item->setBackground(Qt::red);
 
     /* ui->statusbar->showMessage(item->text() + " уже добавлен в базу данных");
