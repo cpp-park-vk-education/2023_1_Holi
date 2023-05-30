@@ -64,8 +64,8 @@ void Session::OnRead(beast::error_code ec, std::size_t bytes_transferred) {
     if (ec)
         return fail(ec, "read");
     std::cout << "\t--- read: done " << std::this_thread::get_id() << std::endl;
-    std::cerr << request_.target() << std::endl;
-    std::cerr << request_.body() << std::endl;
+//    std::cerr << request_.target() << std::endl;
+//    std::cerr << request_.body() << std::endl;
     SendResponse(request_handler_->Handle(std::move(request_)));
 }
 
