@@ -221,7 +221,7 @@ void MainWindow::MP_VK_getAlbums(MessageInfo info){
         QString id = current.value("id", "null").toString();
         QSettings Playlists("Holi", "Playlist_" + id);
         QStringList list = Playlists.allKeys();
-
+        std::cout << list.size();
         for (int i = 0; i < list.size(); i++) {
             ui->VK_main_list_item->item(Playlists.value(list[i]).toInt())->setBackground(Qt::red);
         }
@@ -341,6 +341,7 @@ void MainWindow::on_VK_main_list_item_itemDoubleClicked(QListWidgetItem *item)
     QSettings current("Holi", "CurrentUser");// это все его настройки
     QString id = current.value("id", "null").toString();
     QSettings Playlists("Holi", "Playlist_" + id);
+    qDebug() << Playlists.fileName();
     Playlists.setValue(item->text(), item->listWidget()->row(item));
     std::cout << Playlists.fileName().toStdString();
     std::cout<<"Кладем в базу"<<std::endl;
@@ -469,15 +470,6 @@ void MainWindow::CallBack_Registration(MessageInfo info){
         current.setValue("email", email.c_str());
         current.setValue("login", login.c_str());
         current.setValue("password", password.c_str());
-        QString ID = id.c_str();
-        QSettings settings("Holi", "UserConfig_" + ID);// это все его настройкиF
-        settings.setValue("id", id.c_str());
-
-        settings.setValue("name", name.c_str());
-        settings.setValue("surname", surname.c_str());
-        settings.setValue("email", email.c_str());
-        settings.setValue("login", login.c_str());
-        settings.setValue("password", password.c_str());
         qDebug() << current.fileName();
 
         ui->stackedWidget->setCurrentIndex(0);
