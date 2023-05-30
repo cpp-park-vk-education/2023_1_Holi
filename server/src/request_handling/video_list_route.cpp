@@ -36,7 +36,6 @@ MessageInfo VideoListRoute::Post(json::value body) {
         cols["id_in_service"] = video_info.at("id_in_service").as_string();
         cols["description"] = video_info.at("description").as_string();
 
-
     } catch (const std::out_of_range &e) {
         std::cerr << "Not enough data to post:" << e.what() << std::endl;
         return {{}, http::status::bad_request};
