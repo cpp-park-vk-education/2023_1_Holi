@@ -217,10 +217,14 @@ void MainWindow::MP_VK_getAlbums(MessageInfo info){
             std::cout << "Item: id=" << id << ", owner_id=" << ownerId
                       << ", title=" << title << ", response_type=" << responseType << std::endl;
         }
-        QSettings current("Holi", "CurrentUser");// это все его настройки
+        QSettings current("current.ini", QSettings::IniFormat);// это все его настройки
         QString id = current.value("id", "null").toString();
         QSettings Playlists("Holi", "Playlist_" + id);
+
         QStringList list = Playlists.allKeys();
+        for (QString s : list) {
+            qDebug() << s;
+        }
         std::cout << list.size();
         for (int i = 0; i < list.size(); i++) {
             ui->VK_main_list_item->item(Playlists.value(list[i]).toInt())->setBackground(Qt::red);
@@ -287,7 +291,7 @@ void MainWindow::MP_YT_getVideo(MessageInfo info){
             auto elem  = itemObject["snippet"];
             ui->YouTube_main_list_item->addItem(elem.as_object()["title"].as_string().c_str());
         }
-        QSettings current("Holi", "CurrentUser");// это все его настройки
+        QSettings current("current.ini", QSettings::IniFormat);// это все его настройки
         QString id = current.value("id", "null").toString();
         QSettings Videos("Holi", "Videos_" + id);
         QStringList list = Videos.allKeys();
@@ -340,19 +344,20 @@ void MainWindow::on_VK_main_list_item_itemDoubleClicked(QListWidgetItem *item)
 {
     QSettings current("Holi", "CurrentUser");// это все его настройки
     QString id = current.value("id", "null").toString();
-    QSettings Playlists("Holi", "Playlist_" + id);
+    /*QSettings Playlists("playlist" + id + ".ini", QSettings::IniFormat);
     qDebug() << Playlists.fileName();
-    Playlists.setValue(item->text(), item->listWidget()->row(item));
-    std::cout << Playlists.fileName().toStdString();
+
+    std::cout << Playlists.fileName().toStdString();*/
     std::cout<<"Кладем в базу"<<std::endl;
-    if(!Playlists.allKeys().contains(item->text())){
+
         user = std::make_unique<User>();
         user->addPlaylistOrChannel(item->text().toStdString(), "VK", this, item);
         item->setBackground(Qt::red);
-    }else{
-        ui->statusbar->showMessage(item->text() + " уже добавлен в базу данных");
-        item->setBackground(Qt::red);
-    }
+
+       /* ui->statusbar->showMessage(item->text() + " уже добавлен в базу данных");
+        item->setBackground(Qt::red);*/
+
+    //Playlists.setValue(item->text(), item->listWidget()->row(item));
 }
 
 void MainWindow::MP_DB_getPC(MessageInfo info){
