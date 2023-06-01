@@ -3,28 +3,28 @@
 
 #include <QtNetworkAuth/QOAuth2AuthorizationCodeFlow>
 #include <QtNetworkAuth/QOAuthHttpServerReplyHandler>
-
-
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkReply>
+#include "client/message_info.h"
+#include <QMessageBox>
 
-
-
-
-class GoogleSSO : public QObject {
-    Q_OBJECT
-public:
-    GoogleSSO(QObject *parent=nullptr);
-    virtual ~GoogleSSO();
-
-public slots:
-    void authenticate();
-
-signals:
-    void gotToken(const QString& token);
-
-private:
-    QOAuth2AuthorizationCodeFlow * google;
+//Альбомы Ютуба
+struct YTAlbums{
+    QString title ;
+    QString description;
+    QString channelId;
+    QString id;
 };
+
+struct YTVideo{
+    QString title;
+    QString id;
+    QString description;
+};
+
+
+QVector<YTAlbums> YouTube_Albums(MessageInfo info);
+QVector<QString> YouTube_Albums_DB(MessageInfo info);
+QVector<YTVideo> YouTube_Video(MessageInfo info);
 
 #endif // OAUTHPROVIDER_H

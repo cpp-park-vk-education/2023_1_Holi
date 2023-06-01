@@ -136,9 +136,6 @@ void MainWindow::on_VK_button_clicked() {
 
 }
 
-void MainWindow::setVKoauth(QString& id){
-
-}
 
 void MainWindow::on_YT_Button_clicked() {
     QSettings current("Holi", "CurrentUser");// это все его настройки
@@ -246,40 +243,45 @@ void MainWindow::MP_VK_getAlbums(MessageInfo info){
 
 void MainWindow::MP_VK_getVideo(MessageInfo info){}
 
-struct YTAlbums{
-    QString title ;
-    QString description ;
-    QString channelId;
-    QString id;
-};
-QVector<YTAlbums> YT_vec;
 
-void MainWindow::MP_YT_getAlbums(MessageInfo info){
+QVector<YTAlbums> YT_Albums_API;
+QVector<YTVideo> YT_Videos_API;
+QVector<QString> YT_Albums_DB;
+
+void MainWindow::on_YouTube_getAllAlboms_clicked()//тут логика с выбором альобв с видео
+{
+    std::string token = accessTokenYT.toStdString();
+    api_client = std::make_unique<YTClient>(token);
+    if(ui->YouTube_main_type_request->currentIndex() == 0){
+        api_client->GetPlaylists(this, 3);
+    }else if(ui->YouTube_main_type_request->currentIndex() == 1){
+        std::string playlistId;
+        QString playlistName = ui->YouTube_main_playists->currentText();
+        for (YTAlbums elem : YT_Albums_API) {
+            if(elem.title == playlistName){
+                playlistId = elem.id.toStdString();
+            }
+        }
+        api_client->GetVideos(this,4, playlistId);//берем из сервиса, также надо проверять БД при запросе
+        qDebug() << playlistName;
+    }
+}
+
+void MainWindow::MP_YT_getAlbums(MessageInfo info){//3 КОЛБЕК
     ui->YouTube_main_list_item->clear();
     ui->YouTube_main_playists->clear();
-    YT_vec.clear();
-    std::cout << "Got YT Response" << std::endl;
-    if(info.status_ == http::status::ok){
-        boost::json::object jsonObject = info.body_.as_object();
-        boost::json::array itemsArray = jsonObject["items"].as_array();
-        for (const auto& item : itemsArray) {
-            QList<QString> playlist;
-            boost::json::object itemObject = item.as_object();
-            auto elem  = itemObject["snippet"];
-            QString title = elem.as_object()["title"].as_string().c_str();
-            QString description = elem.as_object()["description"].as_string().c_str();
-            QString channelId = elem.as_object()["channelId"].as_string().c_str();
-            QString id = itemObject["id"].as_string().c_str();
-            YTAlbums album;
-            album.channelId = channelId;
-            album.id = id;
-            album.title = title;
-            album.description = description;
-            YT_vec.push_back(album);
-            ui->YouTube_main_list_item->addItem(title);
-            ui->YouTube_main_playists->addItem(title);
+    YT_Albums_API.clear();
+
+    YT_Albums_API = YouTube_Albums(info);
+    if(!YT_Albums_API.empty()){
+        for(auto elem : YT_Albums_API){
+            ui->YouTube_main_list_item->addItem(elem.title);
+            ui->YouTube_main_playists->addItem(elem.title);
         }
-    } else{
+        user = std::make_unique<User>();
+        user->getPlaylisYouTube_Database(this);
+    }
+    else{
         QMessageBox msgBox;
         msgBox.setText("Что то пошло не так");
         msgBox.exec();
@@ -287,23 +289,15 @@ void MainWindow::MP_YT_getAlbums(MessageInfo info){
 }
 
 void MainWindow::MP_YT_getVideo(MessageInfo info){
-    std::cout << "info\n" << info;
+    YT_Videos_API.clear();
     ui->YouTube_main_list_item->clear();
-    if(info.status_ == http::status::ok){
-        boost::json::object jsonObject = info.body_.as_object();
-        boost::json::array itemsArray = jsonObject["items"].as_array();
-        for (const auto& item : itemsArray) {
-            boost::json::object itemObject = item.as_object();
-            auto elem  = itemObject["snippet"];
-            ui->YouTube_main_list_item->addItem(elem.as_object()["title"].as_string().c_str());
+
+    YT_Videos_API = YouTube_Video(info);
+    if(!YT_Videos_API.empty()){
+        for(auto elem : YT_Videos_API){
+            ui->YouTube_main_list_item->addItem(elem.title);
         }
-        QSettings current("current.ini", QSettings::IniFormat);// это все его настройки
-        QString id = current.value("id", "null").toString();
-        QSettings Videos("Holi", "Videos_" + id);
-        QStringList list = Videos.allKeys();
-        for (int i = 0; i < list.size(); i++) {
-            ui->YouTube_main_list_item->item(Videos.value(list[i]).toInt())->setBackground(Qt::red);
-        }
+
     }
     else{
         QMessageBox msgBox;
@@ -314,26 +308,27 @@ void MainWindow::MP_YT_getVideo(MessageInfo info){
 
 void MainWindow::on_YouTube_main_list_item_itemDoubleClicked(QListWidgetItem *item)
 {
+    user = std::make_unique<User>();
+
     QSettings current("Holi", "CurrentUser");// это все его настройки
     QString id = current.value("id", "null").toString();
     if(ui->YouTube_main_type_request->currentIndex() == 0){//alboms
-        QSettings Playlists("Holi", "Playlist_" + id);
-        Playlists.setValue(item->text(), item->listWidget()->row(item));
-        std::cout << Playlists.fileName().toStdString();
-        std::cout<<"Кладем в базу"<<std::endl;
-        if(!Playlists.allKeys().contains(item->text())){
-            user = std::make_unique<User>();
+        bool permission = false;
+        QString targetElem = item->text();
+
+        if(!YT_Albums_DB.contains(targetElem)){
+            std::cout<<"Кладем в базу"<<std::endl;
             user->addPlaylistOrChannel(item->text().toStdString(),"1", "1", "YT", this, item);
             item->setBackground(Qt::red);
-
-        }else{
-            ui->statusbar->showMessage(item->text() + " уже добавлен в базу данных");
-            item->setBackground(Qt::red);
+        } else{
+            ui->statusbar->showMessage(" уже добавлен в базу данных");
         }
+
+
+
     }else if(ui->YouTube_main_type_request->currentIndex() == 1){//videos
         QSettings Videos("Holi", "Videos_" + id);
         Videos.setValue(item->text(), item->listWidget()->row(item));
-        std::cout << Videos.fileName().toStdString();
         std::cout<<"Кладем в базу"<<std::endl;
         if(!Videos.allKeys().contains(item->text())){
             //user = std::make_unique<User>();
@@ -344,6 +339,20 @@ void MainWindow::on_YouTube_main_list_item_itemDoubleClicked(QListWidgetItem *it
             item->setBackground(Qt::red);
         }
     }
+}
+
+void MainWindow::MP_YT_checkAddPlaylis(MessageInfo info){
+    YT_Albums_DB.clear();
+    YT_Albums_DB = YouTube_Albums_DB(info);
+    for (QString str : YT_Albums_DB ) {
+        qDebug() << "from db    " << str;
+    }
+}
+
+void MainWindow::MP_addPlaylis_YouTube(MessageInfo info){
+    std::cout << "ЕПТИТЬ КОЛОЛТИТЬ" << std::endl;
+    user = std::make_unique<User>();
+    user->getPlaylisYouTube_Database(this);
 }
 
 void MainWindow::on_VK_main_list_item_itemDoubleClicked(QListWidgetItem *item)
@@ -378,15 +387,10 @@ void MainWindow::on_VK_main_list_item_itemDoubleClicked(QListWidgetItem *item)
     user = std::make_unique<User>();
     user->addPlaylistOrChannel(item->text().toStdString(), owner_id + "_" + playlist_id, "description",  "VK", this, item);
     item->setBackground(Qt::red);
-
-    /* ui->statusbar->showMessage(item->text() + " уже добавлен в базу данных");
-        item->setBackground(Qt::red);*/
-
-    //Playlists.setValue(item->text(), item->listWidget()->row(item));
 }
 
 void MainWindow::MP_DB_getPC(MessageInfo info){
-    std::cout << "info\n" << info;
+    std::cout << "ЭТОТ ОТВЕТ ОТ БД НАДО СРАВНИТЬ С ТЕМ ЧТО ПРИШЛО ОТ АПИ И КЛАСТЬ В КЕШ" ;
 }
 
 
@@ -405,24 +409,6 @@ void MainWindow::MP_VK_SuccesfullImportPlaylists(QListWidgetItem *item){
     item->setBackground(Qt::red);
 }
 
-void MainWindow::on_YouTube_getAllAlboms_clicked()
-{
-    std::string token = accessTokenYT.toStdString();
-    api_client = std::make_unique<YTClient>(token);
-    if(ui->YouTube_main_type_request->currentIndex() == 0){
-        api_client->GetPlaylists(this, 3);
-    }else if(ui->YouTube_main_type_request->currentIndex() == 1){
-        std::string playlistId;
-        QString playlistName = ui->YouTube_main_playists->currentText();
-        for (YTAlbums elem : YT_vec) {
-            if(elem.title == playlistName){
-                playlistId = elem.id.toStdString();
-            }
-        }
-        api_client->GetVideos(this,4, playlistId);
-        qDebug() << playlistName;
-    }
-}
 
 
 /*

@@ -63,7 +63,10 @@ public:
 
     void MP_YT_getVideo(MessageInfo info);
 
+    void MP_YT_checkAddPlaylis(MessageInfo info);
     //
+    void MP_addPlaylis_YouTube(MessageInfo info);
+
     void get_response(MessageInfo info);
     //
     void CallBack_Registration(MessageInfo info);
@@ -86,8 +89,6 @@ private slots:
     void on_signUp_button_clicked();
 
     void on_VK_getAllAlboms_clicked();
-
-    void setVKoauth(QString& id);
 
     void on_VK_main_list_item_itemDoubleClicked(QListWidgetItem *item);
 
