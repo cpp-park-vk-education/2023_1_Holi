@@ -137,31 +137,16 @@ void MainWindow::on_VK_button_clicked() {
 }
 
 
-void MainWindow::on_YT_Button_clicked() {
-    QSettings current("Holi", "CurrentUser");// это все его настройки
-    QString id = current.value("id", "null").toString();
-    QString token = current.value("YouTubeAccessToken", "default").toString();//токен
-    QDateTime token_getTime = current.value("YouTubeAccessToken_getTime").toDateTime();//когда получен
-    QDateTime now = QDateTime::currentDateTime();//текущее время
-    //qDebug() << (token == "default" || token_getTime.daysTo(now) >= 1 || !QFile::exists(current.fileName()));
-    if(token == "default" || token_getTime.daysTo(now) >= 1 || !QFile::exists(current.fileName())){
-        OAuthYT([&,this](QOAuth2AuthorizationCodeFlow *oauth) {
-            accessTokenYT = oauth->token();
-            QSettings current("Holi", "CurrentUser");// это все его настройки
-            QDateTime now = QDateTime::currentDateTime();//текущее время
-            current.setValue("YouTubeAccessToken", accessTokenYT);
-            current.setValue("YouTubeAccessToken_getTime",now);
-            ui->YT_Button->setEnabled(false);
-            ui->statusbar->showMessage("Подключен профиль Ютуб");
-        });
-    } else if (token != "default"){
-        accessTokenYT = token;
-        qDebug() << "Токен из настроек пользователя = " << token_getTime;
+void MainWindow::on_YT_Button_clicked() {            
+    OAuthYT([&,this](QOAuth2AuthorizationCodeFlow *oauth) {
+        accessTokenYT = oauth->token();
+        QSettings current("Holi", "CurrentUser");// это все его настройки
+        QDateTime now = QDateTime::currentDateTime();//текущее время
+        current.setValue("YouTubeAccessToken", accessTokenYT);
+        current.setValue("YouTubeAccessToken_getTime",now);
         ui->YT_Button->setEnabled(false);
         ui->statusbar->showMessage("Подключен профиль Ютуб");
-    }
-
-
+    });
 }
 
 void MainWindow::on_button_login_clicked() { ui->stackedWidget->setCurrentIndex(1);}
@@ -169,76 +154,71 @@ void MainWindow::on_Config_button_clicked() { ui->stackedWidget->setCurrentIndex
 void MainWindow::on_AlbomsButton_clicked() {ui->stackedWidget->setCurrentIndex(3);}
 void MainWindow::on_signUp_button_clicked() {ui->stackedWidget->setCurrentIndex(4);}
 
+QVector<VKAlbums> VK_Albums_API;
+QVector<QString> VK_Albums_DB;
+
 void MainWindow::on_VK_getAllAlboms_clicked() {
+    user = std::make_unique<User>();
     std::string token = accessTokenVK.toStdString();
     api_client = std::make_unique<VKClient>(token, 478111331);
-    api_client->GetPlaylists(this, 1);
+
+    if(ui->VK_main_type_request->currentIndex() == 0){
+        user->getPlaylisVK_Database(this);
+        api_client->GetPlaylists(this, 1);
+    }
+    if(ui->VK_main_type_request->currentIndex() == 1){
+        //сдесь видосики из плейлиста контакта
+       if(ui->VK_main_playists->currentIndex() == -1){
+           QMessageBox msgBox;
+           msgBox.setText("Выберите плейлист");
+           msgBox.exec();
+       } else{
+           std::string playlistId;
+           QString playlistName = ui->YouTube_main_playists->currentText();
+           for (auto elem : VK_Albums_API) {
+               if(elem.title == playlistName){
+                   playlistId = elem.id.toStdString();
+               }
+           }
+       }
+    }
+
+
+
+
 }
 
 
-struct VKAlbums{
-    int id;
-    int owner_id;
-    QString title;
-    QString responseType;
-};
-QVector<VKAlbums> VK_vec;
 
 void MainWindow::MP_VK_getAlbums(MessageInfo info){
     ui->VK_main_list_item->clear();
-    VK_vec.clear();
-    std::cout << "Response into GUI" << std::endl;
-
-
-    if(info.status_ == http::status::ok){
-        boost::json::object jsonObject = info.body_.as_object();
-        int count = jsonObject["response"].as_object()["count"].as_int64();
-
-
-        boost::json::array itemsArray = jsonObject["response"].as_object()["items"].as_array();
-        for (const auto& item : itemsArray) {
-            boost::json::object itemObject = item.as_object();
-            int id = itemObject["id"].as_int64();
-
-            int ownerId = itemObject["owner_id"].as_int64();
-
-            std::string title = itemObject["title"].as_string().c_str();
-
-            std::string responseType = itemObject["response_type"].as_string().c_str();
-
-            QString res = title.c_str();
-
-            VKAlbums album;
-            album.id = id;
-            album.owner_id = ownerId;
-            album.title = title.c_str();
-            album.responseType = responseType.c_str();
-            VK_vec.push_back(album);
-            ui->VK_main_list_item->addItem(res);
-
-        }
-        QSettings current("current.ini", QSettings::IniFormat);// это все его настройки
-        QString id = current.value("id", "null").toString();
-
-        QSettings Playlists("playlists.ini", QSettings::IniFormat);
-
-        QStringList list = Playlists.allKeys();
-
-        std::cout << list.size() << std::endl;
-        for (QString s : list) {
-          qDebug() << s;
+    VK_Albums_API.clear();
+    VK_Albums_API = VKontakte_Albums(info);
+    if(!VK_Albums_API.empty()){
+        for(auto elem : VK_Albums_API){
+            ui->VK_main_list_item->addItem(elem.title);
+            ui->VK_main_playists->addItem(elem.title);
         }
 
-        for (int i = 0; i < list.size(); i++) {
-            ui->VK_main_list_item->item(Playlists.value(list[i]).toInt())->setBackground(Qt::red);
+        for(int i = 0; i < ui->VK_main_list_item->count(); i++){
+            QListWidgetItem* item = ui->VK_main_list_item->item(i);
+            if(VK_Albums_DB.contains(item->text())){
+                item->setBackground(QColor(200,255,200));
+            }
         }
+        user = std::make_unique<User>();
+        user->getPlaylisVK_Database(this);
     }
     else{
         QMessageBox msgBox;
         msgBox.setText("Что то пошло не так");
         msgBox.exec();
     }
+}
 
+void MainWindow::MP_VK_checkAddPlaylis(MessageInfo info){
+    VK_Albums_DB.clear();
+    VK_Albums_DB = VKontakte_Albums_DB(info);
 }
 
 void MainWindow::MP_VK_getVideo(MessageInfo info){}
@@ -247,24 +227,37 @@ void MainWindow::MP_VK_getVideo(MessageInfo info){}
 QVector<YTAlbums> YT_Albums_API;
 QVector<YTVideo> YT_Videos_API;
 QVector<QString> YT_Albums_DB;
+QVector<QString> YT_Videos_DB;
 
 void MainWindow::on_YouTube_getAllAlboms_clicked()//тут логика с выбором альобв с видео
 {
+    user = std::make_unique<User>();
     std::string token = accessTokenYT.toStdString();
     api_client = std::make_unique<YTClient>(token);
     if(ui->YouTube_main_type_request->currentIndex() == 0){
+        user->getPlaylisYouTube_Database(this);
         api_client->GetPlaylists(this, 3);
-    }else if(ui->YouTube_main_type_request->currentIndex() == 1){
-        std::string playlistId;
-        QString playlistName = ui->YouTube_main_playists->currentText();
-        for (YTAlbums elem : YT_Albums_API) {
-            if(elem.title == playlistName){
-                playlistId = elem.id.toStdString();
-            }
-        }
-        api_client->GetVideos(this,4, playlistId);//берем из сервиса, также надо проверять БД при запросе
-        qDebug() << playlistName;
     }
+    if(ui->YouTube_main_type_request->currentIndex() == 1){
+        user->getVideoYouTube_Database(this);
+        if(ui->YouTube_main_playists->currentIndex() == -1){
+            QMessageBox msgBox;
+            msgBox.setText("Выберите плейлист");
+            msgBox.exec();
+        } else{
+            std::string playlistId;
+            QString playlistName = ui->YouTube_main_playists->currentText();
+            for (YTAlbums elem : YT_Albums_API) {
+                if(elem.title == playlistName){
+                    playlistId = elem.id.toStdString();
+                }
+            }
+            api_client->GetVideos(this,4, playlistId);//берем из сервиса, также надо проверять БД при запросе
+            qDebug() << playlistName;
+        }
+
+    }
+
 }
 
 void MainWindow::MP_YT_getAlbums(MessageInfo info){//3 КОЛБЕК
@@ -277,6 +270,13 @@ void MainWindow::MP_YT_getAlbums(MessageInfo info){//3 КОЛБЕК
         for(auto elem : YT_Albums_API){
             ui->YouTube_main_list_item->addItem(elem.title);
             ui->YouTube_main_playists->addItem(elem.title);
+        }
+
+        for(int i = 0; i < ui->YouTube_main_list_item->count(); i++){
+            QListWidgetItem* item = ui->YouTube_main_list_item->item(i);
+            if(YT_Albums_DB.contains(item->text())){
+                item->setBackground(QColor(200,255,200));
+            }
         }
         user = std::make_unique<User>();
         user->getPlaylisYouTube_Database(this);
@@ -297,6 +297,14 @@ void MainWindow::MP_YT_getVideo(MessageInfo info){
         for(auto elem : YT_Videos_API){
             ui->YouTube_main_list_item->addItem(elem.title);
         }
+        for(int i = 0; i < ui->YouTube_main_list_item->count(); i++){
+            QListWidgetItem* item = ui->YouTube_main_list_item->item(i);
+            if(YT_Videos_DB.contains(item->text())){
+                item->setBackground(QColor(200,255,200));
+            }
+        }
+        user = std::make_unique<User>();
+        user->getVideoYouTube_Database(this);
 
     }
     else{
@@ -313,30 +321,24 @@ void MainWindow::on_YouTube_main_list_item_itemDoubleClicked(QListWidgetItem *it
     QSettings current("Holi", "CurrentUser");// это все его настройки
     QString id = current.value("id", "null").toString();
     if(ui->YouTube_main_type_request->currentIndex() == 0){//alboms
-        bool permission = false;
         QString targetElem = item->text();
-
         if(!YT_Albums_DB.contains(targetElem)){
             std::cout<<"Кладем в базу"<<std::endl;
             user->addPlaylistOrChannel(item->text().toStdString(),"1", "1", "YT", this, item);
             item->setBackground(Qt::red);
         } else{
-            ui->statusbar->showMessage(" уже добавлен в базу данных");
+            ui->statusbar->showMessage("Плейлист уже добавлен");
         }
-
-
-
-    }else if(ui->YouTube_main_type_request->currentIndex() == 1){//videos
-        QSettings Videos("Holi", "Videos_" + id);
-        Videos.setValue(item->text(), item->listWidget()->row(item));
-        std::cout<<"Кладем в базу"<<std::endl;
-        if(!Videos.allKeys().contains(item->text())){
-            //user = std::make_unique<User>();
-            //user->addPlaylistOrChannel(item->text().toStdString(), "YT", this, item);
+    }
+    else if(ui->YouTube_main_type_request->currentIndex() == 1){//videos
+        QString targetElem = item->text();
+        if(!YT_Videos_DB.contains(targetElem)){
+            ui->statusbar->showMessage("Видео добавлено " + item->text());
+            user = std::make_unique<User>();
+            user->addVideo(item->text().toStdString(), "YT", this);
             item->setBackground(Qt::red);
-        }else{
-            ui->statusbar->showMessage(item->text() + " уже добавлен в базу данных");
-            item->setBackground(Qt::red);
+        } else{
+            ui->statusbar->showMessage("Видео уже добавлено");
         }
     }
 }
@@ -349,12 +351,27 @@ void MainWindow::MP_YT_checkAddPlaylis(MessageInfo info){
     }
 }
 
+void MainWindow::MP_YT_checkAddVideo(MessageInfo info){
+    YT_Videos_DB.clear();
+    YT_Videos_DB = YouTube_Videos_DB(info);
+    for (QString str : YT_Videos_DB ) {
+        qDebug() << "from db    " << str;
+    }
+}
+
+
 void MainWindow::MP_addPlaylis_YouTube(MessageInfo info){
     std::cout << "ЕПТИТЬ КОЛОЛТИТЬ" << std::endl;
     user = std::make_unique<User>();
     user->getPlaylisYouTube_Database(this);
 }
 
+void MainWindow::MP_addVideo_YouTube(MessageInfo info){
+    std::cout << "ЕПТИТЬ" << std::endl;
+    user = std::make_unique<User>();
+    user->getVideoYouTube_Database(this);
+
+}
 void MainWindow::on_VK_main_list_item_itemDoubleClicked(QListWidgetItem *item)
 {
     QSettings current("Holi", "CurrentUser");// это все его настройки
@@ -370,11 +387,11 @@ void MainWindow::on_VK_main_list_item_itemDoubleClicked(QListWidgetItem *item)
     std::string description;
     std::string playlist_id;
     try {
-        for (VKAlbums elem: VK_vec) {
+        for (VKAlbums elem : VK_Albums_API) {
             if (elem.title == item->text()) {
-                owner_id = std::to_string(elem.owner_id);
-                description = elem.owner_id;
-                playlist_id = std::to_string(elem.id);
+                owner_id = elem.owner_id.toStdString();
+                description = elem.owner_id.toStdString();
+                playlist_id = elem.id.toStdString();
             }
         }
     } catch (...) {
