@@ -88,5 +88,12 @@ void RequestMakerHttp::CallBack(int flag) {
         //колбек добавления
         window_->MP_addPlaylis_YouTube(message);
     }
+    if(flag == 140){
+        window_->MP_YT_checkAddVideo(message);
+    }
+    if(flag == 1400){
+        //колбек добавления видео ютуб в базу данных
+        window_->MP_addVideo_YouTube(message);
+    }
 
 }

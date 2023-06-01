@@ -83,7 +83,17 @@
 
             window->MP_VK_SuccesfullImportPlaylists(item);
         }
-
+        void User::addVideo(std::string name, std::string exported_from, MainWindow *window){
+            QSettings current("Holi", "CurrentUser");
+            std::string id = current.value("id").toString().toStdString();
+            std::string target = "/video?user_id="+id;
+            request_maker = std::make_unique<RequestMakerHttp>(target, window);
+            json::object obj;
+            obj["name"] = name;
+            obj["exported_from"] = exported_from;
+            std::string str = boost::json::serialize( boost::json::value_from(obj));
+            request_maker->Post(str,1400);
+        }
         void User::getPlaylistOrChannel(MainWindow *window){
             std::cout<<"getName start"<<std::endl;
             QSettings current("Holi", "CurrentUser");
@@ -101,6 +111,14 @@
             std::string target = "/video/list/all?user_id="+id;
             request_maker = std::make_unique<RequestMakerHttp>(target, window);
             request_maker->Get(120);
+        }
+
+        void User::getVideoYouTube_Database(MainWindow *window){
+            QSettings current("Holi", "CurrentUser");
+            std::string id = current.value("id").toString().toStdString();
+            std::string target = "/video/all?user_id="+id;
+            request_maker = std::make_unique<RequestMakerHttp>(target, window);
+            request_maker->Get(140);
         }
 
         void User::getEmail() {

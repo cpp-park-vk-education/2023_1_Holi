@@ -247,6 +247,7 @@ void MainWindow::MP_VK_getVideo(MessageInfo info){}
 QVector<YTAlbums> YT_Albums_API;
 QVector<YTVideo> YT_Videos_API;
 QVector<QString> YT_Albums_DB;
+QVector<QString> YT_Videos_DB;
 
 void MainWindow::on_YouTube_getAllAlboms_clicked()//тут логика с выбором альобв с видео
 {
@@ -297,6 +298,8 @@ void MainWindow::MP_YT_getVideo(MessageInfo info){
         for(auto elem : YT_Videos_API){
             ui->YouTube_main_list_item->addItem(elem.title);
         }
+        user = std::make_unique<User>();
+        user->getVideoYouTube_Database(this);
 
     }
     else{
@@ -313,30 +316,24 @@ void MainWindow::on_YouTube_main_list_item_itemDoubleClicked(QListWidgetItem *it
     QSettings current("Holi", "CurrentUser");// это все его настройки
     QString id = current.value("id", "null").toString();
     if(ui->YouTube_main_type_request->currentIndex() == 0){//alboms
-        bool permission = false;
         QString targetElem = item->text();
-
         if(!YT_Albums_DB.contains(targetElem)){
             std::cout<<"Кладем в базу"<<std::endl;
             user->addPlaylistOrChannel(item->text().toStdString(),"1", "1", "YT", this, item);
             item->setBackground(Qt::red);
         } else{
-            ui->statusbar->showMessage(" уже добавлен в базу данных");
+            ui->statusbar->showMessage("Плейлист уже добавлен");
         }
-
-
-
-    }else if(ui->YouTube_main_type_request->currentIndex() == 1){//videos
-        QSettings Videos("Holi", "Videos_" + id);
-        Videos.setValue(item->text(), item->listWidget()->row(item));
-        std::cout<<"Кладем в базу"<<std::endl;
-        if(!Videos.allKeys().contains(item->text())){
-            //user = std::make_unique<User>();
-            //user->addPlaylistOrChannel(item->text().toStdString(), "YT", this, item);
+    }
+    else if(ui->YouTube_main_type_request->currentIndex() == 1){//videos
+        QString targetElem = item->text();
+        if(!YT_Videos_DB.contains(targetElem)){
+            ui->statusbar->showMessage("Видео добавлено " + item->text());
+            user = std::make_unique<User>();
+            user->addVideo(item->text().toStdString(), "YT", this);
             item->setBackground(Qt::red);
-        }else{
-            ui->statusbar->showMessage(item->text() + " уже добавлен в базу данных");
-            item->setBackground(Qt::red);
+        } else{
+            ui->statusbar->showMessage("Видео уже добавлено");
         }
     }
 }
@@ -349,12 +346,27 @@ void MainWindow::MP_YT_checkAddPlaylis(MessageInfo info){
     }
 }
 
+void MainWindow::MP_YT_checkAddVideo(MessageInfo info){
+    YT_Videos_DB.clear();
+    YT_Videos_DB = YouTube_Videos_DB(info);
+    for (QString str : YT_Videos_DB ) {
+        qDebug() << "from db    " << str;
+    }
+}
+
+
 void MainWindow::MP_addPlaylis_YouTube(MessageInfo info){
     std::cout << "ЕПТИТЬ КОЛОЛТИТЬ" << std::endl;
     user = std::make_unique<User>();
     user->getPlaylisYouTube_Database(this);
 }
 
+void MainWindow::MP_addVideo_YouTube(MessageInfo info){
+    std::cout << "ЕПТИТЬ" << std::endl;
+    user = std::make_unique<User>();
+    user->getVideoYouTube_Database(this);
+
+}
 void MainWindow::on_VK_main_list_item_itemDoubleClicked(QListWidgetItem *item)
 {
     QSettings current("Holi", "CurrentUser");// это все его настройки

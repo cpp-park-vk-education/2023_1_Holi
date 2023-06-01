@@ -65,7 +65,14 @@ public:
 
     void MP_YT_checkAddPlaylis(MessageInfo info);
     //
+
+    void MP_YT_checkAddVideo(MessageInfo info);
+
     void MP_addPlaylis_YouTube(MessageInfo info);
+
+    void MP_addVideo_YouTube(MessageInfo info);
+
+
 
     void get_response(MessageInfo info);
     //

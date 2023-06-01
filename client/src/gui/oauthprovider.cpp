@@ -1,5 +1,5 @@
 #include "oauthprovider.h"
-
+#include <QDebug>
 //Парсеры ответов
 
 QVector<YTAlbums> YouTube_Albums(MessageInfo info){
@@ -39,6 +39,27 @@ QVector<QString> YouTube_Albums_DB(MessageInfo info){
     }
     return result;
 }
+
+QVector<QString> YouTube_Videos_DB(MessageInfo info){
+    QVector<QString> result;
+    qDebug() << "Тут мы парсим ваши видосики из Ютуба";
+    if(info.status_ == http::status::ok){
+        std::cout << info.body_ << std::endl;
+          qDebug() << "Тут ";
+        boost::json::array itemsArray = info.body_.as_array();
+        for(auto& item : itemsArray){
+             qDebug() << "Тут делаем циклы";
+            if(item.as_object()["exported_from"] == "YT"){
+                QString name = item.as_object()["name"].as_string().c_str();
+                qDebug() << name;
+                result.push_back(name);
+            }
+
+        }
+    }
+    return result;
+}
+
 QVector<YTVideo> YouTube_Video(MessageInfo info){
     QVector<YTVideo> result;
     if(info.status_ == http::status::ok){
