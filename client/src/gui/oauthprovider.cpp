@@ -85,6 +85,7 @@ QVector<VKAlbums> VKontakte_Albums(MessageInfo info){
         boost::json::object jsonObject = info.body_.as_object();
         boost::json::array itemsArray = jsonObject["response"].as_object()["items"].as_array();
         for (const auto& item : itemsArray) {
+            std::cout<<"in for"<<std::endl;
             boost::json::object itemObject = item.as_object();
             std::string id = std::to_string(itemObject["id"].as_int64());
             std::string ownerId = std::to_string(itemObject["owner_id"].as_int64());
