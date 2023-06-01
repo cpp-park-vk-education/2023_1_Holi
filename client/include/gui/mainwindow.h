@@ -72,6 +72,8 @@ public:
     void CallBack_Registration(MessageInfo info);
 
     void MP_DB_getPC(MessageInfo info);
+
+    void CallBack_Auth(MessageInfo info);
 private slots:
 
     void on_main_button_clicked();

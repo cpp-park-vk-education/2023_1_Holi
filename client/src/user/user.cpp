@@ -163,7 +163,7 @@
             obj["login"] = username;
             obj["password"] = password;
             std::string str = boost::json::serialize(boost::json::value_from(obj));           
-            request_maker->Post(str, 1);
+            request_maker->Post(str, 2);
         }
 
         bool User::isFriend(int id){
