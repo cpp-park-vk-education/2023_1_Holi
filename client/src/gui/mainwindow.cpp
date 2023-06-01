@@ -160,35 +160,37 @@ QVector<QString> VK_Albums_DB;
 void MainWindow::on_VK_getAllAlboms_clicked() {
     user = std::make_unique<User>();
     std::string token = accessTokenVK.toStdString();
-    api_client = std::make_unique<VKClient>(token, 478111331);
+    if (!token.empty()){
+        api_client = std::make_unique<VKClient>(token, 478111331);
 
-    if(ui->VK_main_type_request->currentIndex() == 0){
-        user->getPlaylisVK_Database(this);
-        api_client->GetPlaylists(this, 1);
+        if(ui->VK_main_type_request->currentIndex() == 0){
+            user->getPlaylisVK_Database(this);
+            api_client->GetPlaylists(this, 1);
+        }
+        if(ui->VK_main_type_request->currentIndex() == 1){
+            //сдесь видосики из плейлиста контакта
+        if(ui->VK_main_playists->currentIndex() == -1){
+            QMessageBox msgBox;
+            msgBox.setText("Выберите плейлист");
+            msgBox.exec();
+        } else{
+            std::string playlistId;
+            QString playlistName = ui->YouTube_main_playists->currentText();
+            for (auto elem : VK_Albums_API) {
+                if(elem.title == playlistName){
+                    playlistId = elem.id.toStdString();
+                }
+            }
+        }
+        }
     }
-    if(ui->VK_main_type_request->currentIndex() == 1){
-        //сдесь видосики из плейлиста контакта
-       if(ui->VK_main_playists->currentIndex() == -1){
-           QMessageBox msgBox;
-           msgBox.setText("Выберите плейлист");
-           msgBox.exec();
-       } else{
-           std::string playlistId;
-           QString playlistName = ui->YouTube_main_playists->currentText();
-           for (auto elem : VK_Albums_API) {
-               if(elem.title == playlistName){
-                   playlistId = elem.id.toStdString();
-               }
-           }
-       }
+    else{
+            QMessageBox msgBox;
+            msgBox.setText("Что то пошло не так");
+            msgBox.exec();
+        }
     }
-
-
-
-
-}
-
-
+    
 
 void MainWindow::MP_VK_getAlbums(MessageInfo info){
     ui->VK_main_list_item->clear();
