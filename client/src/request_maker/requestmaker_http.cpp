@@ -75,6 +75,7 @@ void RequestMakerHttp::CallBack(int flag) {
         //auth
         std::cout << "AUTH" <<std::endl;
         std::cout << message << std:: endl;
+        window_->CallBack_Auth(message);
 
     }
     if(flag == 100){//getPlaylistOrChannel

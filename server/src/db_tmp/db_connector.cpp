@@ -30,7 +30,7 @@ QSqlDatabase DbConnectorTmp::Connect() {
     connection_.setDatabaseName(db_name_);
     connection_.setHostName("localhost");
     connection_.setUserName("postgres");
-    connection_.setPassword("myPassword");
+    connection_.setPassword("1784");
 
     bool is_open = connection_.open();
 
