@@ -1,76 +1,62 @@
 #include "oauthprovider.h"
-#include <QtNetworkAuth/QAbstractOAuth>
-#include <QtNetworkAuth/QAbstractOAuth2>
 
-#include <QString>
-#include <QDir>
-#include <QUrl>
-#include <QOAuthHttpServerReplyHandler>
-#include <QDesktopServices>
+//Парсеры ответов
 
-#define CLIENT_ID "YOUR-CLIENT-ID"
-#define CLIENT_SECRET "YOUR-CLIENT-SECRET"
-#define AUTH_URI "https://accounts.google.com/o/oauth2/auth"
-#define TOKEN_URI "https://oauth2.googleapis.com/token"
-#define REDIRECT_URI "http://127.0.0.1:8080/"
-
-GoogleSSO::GoogleSSO(QObject *parent) : QObject(parent) {
-    this->google = new QOAuth2AuthorizationCodeFlow(this);
-    this->google->setScope("email");
-    connect(this->google, &QOAuth2AuthorizationCodeFlow::authorizeWithBrowser, &QDesktopServices::openUrl);
-
-    const QUrl authUri(AUTH_URI);
-    const auto clientId = CLIENT_ID;
-    const QUrl tokenUri(TOKEN_URI);
-    const auto clientSecret(CLIENT_SECRET);
-    const QUrl redirectUri(REDIRECT_URI);
-    const auto port = static_cast<quint16>(redirectUri.port());
-    this->google->setAuthorizationUrl(authUri);
-    this->google->setClientIdentifier(clientId);
-    this->google->setAccessTokenUrl(tokenUri);
-    this->google->setClientIdentifierSharedKey(clientSecret);
-
-   /* this->google->setModifyParametersFunction([](QAbstractOAuth2::Stage stage, QVariantMap* parameters) {
-        // Percent-decode the "code" parameter so Google can match it
-        if (stage == QAbstractOAuth::Stage::RequestingAccessToken) {
-            QByteArray code = parameters->value("code").toByteArray();
-            (*parameters)["code"] = QUrl::fromPercentEncoding(code);
+QVector<YTAlbums> YouTube_Albums(MessageInfo info){
+    QVector<YTAlbums> result;
+    if(info.status_ == http::status::ok){
+        boost::json::object jsonObject = info.body_.as_object();
+        boost::json::array itemsArray = jsonObject["items"].as_array();
+        for(auto& item : itemsArray){
+            boost::json::object itemObject = item.as_object();
+            auto elem  = itemObject["snippet"];
+            QString title = elem.as_object()["title"].as_string().c_str();
+            QString description = elem.as_object()["description"].as_string().c_str();
+            QString channelId = elem.as_object()["channelId"].as_string().c_str();
+            QString id = itemObject["id"].as_string().c_str();
+            YTAlbums album;
+            album.channelId = channelId;
+            album.id = id;
+            album.title = title;
+            album.description = description;
+            result.push_back(album);
         }
-    });
-*/
-    QOAuthHttpServerReplyHandler* replyHandler = new QOAuthHttpServerReplyHandler(port, this);
-    this->google->setReplyHandler(replyHandler);
-
-    connect(this->google, &QOAuth2AuthorizationCodeFlow::granted, [=](){
-        const QString token = this->google->token();
-        emit gotToken(token);
-
-    });
+    }
+    return result;
 }
 
-GoogleSSO::~GoogleSSO() {
-    delete this->google;
+QVector<QString> YouTube_Albums_DB(MessageInfo info){
+    QVector<QString> result;
+    if(info.status_ == http::status::ok){
+        boost::json::array itemsArray = info.body_.as_array();
+        for(auto& item : itemsArray){
+            if(item.as_object()["exported_from"] == "YT"){
+                QString name = item.as_object()["name"].as_string().c_str();
+                result.push_back(name);
+            }
+
+        }
+    }
+    return result;
 }
-
-// Invoked externally to initiate
-void GoogleSSO::authenticate() {
-    this->google->grant();
+QVector<YTVideo> YouTube_Video(MessageInfo info){
+    QVector<YTVideo> result;
+    if(info.status_ == http::status::ok){
+        boost::json::object jsonObject = info.body_.as_object();
+        boost::json::array itemsArray = jsonObject["items"].as_array();
+        for (const auto& item : itemsArray) {
+            boost::json::object itemObject = item.as_object();
+            auto snippet  = itemObject["snippet"];
+            QString title = snippet.as_object()["title"].as_string().c_str();
+            QString description = snippet.as_object()["description"].as_string().c_str();
+            auto contentDetails  = itemObject["contentDetails"];
+            QString id = contentDetails.as_object()["videoId"].as_string().c_str();
+            YTVideo video;
+            video.description = description;
+            video.title = title;
+            video.id = id;
+            result.push_back(video);
+        }
+    }
+    return result;
 }
-
-/*
-oauthprovider.cpp:25:47: error: no viable conversion from '(lambda at /home/nik/pr/2023_1_Holi/client/src/gui/oauthprovider.cpp:25:47)' to 'const QAbstractOAuth::ModifyParametersFunction' (aka 'const function<void (QAbstractOAuth::Stage, QMultiMap<QString, QVariant> *)>')
-std_function.h:375:7: note: candidate constructor not viable: no known conversion from '(lambda at /home/nik/pr/2023_1_Holi/client/src/gui/oauthprovider.cpp:25:47)' to 'std::nullptr_t' for 1st argument
-std_function.h:386:7: note: candidate constructor not viable: no known conversion from '(lambda at /home/nik/pr/2023_1_Holi/client/src/gui/oauthprovider.cpp:25:47)' to 'const std::function<void (QAbstractOAuth::Stage, QMultiMap<QString, QVariant> *)> &' for 1st argument
-std_function.h:404:7: note: candidate constructor not viable: no known conversion from '(lambda at /home/nik/pr/2023_1_Holi/client/src/gui/oauthprovider.cpp:25:47)' to 'std::function<void (QAbstractOAuth::Stage, QMultiMap<QString, QVariant> *)> &&' for 1st argument
-std_function.h:435:2: note: candidate template ignored: requirement '_Callable<(lambda at /home/nik/pr/2023_1_Holi/client/src/gui/oauthprovider.cpp:25:47), (lambda at /home/nik/pr/2023_1_Holi/client/src/gui/oauthprovider.cpp:25:47), std::__invoke_result<(lambda at /home/nik/pr/2023_1_Holi/client/src/gui/oauthprovider.cpp:25:47) &, QAbstractOAuth::Stage, QMultiMap<QString, QVariant> *>>::value' was not satisfied [with _Functor = (lambda at /home/nik/pr/2023_1_Holi/client/src/gui/oauthprovider.cpp:25:47)]
-oauthprovider.cpp:25:47: note: candidate function
-qabstractoauth.h:145:70: note: passing argument to parameter 'modifyParametersFunction' here
-
-oauthprovider.cpp:25:47: ошибка: невозможно преобразование из '(лямбда в /home/nik/pr/2023_1_Holi/client/src/gui/oauthprovider.cpp:25:47)' в 'const QAbstractOAuth::ModifyParametersFunction' (он же 'const function<void (QAbstractOAuth::Stage, QMultiMap<QString, QVariant> *)>')
-std_function.h:375:7: примечание: конструктор-кандидат нежизнеспособен: неизвестно преобразование из '(лямбда в /home/nik/pr/2023_1_Holi/client/src/gui/oauthprovider.cpp:25:47)' в 'std ::nullptr_t' для 1-го аргумента
-std_function.h:386:7: примечание: конструктор-кандидат нежизнеспособен: неизвестно преобразование из '(лямбда в /home/nik/pr/2023_1_Holi/client/src/gui/oauthprovider.cpp:25:47)' в 'const std::function<void (QAbstractOAuth::Stage, QMultiMap<QString, QVariant> *)> &' для 1-го аргумента
-std_function.h:404:7: примечание: конструктор-кандидат нежизнеспособен: неизвестно преобразование из '(лямбда в /home/nik/pr/2023_1_Holi/client/src/gui/oauthprovider.cpp:25:47)' в 'std ::function<void (QAbstractOAuth::Stage, QMultiMap<QString, QVariant> *)> &&' для 1-го аргумента
-std_function.h:435:2: примечание: шаблон-кандидат игнорируется: требование '_Callable<(лямбда в /home/nik/pr/2023_1_Holi/client/src/gui/oauthprovider.cpp:25:47), (лямбда в /home /nik/pr/2023_1_Holi/client/src/gui/oauthprovider.cpp:25:47), std::__invoke_result<(лямбда в /home/nik/pr/2023_1_Holi/client/src/gui/oauthprovider.cpp:25 :47) &, QAbstractOAuth::Stage, QMultiMap<QString, QVariant> *>>::value' не был удовлетворен [с _Functor = (лямбда в /home/nik/pr/2023_1_Holi/client/src/gui/oauthprovider. cpp:25:47)]
-oauthprovider.cpp:25:47: примечание: функция-кандидат
-qabstractoauth.h:145:70: примечание: здесь передается аргумент для параметра «modifyParametersFunction»
-*/

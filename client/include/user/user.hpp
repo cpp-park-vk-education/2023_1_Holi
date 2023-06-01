@@ -64,7 +64,12 @@ class User {
 
         void addPlaylistOrChannel(std::string Playlist,std::string owner_id, std::string description, std::string Service, MainWindow *window, QListWidgetItem *item);
 
+
+
         void getPlaylistOrChannel(MainWindow *window);
+
+        //Проверяет добавлен ли плейлист из Ютуба в Базу данных
+        void getPlaylisYouTube_Database(MainWindow *window);
 
         void registrate(std::string name, std::string email, std::string password, MainWindow* window);
 

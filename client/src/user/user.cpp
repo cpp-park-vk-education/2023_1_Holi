@@ -78,7 +78,7 @@
             obj["description"] = description;
             std::string str = boost::json::serialize( boost::json::value_from(obj));
             std::cout << str;
-            request_maker->Post(str,0);
+            request_maker->Post(str,1200);
             std::cout<<"getName end"<<std::endl;
 
             window->MP_VK_SuccesfullImportPlaylists(item);
@@ -92,15 +92,17 @@
 
             request_maker = std::make_unique<RequestMakerHttp>(target, window);
             std::cout<<"GET user"<<std::endl;
-
-
-
-
             request_maker->Get(100);
-
-
-
         }
+
+        void User::getPlaylisYouTube_Database(MainWindow *window){
+            QSettings current("Holi", "CurrentUser");
+            std::string id = current.value("id").toString().toStdString();
+            std::string target = "/video/list/all?user_id="+id;
+            request_maker = std::make_unique<RequestMakerHttp>(target, window);
+            request_maker->Get(120);
+        }
+
         void User::getEmail() {
             
         }
