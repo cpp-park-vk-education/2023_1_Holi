@@ -11,7 +11,7 @@ MessageInfo VideoAllRoute::Get(int id) {
         return {{}, http::status::not_found};
     }
 
-    std::string sql = R"(select * from "Playlist" where user_id = )" + std::to_string(id);
+    std::string sql = R"(select * from "Video" where user_id = )" + std::to_string(id);
 
     QSqlQuery query;
     try {
