@@ -93,13 +93,24 @@ MainWindow::MainWindow(QWidget *parent)
     QString name = current.value("name", "null").toString();
     if (QFile::exists(current.fileName()) && name != "null"){
         ui->statusbar->showMessage(name);
+        QPalette palette = ui->statusbar->palette();
+        palette.setColor(QPalette::WindowText, Qt::white);
+        ui->statusbar->setPalette(palette);
         ui->button_login->hide();
         ui->signUp_button->hide();
+        ui->VK_button->setEnabled(true);
+        ui->VK_getAllAlboms->setEnabled(true);
+        ui->YouTube_getAllAlboms->setEnabled(true);
+        ui->YT_Button->setEnabled(true);
         ui->stackedWidget->setCurrentIndex(0);
     }
     else
     {
         ui->logout->hide();
+        ui->VK_button->setEnabled(false);
+        ui->VK_getAllAlboms->setEnabled(false);
+        ui->YouTube_getAllAlboms->setEnabled(false);
+        ui->YT_Button->setEnabled(false);
     }
 }
 
@@ -156,6 +167,8 @@ void MainWindow::on_signUp_button_clicked() {ui->stackedWidget->setCurrentIndex(
 
 QVector<VKAlbums> VK_Albums_API;
 QVector<QString> VK_Albums_DB;
+QVector<VKVideos> VK_Videos_API;
+QVector<QString> VK_Videos_DB;
 
 void MainWindow::on_VK_getAllAlboms_clicked() {
     user = std::make_unique<User>();
@@ -168,31 +181,33 @@ void MainWindow::on_VK_getAllAlboms_clicked() {
     }
     if(ui->VK_main_type_request->currentIndex() == 1){
         //сдесь видосики из плейлиста контакта
+        user->getVideoVKontakte_Database(this);
        if(ui->VK_main_playists->currentIndex() == -1){
            QMessageBox msgBox;
            msgBox.setText("Выберите плейлист");
            msgBox.exec();
        } else{
-           std::string playlistId;
-           QString playlistName = ui->YouTube_main_playists->currentText();
+           QString playlistId;
+           QString playlistName = ui->VK_main_playists->currentText();
+
            for (auto elem : VK_Albums_API) {
                if(elem.title == playlistName){
-                   playlistId = elem.id.toStdString();
+                   playlistId = elem.id;
                }
            }
+
+           api_client->GetVideos(this, 2, playlistId.toStdString());
        }
     }
-
-
-
-
 }
 
 
 
 void MainWindow::MP_VK_getAlbums(MessageInfo info){
     ui->VK_main_list_item->clear();
+    ui->VK_main_playists->clear();
     VK_Albums_API.clear();
+
     VK_Albums_API = VKontakte_Albums(info);
     if(!VK_Albums_API.empty()){
         for(auto elem : VK_Albums_API){
@@ -203,7 +218,8 @@ void MainWindow::MP_VK_getAlbums(MessageInfo info){
         for(int i = 0; i < ui->VK_main_list_item->count(); i++){
             QListWidgetItem* item = ui->VK_main_list_item->item(i);
             if(VK_Albums_DB.contains(item->text())){
-                item->setBackground(QColor(200,255,200));
+                 item->setBackground(QColor(105, 151, 211));
+                 item->setForeground(Qt::white);
             }
         }
         user = std::make_unique<User>();
@@ -221,7 +237,68 @@ void MainWindow::MP_VK_checkAddPlaylis(MessageInfo info){
     VK_Albums_DB = VKontakte_Albums_DB(info);
 }
 
-void MainWindow::MP_VK_getVideo(MessageInfo info){}
+void MainWindow::MP_addPlaylis_VKontakte(MessageInfo info){
+    user = std::make_unique<User>();
+    user->getPlaylisVK_Database(this);
+}
+void MainWindow::on_VK_main_list_item_itemDoubleClicked(QListWidgetItem *item)
+{
+    user = std::make_unique<User>();
+
+    QSettings current("Holi", "CurrentUser");// это все его настройки
+    QString id = current.value("id", "null").toString();
+
+    if(ui->VK_main_type_request->currentIndex() == 0){
+        QString targetElem = item->text();
+        if(!VK_Albums_DB.contains(targetElem)){
+            user->addPlaylistOrChannel(item->text().toStdString(), "1", "description",  "VK", this, item);
+            item->setBackground(QColor(181, 100, 212));
+            item->setForeground(Qt::white);
+        }
+    }
+    if(ui->VK_main_type_request->currentIndex() == 1){
+        QString targetElem = item->text();
+        if(!VK_Videos_DB.contains(targetElem)){
+            ui->statusbar->showMessage("Видео добавлено " + item->text());
+            user = std::make_unique<User>();
+            user->addVideo(item->text().toStdString(), "VK", this);
+            item->setBackground(QColor(181, 100, 212));
+            item->setForeground(Qt::white);
+        } else{
+            ui->statusbar->showMessage("Видео уже добавлено");
+        }
+    }
+}
+
+void MainWindow::MP_VK_getVideo(MessageInfo info){
+    std::cout << info << std::endl;
+    ui->VK_main_list_item->clear();
+    VK_Videos_API.clear();
+    VK_Videos_API = VKontakte_Videos(info);
+
+    if(!VK_Videos_API.empty()){
+        for(auto elem : VK_Videos_API){
+            ui->VK_main_list_item->addItem(elem.title);
+        }
+        for(int i = 0; i < ui->VK_main_list_item->count(); i++){
+            QListWidgetItem* item = ui->VK_main_list_item->item(i);
+
+            if(VK_Videos_DB.contains(item->text())){
+
+                 item->setBackground(QColor(105, 151, 211));
+                 item->setForeground(Qt::white);
+            }
+        }
+        user = std::make_unique<User>();
+        user->getVideoYouTube_Database(this);
+    }
+    else{
+        QMessageBox msgBox;
+        msgBox.setText("Что то пошло не так");
+        msgBox.exec();
+    }
+
+}
 
 
 QVector<YTAlbums> YT_Albums_API;
@@ -275,7 +352,8 @@ void MainWindow::MP_YT_getAlbums(MessageInfo info){//3 КОЛБЕК
         for(int i = 0; i < ui->YouTube_main_list_item->count(); i++){
             QListWidgetItem* item = ui->YouTube_main_list_item->item(i);
             if(YT_Albums_DB.contains(item->text())){
-                item->setBackground(QColor(200,255,200));
+                 item->setBackground(QColor(105, 151, 211));
+                 item->setForeground(Qt::white);
             }
         }
         user = std::make_unique<User>();
@@ -300,7 +378,8 @@ void MainWindow::MP_YT_getVideo(MessageInfo info){
         for(int i = 0; i < ui->YouTube_main_list_item->count(); i++){
             QListWidgetItem* item = ui->YouTube_main_list_item->item(i);
             if(YT_Videos_DB.contains(item->text())){
-                item->setBackground(QColor(200,255,200));
+                item->setBackground(QColor(105, 151, 211));
+                item->setForeground(Qt::white);
             }
         }
         user = std::make_unique<User>();
@@ -325,7 +404,8 @@ void MainWindow::on_YouTube_main_list_item_itemDoubleClicked(QListWidgetItem *it
         if(!YT_Albums_DB.contains(targetElem)){
             std::cout<<"Кладем в базу"<<std::endl;
             user->addPlaylistOrChannel(item->text().toStdString(),"1", "1", "YT", this, item);
-            item->setBackground(Qt::red);
+            item->setBackground(QColor(181, 100, 212));
+            item->setForeground(Qt::white);
         } else{
             ui->statusbar->showMessage("Плейлист уже добавлен");
         }
@@ -336,7 +416,8 @@ void MainWindow::on_YouTube_main_list_item_itemDoubleClicked(QListWidgetItem *it
             ui->statusbar->showMessage("Видео добавлено " + item->text());
             user = std::make_unique<User>();
             user->addVideo(item->text().toStdString(), "YT", this);
-            item->setBackground(Qt::red);
+           item->setBackground(QColor(181, 100, 212));
+           item->setForeground(Qt::white);
         } else{
             ui->statusbar->showMessage("Видео уже добавлено");
         }
@@ -359,6 +440,18 @@ void MainWindow::MP_YT_checkAddVideo(MessageInfo info){
     }
 }
 
+void MainWindow::MP_VK_checkAddVideo(MessageInfo info){
+    VK_Videos_DB.clear();
+    VK_Videos_DB = VKontakte_Videos_DB(info);
+    for (QString str : VK_Videos_DB ) {
+        qDebug() << "from db    " << str;
+    }
+}
+
+void MainWindow::MP_addVideo_VKontakte(MessageInfo info){
+    user = std::make_unique<User>();
+    user->getVideoVKontakte_Database(this);
+}
 
 void MainWindow::MP_addPlaylis_YouTube(MessageInfo info){
     std::cout << "ЕПТИТЬ КОЛОЛТИТЬ" << std::endl;
@@ -367,43 +460,8 @@ void MainWindow::MP_addPlaylis_YouTube(MessageInfo info){
 }
 
 void MainWindow::MP_addVideo_YouTube(MessageInfo info){
-    std::cout << "ЕПТИТЬ" << std::endl;
     user = std::make_unique<User>();
     user->getVideoYouTube_Database(this);
-
-}
-void MainWindow::on_VK_main_list_item_itemDoubleClicked(QListWidgetItem *item)
-{
-    QSettings current("Holi", "CurrentUser");// это все его настройки
-    QString id = current.value("id", "null").toString();
-
-    QSettings Playlists("playlists.ini", QSettings::IniFormat);
-    qDebug() << Playlists.fileName();
-
-    std::cout << Playlists.fileName().toStdString();
-    std::cout<<"Кладем в базу"<<std::endl;
-
-    std::string owner_id;
-    std::string description;
-    std::string playlist_id;
-    try {
-        for (VKAlbums elem : VK_Albums_API) {
-            if (elem.title == item->text()) {
-                owner_id = elem.owner_id.toStdString();
-                description = elem.owner_id.toStdString();
-                playlist_id = elem.id.toStdString();
-            }
-        }
-    } catch (...) {
-        std::cerr << "problem with owner_id convers in on_VK_main_list_item_itemDoubleClicked" << std::endl;
-    }
-
-
-    std::cout << "params" << owner_id << std::endl << description;
-
-    user = std::make_unique<User>();
-    user->addPlaylistOrChannel(item->text().toStdString(), owner_id + "_" + playlist_id, "description",  "VK", this, item);
-    item->setBackground(Qt::red);
 }
 
 void MainWindow::MP_DB_getPC(MessageInfo info){
@@ -422,8 +480,8 @@ void MainWindow::get_response(MessageInfo info)
 
 
 void MainWindow::MP_VK_SuccesfullImportPlaylists(QListWidgetItem *item){
-    std::cout << "srgsrg";
-    item->setBackground(Qt::red);
+   item->setBackground(QColor(181, 100, 212));
+   item->setForeground(Qt::white);
 }
 
 
@@ -547,6 +605,11 @@ void MainWindow::CallBack_Auth(MessageInfo info)
             ui->button_login->hide();
             ui->signUp_button->hide();
             ui->logout->show();
+
+            ui->VK_button->setEnabled(true);
+            ui->VK_getAllAlboms->setEnabled(true);
+            ui->YouTube_getAllAlboms->setEnabled(true);
+            ui->YT_Button->setEnabled(true);
         } else{
             QMessageBox msgBox;
             msgBox.setText("Что то пошло не так");
@@ -574,8 +637,10 @@ void MainWindow::on_logout_clicked()
 
     ui->statusbar->showMessage("Вы вышли");
 
-    ui->YT_Button->setEnabled(true);
-    ui->VK_button->setEnabled(true);
+    ui->VK_button->setEnabled(false);
+    ui->VK_getAllAlboms->setEnabled(false);
+    ui->YouTube_getAllAlboms->setEnabled(false);
+    ui->YT_Button->setEnabled(false);
 
 }
 

@@ -81,9 +81,12 @@ void RequestMakerHttp::CallBack(int flag) {
     if(flag == 100){//getPlaylistOrChannel
         window_->MP_DB_getPC(message);
     }
-    if(flag == 1100){
+    if(flag == 110){
         //add playlist vk to db
         window_->MP_VK_checkAddPlaylis(message);
+    }
+    if(flag == 1100){
+        window_->MP_addPlaylis_VKontakte(message);
     }
     if(flag == 120){
         // Функция проверки добавления в БД
@@ -92,6 +95,13 @@ void RequestMakerHttp::CallBack(int flag) {
     if(flag == 1200){
         //колбек добавления
         window_->MP_addPlaylis_YouTube(message);
+    }
+    if(flag == 150){
+        window_->MP_VK_checkAddVideo(message);
+    }
+    if(flag == 1500){
+        //колбек добавления видео vk в базу данных
+        window_->MP_addVideo_VKontakte(message);
     }
     if(flag == 140){
         window_->MP_YT_checkAddVideo(message);

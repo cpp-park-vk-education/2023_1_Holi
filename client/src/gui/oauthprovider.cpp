@@ -42,13 +42,9 @@ QVector<QString> YouTube_Albums_DB(MessageInfo info){
 
 QVector<QString> YouTube_Videos_DB(MessageInfo info){
     QVector<QString> result;
-    qDebug() << "Тут мы парсим ваши видосики из Ютуба";
     if(info.status_ == http::status::ok){
-        std::cout << info.body_ << std::endl;
-          qDebug() << "Тут ";
         boost::json::array itemsArray = info.body_.as_array();
         for(auto& item : itemsArray){
-             qDebug() << "Тут делаем циклы";
             if(item.as_object()["exported_from"] == "YT"){
                 QString name = item.as_object()["name"].as_string().c_str();
                 qDebug() << name;
@@ -91,7 +87,7 @@ QVector<VKAlbums> VKontakte_Albums(MessageInfo info){
         for (const auto& item : itemsArray) {
             boost::json::object itemObject = item.as_object();
             std::string id = std::to_string(itemObject["id"].as_int64());
-            std::string ownerId = itemObject["owner_id"].as_string().c_str();
+            std::string ownerId = std::to_string(itemObject["owner_id"].as_int64());
             std::string title = itemObject["title"].as_string().c_str();
             std::string responseType = itemObject["response_type"].as_string().c_str();
             VKAlbums album;
@@ -106,6 +102,41 @@ QVector<VKAlbums> VKontakte_Albums(MessageInfo info){
 }
 
 QVector<QString> VKontakte_Albums_DB(MessageInfo info){
+    QVector<QString> result;
+    if(info.status_ == http::status::ok){
+        boost::json::array itemsArray = info.body_.as_array();
+        for(auto& item : itemsArray){
+            if(item.as_object()["exported_from"] == "VK"){
+                QString name = item.as_object()["name"].as_string().c_str();
+                result.push_back(name);
+            }
+
+        }
+    }
+    return result;
+}
+
+QVector<VKVideos> VKontakte_Videos(MessageInfo info){
+    QVector<VKVideos> result;
+    if(info.status_ == http::status::ok){
+        boost::json::object jsonObject = info.body_.as_object();
+        boost::json::array itemsArray = jsonObject["response"].as_object()["items"].as_array();
+         for (const auto& item : itemsArray) {
+             boost::json::object itemObject = item.as_object();
+             std::string title = itemObject["title"].as_string().c_str();
+             std::string description = itemObject["response_type"].as_string().c_str();
+             std::string id = std::to_string(itemObject["id"].as_int64());
+             VKVideos video;
+             video.description = description.c_str();
+             video.title = title.c_str();
+             video.id = id.c_str();
+             result.push_back(video);
+         }
+    }
+    return result;
+}
+
+QVector<QString> VKontakte_Videos_DB(MessageInfo info){
     QVector<QString> result;
     if(info.status_ == http::status::ok){
         boost::json::array itemsArray = info.body_.as_array();

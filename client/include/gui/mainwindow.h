@@ -69,11 +69,16 @@ public:
 
     void MP_YT_checkAddVideo(MessageInfo info);
 
+    void MP_VK_checkAddVideo(MessageInfo info);
+
+    //колбек добавления видео vk в базу данных
+    void MP_addVideo_VKontakte(MessageInfo info);
+
     void MP_addPlaylis_YouTube(MessageInfo info);
 
     void MP_addVideo_YouTube(MessageInfo info);
 
-
+    void MP_addPlaylis_VKontakte(MessageInfo info);
 
     void get_response(MessageInfo info);
     //

@@ -15,7 +15,10 @@
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(167, 62, 231, 255), stop:1 rgba(0, 235, 255, 255));
-</string>
+
+QStatusBar {
+ 	сolor: white;
+}</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="Line" name="line">
@@ -42,8 +45,8 @@
      <rect>
       <x>190</x>
       <y>20</y>
-      <width>731</width>
-      <height>491</height>
+      <width>751</width>
+      <height>531</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -56,9 +59,9 @@
      <widget class="QComboBox" name="YouTube_main_type_request">
       <property name="geometry">
        <rect>
-        <x>470</x>
+        <x>480</x>
         <y>10</y>
-        <width>81</width>
+        <width>121</width>
         <height>22</height>
        </rect>
       </property>
@@ -82,9 +85,9 @@
      <widget class="QComboBox" name="VK_main_playists">
       <property name="geometry">
        <rect>
-        <x>220</x>
+        <x>250</x>
         <y>10</y>
-        <width>111</width>
+        <width>121</width>
         <height>22</height>
        </rect>
       </property>
@@ -95,9 +98,9 @@
      <widget class="QPushButton" name="VK_getAllAlboms">
       <property name="geometry">
        <rect>
-        <x>50</x>
+        <x>30</x>
         <y>10</y>
-        <width>71</width>
+        <width>81</width>
         <height>25</height>
        </rect>
       </property>
@@ -127,9 +130,9 @@ QPushButton:hover {
      <widget class="QComboBox" name="VK_main_type_request">
       <property name="geometry">
        <rect>
-        <x>130</x>
+        <x>120</x>
         <y>10</y>
-        <width>81</width>
+        <width>121</width>
         <height>22</height>
        </rect>
       </property>
@@ -150,7 +153,7 @@ QPushButton:hover {
      <widget class="QPushButton" name="YouTube_getAllAlboms">
       <property name="geometry">
        <rect>
-        <x>380</x>
+        <x>390</x>
         <y>10</y>
         <width>81</width>
         <height>25</height>
@@ -182,9 +185,9 @@ QPushButton:hover {
      <widget class="QComboBox" name="YouTube_main_playists">
       <property name="geometry">
        <rect>
-        <x>560</x>
+        <x>610</x>
         <y>10</y>
-        <width>101</width>
+        <width>121</width>
         <height>22</height>
        </rect>
       </property>
@@ -198,31 +201,69 @@ QPushButton:hover {
      <widget class="QListWidget" name="VK_main_list_item">
       <property name="geometry">
        <rect>
-        <x>50</x>
+        <x>30</x>
         <y>40</y>
-        <width>281</width>
-        <height>411</height>
+        <width>341</width>
+        <height>481</height>
        </rect>
       </property>
       <property name="styleSheet">
        <string notr="true">border: 1px solid #ffffff;
 border-radius: 5px;
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0.140704 rgba(153, 193, 241, 255), stop:0.894472 rgba(226, 225, 249, 255));</string>
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0.140704 rgba(153, 193, 241, 255), stop:0.894472 rgba(226, 225, 249, 255));
+
+</string>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="resizeMode">
+       <enum>QListView::Adjust</enum>
+      </property>
+      <property name="spacing">
+       <number>7</number>
+      </property>
+      <property name="gridSize">
+       <size>
+        <width>0</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
       </property>
      </widget>
      <widget class="QListWidget" name="YouTube_main_list_item">
       <property name="geometry">
        <rect>
-        <x>380</x>
+        <x>390</x>
         <y>40</y>
-        <width>281</width>
-        <height>411</height>
+        <width>341</width>
+        <height>481</height>
        </rect>
       </property>
       <property name="styleSheet">
        <string notr="true">border: 1px solid #ffffff;
 border-radius: 5px;
 background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0.140704 rgba(153, 193, 241, 255), stop:0.894472 rgba(226, 225, 249, 255));</string>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="resizeMode">
+       <enum>QListView::Adjust</enum>
+      </property>
+      <property name="spacing">
+       <number>7</number>
+      </property>
+      <property name="gridSize">
+       <size>
+        <width>0</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
       </property>
      </widget>
     </widget>
@@ -1190,43 +1231,18 @@ QPushButton:hover {
        </property>
       </widget>
      </item>
-     <item alignment="Qt::AlignLeft">
-      <widget class="QPushButton" name="AlbomsButton">
-       <property name="font">
-        <font>
-         <family>Play</family>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton {
-	border: none;
-	color: rgb(255, 255, 255);
-
-}
-
-QPushButton:hover {
-	background-color: rgba(102, 64, 191, 169);
-	border-radius: 5px;
-	color: rgb(255, 255, 255);
-	
-}
-</string>
-       </property>
-       <property name="text">
-        <string>Мои альбомы</string>
-       </property>
-      </widget>
-     </item>
      <item>
       <spacer name="verticalSpacer">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>155</width>
-         <height>20</height>
+         <width>130</width>
+         <height>100</height>
         </size>
        </property>
       </spacer>
@@ -1304,34 +1320,6 @@ QPushButton:hover {
        </property>
        <property name="text">
         <string>YouTube</string>
-       </property>
-      </widget>
-     </item>
-     <item alignment="Qt::AlignLeft">
-      <widget class="QPushButton" name="Config_button">
-       <property name="font">
-        <font>
-         <family>Play</family>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton {
-	border: none;
-	color: rgb(255, 255, 255);
-
-}
-
-QPushButton:hover {
-	background-color: rgba(102, 64, 191, 169);
-	border-radius: 5px;
-	color: rgb(255, 255, 255);
-	
-}
-</string>
-       </property>
-       <property name="text">
-        <string>Настройки</string>
        </property>
       </widget>
      </item>
@@ -1535,7 +1523,11 @@ QPushButton:hover {
     </rect>
    </property>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

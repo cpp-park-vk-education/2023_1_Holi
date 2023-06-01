@@ -89,12 +89,10 @@ public:
     QWidget *verticalWidget_2;
     QVBoxLayout *verticalLayout_3;
     QPushButton *main_button;
-    QPushButton *AlbomsButton;
     QSpacerItem *verticalSpacer;
     QLabel *label_3;
     QPushButton *VK_button;
     QPushButton *YT_Button;
-    QPushButton *Config_button;
     QSpacerItem *verticalSpacer_3;
     QPushButton *button_login;
     QPushButton *signUp_button;
@@ -110,7 +108,10 @@ public:
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(952, 600);
         MainWindow->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(167, 62, 231, 255), stop:1 rgba(0, 235, 255, 255));\n"
-""));
+"\n"
+"QStatusBar {\n"
+" 	\321\201olor: white;\n"
+"}"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         line = new QFrame(centralwidget);
@@ -122,7 +123,7 @@ public:
         stackedWidget = new QStackedWidget(centralwidget);
         stackedWidget->setObjectName(QString::fromUtf8("stackedWidget"));
         stackedWidget->setEnabled(true);
-        stackedWidget->setGeometry(QRect(190, 20, 731, 491));
+        stackedWidget->setGeometry(QRect(190, 20, 751, 531));
         stackedWidget->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:1 rgba(0, 0, 0, 0));"));
         mainpage = new QWidget();
         mainpage->setObjectName(QString::fromUtf8("mainpage"));
@@ -130,15 +131,15 @@ public:
         YouTube_main_type_request->addItem(QString());
         YouTube_main_type_request->addItem(QString());
         YouTube_main_type_request->setObjectName(QString::fromUtf8("YouTube_main_type_request"));
-        YouTube_main_type_request->setGeometry(QRect(470, 10, 81, 22));
+        YouTube_main_type_request->setGeometry(QRect(480, 10, 121, 22));
         YouTube_main_type_request->setStyleSheet(QString::fromUtf8("background-color: rgb(153, 193, 241);"));
         VK_main_playists = new QComboBox(mainpage);
         VK_main_playists->setObjectName(QString::fromUtf8("VK_main_playists"));
-        VK_main_playists->setGeometry(QRect(220, 10, 111, 22));
+        VK_main_playists->setGeometry(QRect(250, 10, 121, 22));
         VK_main_playists->setStyleSheet(QString::fromUtf8("background-color: rgb(153, 193, 241);"));
         VK_getAllAlboms = new QPushButton(mainpage);
         VK_getAllAlboms->setObjectName(QString::fromUtf8("VK_getAllAlboms"));
-        VK_getAllAlboms->setGeometry(QRect(50, 10, 71, 25));
+        VK_getAllAlboms->setGeometry(QRect(30, 10, 81, 25));
         VK_getAllAlboms->setContextMenuPolicy(Qt::NoContextMenu);
         VK_getAllAlboms->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "	background-color: rgb(72, 49, 157);\n"
@@ -158,11 +159,11 @@ public:
         VK_main_type_request->addItem(QString());
         VK_main_type_request->addItem(QString());
         VK_main_type_request->setObjectName(QString::fromUtf8("VK_main_type_request"));
-        VK_main_type_request->setGeometry(QRect(130, 10, 81, 22));
+        VK_main_type_request->setGeometry(QRect(120, 10, 121, 22));
         VK_main_type_request->setStyleSheet(QString::fromUtf8("background-color: rgb(153, 193, 241);"));
         YouTube_getAllAlboms = new QPushButton(mainpage);
         YouTube_getAllAlboms->setObjectName(QString::fromUtf8("YouTube_getAllAlboms"));
-        YouTube_getAllAlboms->setGeometry(QRect(380, 10, 81, 25));
+        YouTube_getAllAlboms->setGeometry(QRect(390, 10, 81, 25));
         YouTube_getAllAlboms->setContextMenuPolicy(Qt::NoContextMenu);
         YouTube_getAllAlboms->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "	background-color: rgb(72, 49, 157);\n"
@@ -180,21 +181,33 @@ public:
 ""));
         YouTube_main_playists = new QComboBox(mainpage);
         YouTube_main_playists->setObjectName(QString::fromUtf8("YouTube_main_playists"));
-        YouTube_main_playists->setGeometry(QRect(560, 10, 101, 22));
+        YouTube_main_playists->setGeometry(QRect(610, 10, 121, 22));
         YouTube_main_playists->setStyleSheet(QString::fromUtf8("background-color: rgb(153, 193, 241);"));
         YouTube_main_playists->setEditable(false);
         VK_main_list_item = new QListWidget(mainpage);
         VK_main_list_item->setObjectName(QString::fromUtf8("VK_main_list_item"));
-        VK_main_list_item->setGeometry(QRect(50, 40, 281, 411));
+        VK_main_list_item->setGeometry(QRect(30, 40, 341, 481));
         VK_main_list_item->setStyleSheet(QString::fromUtf8("border: 1px solid #ffffff;\n"
 "border-radius: 5px;\n"
-"background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0.140704 rgba(153, 193, 241, 255), stop:0.894472 rgba(226, 225, 249, 255));"));
+"background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0.140704 rgba(153, 193, 241, 255), stop:0.894472 rgba(226, 225, 249, 255));\n"
+"\n"
+""));
+        VK_main_list_item->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        VK_main_list_item->setResizeMode(QListView::Adjust);
+        VK_main_list_item->setSpacing(7);
+        VK_main_list_item->setGridSize(QSize(0, 25));
+        VK_main_list_item->setWordWrap(false);
         YouTube_main_list_item = new QListWidget(mainpage);
         YouTube_main_list_item->setObjectName(QString::fromUtf8("YouTube_main_list_item"));
-        YouTube_main_list_item->setGeometry(QRect(380, 40, 281, 411));
+        YouTube_main_list_item->setGeometry(QRect(390, 40, 341, 481));
         YouTube_main_list_item->setStyleSheet(QString::fromUtf8("border: 1px solid #ffffff;\n"
 "border-radius: 5px;\n"
 "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0.140704 rgba(153, 193, 241, 255), stop:0.894472 rgba(226, 225, 249, 255));"));
+        YouTube_main_list_item->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        YouTube_main_list_item->setResizeMode(QListView::Adjust);
+        YouTube_main_list_item->setSpacing(7);
+        YouTube_main_list_item->setGridSize(QSize(0, 25));
+        YouTube_main_list_item->setWordWrap(false);
         stackedWidget->addWidget(mainpage);
         login = new QWidget();
         login->setObjectName(QString::fromUtf8("login"));
@@ -584,26 +597,7 @@ public:
 
         verticalLayout_3->addWidget(main_button, 0, Qt::AlignLeft);
 
-        AlbomsButton = new QPushButton(verticalWidget_2);
-        AlbomsButton->setObjectName(QString::fromUtf8("AlbomsButton"));
-        AlbomsButton->setFont(font);
-        AlbomsButton->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"	border: none;\n"
-"	color: rgb(255, 255, 255);\n"
-"\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(102, 64, 191, 169);\n"
-"	border-radius: 5px;\n"
-"	color: rgb(255, 255, 255);\n"
-"	\n"
-"}\n"
-""));
-
-        verticalLayout_3->addWidget(AlbomsButton, 0, Qt::AlignLeft);
-
-        verticalSpacer = new QSpacerItem(155, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        verticalSpacer = new QSpacerItem(130, 100, QSizePolicy::Minimum, QSizePolicy::Fixed);
 
         verticalLayout_3->addItem(verticalSpacer);
 
@@ -658,25 +652,6 @@ public:
 ""));
 
         verticalLayout_3->addWidget(YT_Button, 0, Qt::AlignLeft);
-
-        Config_button = new QPushButton(verticalWidget_2);
-        Config_button->setObjectName(QString::fromUtf8("Config_button"));
-        Config_button->setFont(font);
-        Config_button->setStyleSheet(QString::fromUtf8("QPushButton {\n"
-"	border: none;\n"
-"	color: rgb(255, 255, 255);\n"
-"\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"	background-color: rgba(102, 64, 191, 169);\n"
-"	border-radius: 5px;\n"
-"	color: rgb(255, 255, 255);\n"
-"	\n"
-"}\n"
-""));
-
-        verticalLayout_3->addWidget(Config_button, 0, Qt::AlignLeft);
 
         verticalSpacer_3 = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
@@ -780,11 +755,13 @@ public:
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
+        statusbar->setAutoFillBackground(false);
         MainWindow->setStatusBar(statusbar);
 
         retranslateUi(MainWindow);
 
         stackedWidget->setCurrentIndex(0);
+        YouTube_main_type_request->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -870,11 +847,9 @@ public:
         signin_label_2->setText(QCoreApplication::translate("MainWindow", "Email", nullptr));
         signin_button->setText(QCoreApplication::translate("MainWindow", "\320\241\320\276\320\267\320\264\320\260\321\202\321\214", nullptr));
         main_button->setText(QCoreApplication::translate("MainWindow", "\320\223\320\273\320\260\320\262\320\275\320\260\321\217", nullptr));
-        AlbomsButton->setText(QCoreApplication::translate("MainWindow", "\320\234\320\276\320\270 \320\260\320\273\321\214\320\261\320\276\320\274\321\213", nullptr));
         label_3->setText(QCoreApplication::translate("MainWindow", "\320\241\320\265\321\200\320\262\320\270\321\201\321\213", nullptr));
         VK_button->setText(QCoreApplication::translate("MainWindow", "VK", nullptr));
         YT_Button->setText(QCoreApplication::translate("MainWindow", "YouTube", nullptr));
-        Config_button->setText(QCoreApplication::translate("MainWindow", "\320\235\320\260\321\201\321\202\321\200\320\276\320\271\320\272\320\270", nullptr));
         button_login->setText(QCoreApplication::translate("MainWindow", "\320\222\320\276\320\271\321\202\320\270", nullptr));
         signUp_button->setText(QCoreApplication::translate("MainWindow", "\320\240\320\265\320\263\320\270\321\201\321\202\321\200\320\260\321\206\320\270\321\217", nullptr));
         logout->setText(QCoreApplication::translate("MainWindow", "\320\222\321\213\320\271\321\202\320\270", nullptr));

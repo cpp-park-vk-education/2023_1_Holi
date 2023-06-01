@@ -36,8 +36,18 @@ struct VKAlbums{
     QString responseType;
 };
 
+struct VKVideos{
+    QString id;
+    QString title;
+    QString description;
+};
 QVector<VKAlbums> VKontakte_Albums(MessageInfo info);
 
 QVector<QString> VKontakte_Albums_DB(MessageInfo info);
+
+QVector<VKVideos> VKontakte_Videos(MessageInfo info);
+
+QVector<QString> VKontakte_Videos_DB(MessageInfo info);
+
 
 #endif // OAUTHPROVIDER_H

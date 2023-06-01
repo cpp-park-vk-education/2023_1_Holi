@@ -83,7 +83,7 @@
                 request_maker->Post(str, 1100);
             }
             if(Service == "YT"){
-                request_maker->Post(str,1200);
+                request_maker->Post(str, 1200);
             }
         }
         void User::addVideo(std::string name, std::string exported_from, MainWindow *window){
@@ -95,7 +95,13 @@
             obj["name"] = name;
             obj["exported_from"] = exported_from;
             std::string str = boost::json::serialize( boost::json::value_from(obj));
-            request_maker->Post(str,1400);
+            if(exported_from == "YT"){
+                request_maker->Post(str,1400);
+            }
+            if(exported_from == "VK"){
+                request_maker->Post(str,1500);
+            }
+
         }
         void User::getPlaylistOrChannel(MainWindow *window){
             std::cout<<"getName start"<<std::endl;
@@ -124,12 +130,20 @@
             request_maker->Get(140);
         }
 
+        void User::getVideoVKontakte_Database(MainWindow *window){
+            QSettings current("Holi", "CurrentUser");
+            std::string id = current.value("id").toString().toStdString();
+            std::string target = "/video/all?user_id="+id;
+            request_maker = std::make_unique<RequestMakerHttp>(target, window);
+            request_maker->Get(150);
+        }
+
         void User::getPlaylisVK_Database(MainWindow *window){
             QSettings current("Holi", "CurrentUser");
             std::string id = current.value("id").toString().toStdString();
             std::string target = "/video/list/all?user_id="+id;
             request_maker = std::make_unique<RequestMakerHttp>(target, window);
-            request_maker->Get(1100);
+            request_maker->Get(110);
         }
 
         void User::getEmail() {

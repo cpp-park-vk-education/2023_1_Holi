@@ -22,7 +22,7 @@ void VKClient::GetVideos(MainWindow* window, int flag, std::string playlistId){
     std::string method = "video.get";
     std::map<std::string, std::string> params = 
     {
-        {"owner_id", std::to_string(user_id_)},
+        {"album_id", playlistId},
         {"extended", std::to_string(0)}
     };
     vk_request = std::make_unique<VKRequest>();
