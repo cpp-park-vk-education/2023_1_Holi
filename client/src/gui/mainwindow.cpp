@@ -251,11 +251,16 @@ QVector<QString> YT_Videos_DB;
 
 void MainWindow::on_YouTube_getAllAlboms_clicked()//тут логика с выбором альобв с видео
 {
+    user = std::make_unique<User>();
     std::string token = accessTokenYT.toStdString();
     api_client = std::make_unique<YTClient>(token);
     if(ui->YouTube_main_type_request->currentIndex() == 0){
+        user->getPlaylisYouTube_Database(this);
+
         api_client->GetPlaylists(this, 3);
     }else if(ui->YouTube_main_type_request->currentIndex() == 1){
+        user->getVideoYouTube_Database(this);
+
         std::string playlistId;
         QString playlistName = ui->YouTube_main_playists->currentText();
         for (YTAlbums elem : YT_Albums_API) {
@@ -279,6 +284,13 @@ void MainWindow::MP_YT_getAlbums(MessageInfo info){//3 КОЛБЕК
             ui->YouTube_main_list_item->addItem(elem.title);
             ui->YouTube_main_playists->addItem(elem.title);
         }
+
+        for(int i = 0; i < ui->YouTube_main_list_item->count(); i++){
+            QListWidgetItem* item = ui->YouTube_main_list_item->item(i);
+            if(YT_Albums_DB.contains(item->text())){
+                item->setBackground(QColor(200,255,200));
+            }
+        }
         user = std::make_unique<User>();
         user->getPlaylisYouTube_Database(this);
     }
@@ -297,6 +309,12 @@ void MainWindow::MP_YT_getVideo(MessageInfo info){
     if(!YT_Videos_API.empty()){
         for(auto elem : YT_Videos_API){
             ui->YouTube_main_list_item->addItem(elem.title);
+        }
+        for(int i = 0; i < ui->YouTube_main_list_item->count(); i++){
+            QListWidgetItem* item = ui->YouTube_main_list_item->item(i);
+            if(YT_Videos_DB.contains(item->text())){
+                item->setBackground(QColor(200,255,200));
+            }
         }
         user = std::make_unique<User>();
         user->getVideoYouTube_Database(this);
