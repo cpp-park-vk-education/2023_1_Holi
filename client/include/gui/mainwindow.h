@@ -65,6 +65,7 @@ public:
 
     void MP_YT_checkAddPlaylis(MessageInfo info);
     //
+    void MP_VK_checkAddPlaylis(MessageInfo info);
 
     void MP_YT_checkAddVideo(MessageInfo info);
 

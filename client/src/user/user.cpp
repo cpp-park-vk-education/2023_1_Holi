@@ -64,12 +64,12 @@
 
 
         void User::addPlaylistOrChannel(std::string Playlist, std::string owner_id, std::string description, std::string Service, MainWindow *window, QListWidgetItem *item){
-            std::cout<<"getName start"<<std::endl;
+
             QSettings current("Holi", "CurrentUser");
             std::string id = current.value("id").toString().toStdString();
             std::string target = "/video/list?user_id="+id;
-            std::cout << target;
-            //std::unique_ptr<MainWindow> window_ = std::move(window);
+
+
             request_maker = std::make_unique<RequestMakerHttp>(target, window);
             json::object obj;
             obj["name"] = Playlist;
@@ -77,11 +77,14 @@
             obj["id_in_service"] = owner_id;
             obj["description"] = description;
             std::string str = boost::json::serialize( boost::json::value_from(obj));
-            std::cout << str;
-            request_maker->Post(str,1200);
-            std::cout<<"getName end"<<std::endl;
 
-            window->MP_VK_SuccesfullImportPlaylists(item);
+
+            if(Service == "VK"){
+                request_maker->Post(str, 1100);
+            }
+            if(Service == "YT"){
+                request_maker->Post(str,1200);
+            }
         }
         void User::addVideo(std::string name, std::string exported_from, MainWindow *window){
             QSettings current("Holi", "CurrentUser");
@@ -119,6 +122,14 @@
             std::string target = "/video/all?user_id="+id;
             request_maker = std::make_unique<RequestMakerHttp>(target, window);
             request_maker->Get(140);
+        }
+
+        void User::getPlaylisVK_Database(MainWindow *window){
+            QSettings current("Holi", "CurrentUser");
+            std::string id = current.value("id").toString().toStdString();
+            std::string target = "/video/list/all?user_id="+id;
+            request_maker = std::make_unique<RequestMakerHttp>(target, window);
+            request_maker->Get(1100);
         }
 
         void User::getEmail() {

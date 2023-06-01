@@ -81,6 +81,10 @@ void RequestMakerHttp::CallBack(int flag) {
     if(flag == 100){//getPlaylistOrChannel
         window_->MP_DB_getPC(message);
     }
+    if(flag == 1100){
+        //add playlist vk to db
+        window_->MP_VK_checkAddPlaylis(message);
+    }
     if(flag == 120){
         // Функция проверки добавления в БД
         window_->MP_YT_checkAddPlaylis(message);

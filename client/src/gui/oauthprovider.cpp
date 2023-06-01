@@ -81,3 +81,41 @@ QVector<YTVideo> YouTube_Video(MessageInfo info){
     }
     return result;
 }
+
+QVector<VKAlbums> VKontakte_Albums(MessageInfo info){
+    QVector<VKAlbums> result;
+
+    if(info.status_ == http::status::ok){
+        boost::json::object jsonObject = info.body_.as_object();
+        boost::json::array itemsArray = jsonObject["response"].as_object()["items"].as_array();
+        for (const auto& item : itemsArray) {
+            boost::json::object itemObject = item.as_object();
+            std::string id = std::to_string(itemObject["id"].as_int64());
+            std::string ownerId = itemObject["owner_id"].as_string().c_str();
+            std::string title = itemObject["title"].as_string().c_str();
+            std::string responseType = itemObject["response_type"].as_string().c_str();
+            VKAlbums album;
+            album.id = id.c_str();
+            album.owner_id = ownerId.c_str();
+            album.title = title.c_str();
+            album.responseType = responseType.c_str();
+            result.push_back(album);
+        }
+    }
+    return result;
+}
+
+QVector<QString> VKontakte_Albums_DB(MessageInfo info){
+    QVector<QString> result;
+    if(info.status_ == http::status::ok){
+        boost::json::array itemsArray = info.body_.as_array();
+        for(auto& item : itemsArray){
+            if(item.as_object()["exported_from"] == "VK"){
+                QString name = item.as_object()["name"].as_string().c_str();
+                result.push_back(name);
+            }
+
+        }
+    }
+    return result;
+}

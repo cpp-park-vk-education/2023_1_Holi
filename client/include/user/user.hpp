@@ -73,7 +73,7 @@ class User {
 
         void getVideoYouTube_Database(MainWindow *window);
 
-
+        void getPlaylisVK_Database(MainWindow *window);
         void registrate(std::string name, std::string email, std::string password, MainWindow* window);
 
         void auth(std::string username, std::string password, MainWindow* window);
