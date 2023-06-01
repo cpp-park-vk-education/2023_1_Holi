@@ -469,33 +469,41 @@ void MainWindow::on_signin_button_clicked()
 }
 
 void MainWindow::CallBack_Registration(MessageInfo info){
-    boost::json::object jsonObject = info.body_.as_object();
-    if(info.status_ == http::status::ok){
-        std::string id = jsonObject["id"].as_string().c_str();
-        std::string name = jsonObject["name"].as_string().c_str();
-        std::string surname = jsonObject["surname"].as_string().c_str();
-        std::string email = jsonObject["email"].as_string().c_str();
-        std::string login = jsonObject["login"].as_string().c_str();
-        std::string password = jsonObject["password"].as_string().c_str();
-        std::cout << "Пишем в кеш" << std::endl;
-        QSettings current("Holi", "CurrentUser");// это все его настройки
-        current.setValue("id", id.c_str());
-         std::cout << id << std::endl;
-        current.setValue("name", name.c_str());
-        current.setValue("surname", surname.c_str());
-        current.setValue("email", email.c_str());
-        current.setValue("login", login.c_str());
-        current.setValue("password", password.c_str());
-        qDebug() << current.fileName();
+    if (info.body_.is_object() != 0){
+        boost::json::object jsonObject = info.body_.as_object();
+        if(info.status_ == http::status::ok){
+            std::string id = jsonObject["id"].as_string().c_str();
+            std::string name = jsonObject["name"].as_string().c_str();
+            std::string surname = jsonObject["surname"].as_string().c_str();
+            std::string email = jsonObject["email"].as_string().c_str();
+            std::string login = jsonObject["login"].as_string().c_str();
+            std::string password = jsonObject["password"].as_string().c_str();
+            std::cout << "Пишем в кеш" << std::endl;
+            QSettings current("Holi", "CurrentUser");// это все его настройки
+            current.setValue("id", id.c_str());
+            std::cout << id << std::endl;
+            current.setValue("name", name.c_str());
+            current.setValue("surname", surname.c_str());
+            current.setValue("email", email.c_str());
+            current.setValue("login", login.c_str());
+            current.setValue("password", password.c_str());
+            qDebug() << current.fileName();
 
-        ui->stackedWidget->setCurrentIndex(0);
-        ui->statusbar->showMessage(name.c_str());
-        ui->button_login->hide();
-        ui->signUp_button->hide();
-        ui->logout->show();
-    } else{
+            ui->stackedWidget->setCurrentIndex(0);
+            ui->statusbar->showMessage(name.c_str());
+            ui->button_login->hide();
+            ui->signUp_button->hide();
+            ui->logout->show();
+        } else{
+            QMessageBox msgBox;
+            msgBox.setText("Что то пошло не так");
+            msgBox.exec();
+        }
+    }
+    else
+    {
         QMessageBox msgBox;
-        msgBox.setText("Что то пошло не так");
+        msgBox.setText("Такой логин уже существует");
         msgBox.exec();
     }
 
